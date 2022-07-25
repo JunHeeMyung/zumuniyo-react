@@ -1,25 +1,64 @@
-import React ,{ useState, useEffect } from "react";
-import ZumuniyoAxios from 'components/common/ZumuniyoAxios'
+import NotFound from "components/common/NotFound";
+import React,{  useState,useEffect } from "react";
+import { Route, Routes ,useNavigate} from "react-router-dom";
+import ZumuniyoAxios from 'components/common/ZumuniyoAxios';
+import Register from 'components/member/Register'
 
+const NaverLogin = (props)=> {
 
-const NaverLogin = ()=> {
+    const [email,setEmail] = useState('');
+    const [registered,setRegistered] = useState('');
+    const navigate = useNavigate();
 
-    const [mainheartbeat,setMainheartbeat] = useState('');
-    const [memberheartbeat,setMemberheartbeat] = useState('');
+    const loginResult = (result)=>{
+      setRegistered(result);
+
+      if (result === '아이디없음'){
+        navigate('register');
+      }
+      else if(['입력값없음','토큰이상','로그인실패'].indexOf(result)===-1){
+        sessionStorage.setItem('member',result);
+        window.location.reload();
+      }else{
+        navigate('..');
+      }
+      
+    };
+
+    const login = () => props.naverLogin.getLoginStatus((status)=>{
+      if(status){
+        if(email===''){
+
+          let memEmail = JSON.stringify(props.naverLogin.user.email).replaceAll('"','');
+          let memToken = JSON.stringify(props.naverLogin.accessToken.accessToken).replaceAll('"','');
+          setEmail(memEmail);
+
+          let params = new URLSearchParams();
+          params.append('memEmail',memEmail);
+          params.append('memToken',memToken);
+
+          if(registered===''){
+            ZumuniyoAxios('/member/login/naver/','post',params,result=>{loginResult(result)});
+          }
+        }
+      }
+    });
 
     useEffect(
-        () => {
-            ZumuniyoAxios('/main/heartbeat','get', data => {setMainheartbeat(data);});
-            ZumuniyoAxios('/member/heartbeat','get', data => {setMemberheartbeat(data);});
-        }, []
+      () => {
+        login();
+
+      }, []
     );
 
     return (
-      <>
-        <h1>메인생존여부: {mainheartbeat}</h1>
-        <h1>멤버생존여부: {memberheartbeat}</h1>
-        <h1>네이버로그인</h1>
-      </>
+        <>
+        <Routes>
+          <Route path="/" element={<></>} />
+          <Route path="/register" element={<Register memEmail={email} socialType={'naver'}/>} />
+          <Route path="*" element={<NotFound/>} />
+        </Routes>
+        </>
     );
   }
   export default NaverLogin;

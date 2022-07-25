@@ -1,0 +1,9 @@
+#naverIdLogin{
+    display: none;
+}
+
+#naverLoginButton:hover,
+#kakaoLoginButton:hover,
+#naverLogoutButton:hover{
+    cursor: pointer;
+}

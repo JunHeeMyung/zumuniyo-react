@@ -6,6 +6,7 @@ import LDS from "components/common/TestUser/LDS"
 import LJW from "components/common/TestUser/LJW"
 import SWY from "components/common/TestUser/SWY"
 import NotFound from "components/common/NotFound";
+import LogInOut from "components/member/LogInOut"
 
 const TestPage = ()=> {
   return (
@@ -16,6 +17,7 @@ const TestPage = ()=> {
     <Link to="/LDS">이덕수 </Link> 
     <Link to="/LJW">이정우 </Link> 
     <Link to="/SWY">서원영 </Link> 
+    <LogInOut/>
 
     <hr/>
 
