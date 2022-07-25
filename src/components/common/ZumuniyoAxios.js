@@ -1,14 +1,15 @@
 import axios from 'axios'
 
-const ZumunityoAxios = function(url, method, callback) {
+const ZumuniyoAxios = function(url, method,params, callback) {
   axios(
     {
       url: url,
-      method: method
+      method: method,
+      data:params
     }
   ).then( response => {
     callback(response.data);
   });
 }
 
-export default ZumunityoAxios;
+export default ZumuniyoAxios;
