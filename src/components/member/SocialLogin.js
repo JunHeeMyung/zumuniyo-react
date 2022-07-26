@@ -34,12 +34,10 @@ const SocialLogin = (props)=> {
 
     const loginButton = <> {naverLoginButton} {kakaoLoginButton} </>;
 
-    const getMemberSession = () => sessionStorage.getItem('member');
-
     const setPage = ()=>{
-            let member = getMemberSession();
-            if(member){
-              navigate(-1);
+            const logined = sessionStorage.getItem('logined');
+            if(logined){
+              navigate(-1,{replace:true});
             }
     };
     
@@ -54,7 +52,7 @@ const SocialLogin = (props)=> {
       <>
         <Routes>
           <Route path="/" element={loginButton} />
-          <Route path="/naver/*" element={<NaverLogin naverLogin={naverLogin}/>} />
+          <Route path="/naver/*" element={<NaverLogin naverLogin={naverLogin} />} />
           <Route path="/kakao/*" element={<KakaoLogin />} />
           <Route path="*" element={<NotFound/>} />
         </Routes>

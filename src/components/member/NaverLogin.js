@@ -16,38 +16,40 @@ const NaverLogin = (props)=> {
       if (result === '아이디없음'){
         navigate('register');
       }
-      else if(['입력값없음','토큰이상','로그인실패'].indexOf(result)===-1){
-        sessionStorage.setItem('member',result);
+      else if(result === '로그인성공'){
+        sessionStorage.setItem('logined',true);
+        navigate(-2,{replace:true});
         window.location.reload();
       }else{
-        navigate('..');
+        navigate(-2,{replace:true});
       }
       
     };
 
-    const login = () => props.naverLogin.getLoginStatus((status)=>{
-      if(status){
-        if(email===''){
+    const login = () => {
+        props.naverLogin.getLoginStatus((status)=>{
+        if(status){
+          
 
-          let memEmail = JSON.stringify(props.naverLogin.user.email).replaceAll('"','');
-          let memToken = JSON.stringify(props.naverLogin.accessToken.accessToken).replaceAll('"','');
-          setEmail(memEmail);
+            const memEmail = JSON.stringify(props.naverLogin.user.email).replaceAll('"','');
+            const memToken = JSON.stringify(props.naverLogin.accessToken.accessToken).replaceAll('"','');
+            setEmail(memEmail);
 
-          let params = new URLSearchParams();
-          params.append('memEmail',memEmail);
-          params.append('memToken',memToken);
+            const params = new URLSearchParams();
+            params.append('memEmail',memEmail);
+            params.append('memToken',memToken);
 
-          if(registered===''){
-            ZumuniyoAxios('/member/login/naver/','post',params,result=>{loginResult(result)});
-          }
+            if(registered===''){
+              ZumuniyoAxios('/member/login/naver/','post',params,result=>{loginResult(result)});
+            }
+          
         }
-      }
-    });
+      })
+    };
 
     useEffect(
       () => {
         login();
-
       }, []
     );
 

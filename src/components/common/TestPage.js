@@ -6,9 +6,12 @@ import LDS from "components/common/TestUser/LDS"
 import LJW from "components/common/TestUser/LJW"
 import SWY from "components/common/TestUser/SWY"
 import NotFound from "components/common/NotFound";
-import LogInOut from "components/member/LogInOut"
+import LogInOutButton from "components/member/LogInOutButton"
+import MemNick from "components/member/MemNick";
+import Logined from "components/member/Logined";
 
 const TestPage = ()=> {
+
   return (
     <>
      
@@ -17,7 +20,9 @@ const TestPage = ()=> {
     <Link to="/LDS">이덕수 </Link> 
     <Link to="/LJW">이정우 </Link> 
     <Link to="/SWY">서원영 </Link> 
-    <LogInOut/>
+    ...............
+    <MemNick/>
+    <LogInOutButton/>
 
     <hr/>
 
