@@ -34,10 +34,15 @@ const SocialLogin = (props)=> {
     const initNaverLogin = () => naverLogin.init();       
 
     const loginButton = <> {naverLoginButton} {kakaoLoginButton} </>;
-    
+
     useEffect(
       () => {
           initNaverLogin();
+
+          if(window.performance.navigation.type === 2||window.performance.getEntriesByType("navigation")[0].type === "back_forward") {
+            window.location.reload();
+          }
+        
       }, []
     );
 
@@ -49,8 +54,8 @@ const SocialLogin = (props)=> {
           <Route path="/kakao/*" element={<KakaoLogin />} />
           <Route path="*" element={<NotFound/>} />
         </Routes>
-        { useContext(LoginedContext) && navigate(-1) }
         <div id='naverIdLogin' />
+        { useContext(LoginedContext) && navigate(-1) }
       </>
     );
   }
