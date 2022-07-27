@@ -1,33 +1,22 @@
-import React,{  useState,useEffect } from "react";
-import ZumuniyoAxios from 'components/common/ZumuniyoAxios';
+import React,{ useContext } from "react";
+import {LoginedContext} from "components/member/LoginProvider";
 import { Link } from "react-router-dom";
+import ZumuniyoAxios from "components/common/ZumuniyoAxios";
 
-const LogInOutButton = (props) => {
-
-    const [logined,setLogined] = useState('');
-
-    const checkLogined = () => {
-        ZumuniyoAxios('/member/login','get',{},result=>{setLogined(result)});
-    }
+const LogInOutButton = () => {
 
     const logout = () => {
-        ZumuniyoAxios('/member/logout','post',{},result=>{if(result) {
-          sessionStorage.clear();
-          alert("로그아웃 되었습니다");
-          window.location.reload();
-        }});
+        ZumuniyoAxios('/member/logout','post',{},result=>{
+          if(result) {
+            sessionStorage.clear();
+            alert("로그아웃 되었습니다");
+            window.location.reload();
+          }});
     }
 
-    useEffect(
-        () => {
-            checkLogined();
-        }, []
-      );
-
     return (
-        
       <>
-         { logined ?
+         { useContext(LoginedContext) ?
           <button onClick={logout}>로그아웃</button>:
           <Link to="/MJH/sociallogin"><button>로그인</button></Link> }
       </>

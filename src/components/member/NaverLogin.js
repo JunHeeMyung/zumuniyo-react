@@ -17,9 +17,7 @@ const NaverLogin = (props)=> {
         navigate('register');
       }
       else if(result === '로그인성공'){
-        sessionStorage.setItem('logined',true);
         navigate(-2,{replace:true});
-        window.location.reload();
       }else{
         navigate(-2,{replace:true});
       }
@@ -29,8 +27,6 @@ const NaverLogin = (props)=> {
     const login = () => {
         props.naverLogin.getLoginStatus((status)=>{
         if(status){
-          
-
             const memEmail = JSON.stringify(props.naverLogin.user.email).replaceAll('"','');
             const memToken = JSON.stringify(props.naverLogin.accessToken.accessToken).replaceAll('"','');
             setEmail(memEmail);

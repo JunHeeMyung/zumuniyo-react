@@ -5,6 +5,7 @@ const LoginInfo = ()=> {
 
     return (
       <>
+        참조용 샘플파일입니다
         <br/>
         로그인상태 : {useContext(LoginedContext)?"로그인됨":"로그인안됨"}
         <br/>

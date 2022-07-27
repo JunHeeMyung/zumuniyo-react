@@ -1,4 +1,4 @@
-import React,{ useEffect } from "react";
+import React,{ useEffect,useContext } from "react";
 import NaverLoginButton from 'images/naverlogin/naverlogin.png';
 import KaKaoLoginButton from 'images/kakaologin/kakaologin.png';
 import { Route, Routes,useNavigate} from "react-router-dom";
@@ -6,6 +6,7 @@ import NotFound from "components/common/NotFound";
 import "./SocialLogin.css";
 import NaverLogin from "components/member/NaverLogin";
 import KakaoLogin from "components/member/KakaoLogin";
+import {LoginedContext} from "components/member/LoginProvider";
 
 const SocialLogin = (props)=> {
 
@@ -33,18 +34,10 @@ const SocialLogin = (props)=> {
     const initNaverLogin = () => naverLogin.init();       
 
     const loginButton = <> {naverLoginButton} {kakaoLoginButton} </>;
-
-    const setPage = ()=>{
-            const logined = sessionStorage.getItem('logined');
-            if(logined){
-              navigate(-1,{replace:true});
-            }
-    };
     
     useEffect(
       () => {
           initNaverLogin();
-          setPage();
       }, []
     );
 
@@ -56,6 +49,7 @@ const SocialLogin = (props)=> {
           <Route path="/kakao/*" element={<KakaoLogin />} />
           <Route path="*" element={<NotFound/>} />
         </Routes>
+        { useContext(LoginedContext) && navigate(-1) }
         <div id='naverIdLogin' />
       </>
     );
