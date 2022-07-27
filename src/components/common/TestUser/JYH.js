@@ -1,7 +1,7 @@
-import MenuList from "components/menu/MenuList";
+import MenuListTest from "components/menu/menuTest/MenuListTest";
 import React from "react";
 import { Route, Routes ,Link} from "react-router-dom";
-import MenuHello from "components/menu/MenuHello";
+import MenuHello from "components/menu/menuTest/MenuHello";
 
 
 
@@ -10,7 +10,7 @@ const JYH = ()=> {
       <>
       <div>
           <h1>정영훈 테스트 페이지</h1>
-          <Link to="menuList">메뉴리스트 </Link>
+          <Link to="menuListTest">메뉴리스트 Test </Link>
           <hr/>
 
         <Routes>
@@ -20,7 +20,7 @@ const JYH = ()=> {
           
         <Routes>
           <Route path="/" element={<><h2>기능선택</h2></>} />
-          <Route path="/menuList/*" element={<MenuList/>} />
+          <Route path="/menuListTest/*" element={<MenuListTest/>} />
           <Route path="*" element={<><h2>주소값 이상</h2></>} />
         </Routes>
 
