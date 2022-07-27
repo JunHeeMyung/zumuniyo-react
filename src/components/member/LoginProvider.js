@@ -1,6 +1,7 @@
 import React,{  useState,useEffect,createContext } from "react";
 import ZumuniyoAxios from "components/common/ZumuniyoAxios";
 
+
 export const LoginedContext = createContext(false);
 export const MemNickContext = createContext('');
 export const MemTypeContext = createContext('');
