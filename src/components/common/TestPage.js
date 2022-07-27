@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useContext } from "react";
 import { Route, Routes,Link } from "react-router-dom";
 import MJH from "components/common/TestUser/MJH"
 import JYH from "components/common/TestUser/JYH"
@@ -7,8 +7,9 @@ import LJW from "components/common/TestUser/LJW"
 import SWY from "components/common/TestUser/SWY"
 import NotFound from "components/common/NotFound";
 import LogInOutButton from "components/member/LogInOutButton"
-import MemNick from "components/member/MemNick";
-import Logined from "components/member/Logined";
+
+import {LoginedContext,MemNickContext} from "components/member/LoginProvider";
+
 
 const TestPage = ()=> {
 
@@ -21,7 +22,7 @@ const TestPage = ()=> {
     <Link to="/LJW">이정우 </Link> 
     <Link to="/SWY">서원영 </Link> 
     ...............
-    <MemNick/>
+    {useContext(MemNickContext)} {useContext(LoginedContext)?'님 안녕하세요':''}
     <LogInOutButton/>
 
     <hr/>
