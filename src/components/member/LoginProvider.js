@@ -1,12 +1,11 @@
 import React,{  useState,useEffect,createContext } from "react";
 import ZumuniyoAxios from "components/common/ZumuniyoAxios";
-import TestPage from 'components/common/TestPage';
 
 export const LoginedContext = createContext(false);
 export const MemNickContext = createContext('');
 export const MemTypeContext = createContext('');
 
-const LoginProvider = ()=> {
+const LoginProvider = (props)=> {
 
     const [logined,setLogined] = useState(false);
     const [memNick,setMemNick] = useState('');
@@ -29,7 +28,7 @@ const LoginProvider = ()=> {
         <LoginedContext.Provider value={logined}>
             <MemNickContext.Provider value={memNick}>
                 <MemTypeContext.Provider value={memType}>
-                    <TestPage />
+                  {props.children}
                 </MemTypeContext.Provider>
             </MemNickContext.Provider>
         </LoginedContext.Provider>
