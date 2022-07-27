@@ -1,7 +1,9 @@
-import React,{ useContext } from "react";
+import React,{ useContext ,useEffect} from "react";
 import {LoginedContext,MemNickContext,MemTypeContext} from "components/member/LoginProvider";
 
 const LoginInfo = ()=> {
+
+    useEffect(() => {}, []);
 
     return (
       <>

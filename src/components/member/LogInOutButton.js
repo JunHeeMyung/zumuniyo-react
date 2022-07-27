@@ -1,4 +1,4 @@
-import React,{ useContext } from "react";
+import React,{ useContext ,useEffect} from "react";
 import {LoginedContext} from "components/member/LoginProvider";
 import { Link } from "react-router-dom";
 import ZumuniyoAxios from "components/common/ZumuniyoAxios";
@@ -13,6 +13,8 @@ const LogInOutButton = () => {
             window.location.reload();
           }});
     }
+
+    useEffect(() => {}, []);
 
     return (
       <>
