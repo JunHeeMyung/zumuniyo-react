@@ -1,6 +1,6 @@
 import NotFound from "components/common/NotFound";
 import React,{  useState,useEffect } from "react";
-import { Route, Routes ,useNavigate} from "react-router-dom";
+import { Route, Routes ,useNavigate,} from "react-router-dom";
 import ZumuniyoAxios from 'components/common/ZumuniyoAxios';
 import Register from 'components/member/Register'
 
@@ -17,11 +17,9 @@ const NaverLogin = (props)=> {
         navigate('register');
       }
       else if(result === '로그인성공'){
-        navigate(-2,{replace:true});
-        window.location.reload();
+        navigate(-2);
       }else{
-        navigate(-2,{replace:true});
-        window.location.reload();
+        navigate(-2);
       }
       
     };
