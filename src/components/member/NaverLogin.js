@@ -18,8 +18,10 @@ const NaverLogin = (props)=> {
       }
       else if(result === '로그인성공'){
         navigate(-2,{replace:true});
+        window.location.reload();
       }else{
         navigate(-2,{replace:true});
+        window.location.reload();
       }
       
     };
