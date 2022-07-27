@@ -29,15 +29,7 @@ const Register = (props)=> {
 
     const onSubmit = e => {
         e.preventDefault();
-
-        const params = new URLSearchParams();
-        params.append('memNick',member.memNick);
-        params.append('memEmail',member.memEmail);
-        params.append('memType',member.memType);
-        params.append('socialType',member.socialType);
-        
-        ZumuniyoAxios('/member/naver/','post',params,result=>{registerResult(result)});
-
+        ZumuniyoAxios('/member/naver/','post',member,result=>{registerResult(result)});
     }
 
     useEffect(

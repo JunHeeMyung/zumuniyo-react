@@ -35,12 +35,8 @@ const NaverLogin = (props)=> {
             const memToken = JSON.stringify(props.naverLogin.accessToken.accessToken).replaceAll('"','');
             setEmail(memEmail);
 
-            const params = new URLSearchParams();
-            params.append('memEmail',memEmail);
-            params.append('memToken',memToken);
-
             if(registered===''){
-              ZumuniyoAxios('/member/login/naver/','post',params,result=>{loginResult(result)});
+              ZumuniyoAxios('/member/login/naver/','post',{memEmail:memEmail,memToken:memToken},result=>{loginResult(result)});
             }
           
         }
