@@ -1,10 +1,11 @@
 import React from "react";
-import HalfRating from "components/review/HalfRating";
+import FloatingActionButtonZoom from "components/review/components/FloatingActionButton";
+
 const LDS = ()=> {
     return (
       <div>
           <h1>이덕수 테스트 페이지</h1>
-          <HalfRating/>
+          <FloatingActionButtonZoom/>   
 
       </div>
     );
