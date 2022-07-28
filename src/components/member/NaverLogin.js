@@ -1,6 +1,6 @@
 import NotFound from "components/common/NotFound";
 import React,{  useState,useEffect } from "react";
-import { Route, Routes ,useNavigate} from "react-router-dom";
+import { Route, Routes ,useNavigate,} from "react-router-dom";
 import ZumuniyoAxios from 'components/common/ZumuniyoAxios';
 import Register from 'components/member/Register'
 
@@ -16,38 +16,32 @@ const NaverLogin = (props)=> {
       if (result === '아이디없음'){
         navigate('register');
       }
-      else if(['입력값없음','토큰이상','로그인실패'].indexOf(result)===-1){
-        sessionStorage.setItem('member',result);
-        window.location.reload();
+      else if(result === '로그인성공'){
+        navigate(-2);
       }else{
-        navigate('..');
+        navigate(-2);
       }
       
     };
 
-    const login = () => props.naverLogin.getLoginStatus((status)=>{
-      if(status){
-        if(email===''){
+    const login = () => {
+        props.naverLogin.getLoginStatus((status)=>{
+        if(status){
+            const memEmail = JSON.stringify(props.naverLogin.user.email).replaceAll('"','');
+            const memToken = JSON.stringify(props.naverLogin.accessToken.accessToken).replaceAll('"','');
+            setEmail(memEmail);
 
-          let memEmail = JSON.stringify(props.naverLogin.user.email).replaceAll('"','');
-          let memToken = JSON.stringify(props.naverLogin.accessToken.accessToken).replaceAll('"','');
-          setEmail(memEmail);
-
-          let params = new URLSearchParams();
-          params.append('memEmail',memEmail);
-          params.append('memToken',memToken);
-
-          if(registered===''){
-            ZumuniyoAxios('/member/login/naver/','post',params,result=>{loginResult(result)});
-          }
+            if(registered===''){
+              ZumuniyoAxios('/member/login/naver/','post',{memEmail:memEmail,memToken:memToken},result=>{loginResult(result)});
+            }
+          
         }
-      }
-    });
+      })
+    };
 
     useEffect(
       () => {
         login();
-
       }, []
     );
 

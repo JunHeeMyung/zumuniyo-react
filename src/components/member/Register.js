@@ -1,20 +1,66 @@
-import NotFound from "components/common/NotFound";
 import React,{  useState,useEffect } from "react";
-import { Route, Routes ,useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ZumuniyoAxios from 'components/common/ZumuniyoAxios';
 
 const Register = (props)=> {
 
+    const navigate = useNavigate();
+
+    const [member,setMember] = useState({
+        memNick : '',
+        memEmail : props.memEmail,
+        memType : '일반회원',
+        socialType : props.socialType
+    });
+
+    const onChange = e => {
+        const { name , value } = e.target;
+        setMember({...member, [name] : value });
+    }
+
+    const emailCheck = () => {
+        if(props.memEmail ==='') navigate(-3,{replace:true});
+    }
+
+    const registerResult = result => {
+        alert(result);
+        if(result==='가입성공') navigate(-3,{replace:true});
+    }
+
+    const onSubmit = e => {
+        e.preventDefault();
+        ZumuniyoAxios('/member/naver/','post',member,result=>{registerResult(result)});
+    }
+
+    useEffect(
+        () => {
+            emailCheck();
+        }, []
+      );
+
 return (
     <>
-    네이버 소셜가입
 
-    <br/>
-    가입폼
-    <br/>
-    {props.memEmail}
-    <br/>
-    {props.socialType}
+    저장값 : {JSON.stringify(member)}
+
+    <h1>네이버 계정으로 회원가입</h1>
+
+    <form className="" onSubmit={onSubmit}>
+        <div className="memNickBox">
+            <h4>닉네임</h4>
+            <input name="memNick" onChange={onChange}/>
+        </div>
+        <div className="memTypeBox">
+            <h4>타입</h4>
+            <input type="radio" id="memType1" name="memType" value="일반회원" onChange={onChange} defaultChecked/>
+            <label htmlFor="memType1">일반회원</label>
+            <input type="radio" id="memType2" name="memType" value="사업자회원" onChange={onChange}/>
+            <label htmlFor="memType2">사업자회원</label>
+        </div>
+        <div>
+            <input type="submit" value="가입하기"/>
+        </div>
+    </form>
 
     </>
 );

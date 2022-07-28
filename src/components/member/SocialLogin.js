@@ -1,4 +1,4 @@
-import React,{ useEffect } from "react";
+import React,{ useEffect,useContext } from "react";
 import NaverLoginButton from 'images/naverlogin/naverlogin.png';
 import KaKaoLoginButton from 'images/kakaologin/kakaologin.png';
 import { Route, Routes,useNavigate} from "react-router-dom";
@@ -6,6 +6,7 @@ import NotFound from "components/common/NotFound";
 import "./SocialLogin.css";
 import NaverLogin from "components/member/NaverLogin";
 import KakaoLogin from "components/member/KakaoLogin";
+import {LoginedContext} from "components/member/LoginProvider";
 
 const SocialLogin = (props)=> {
 
@@ -34,19 +35,14 @@ const SocialLogin = (props)=> {
 
     const loginButton = <> {naverLoginButton} {kakaoLoginButton} </>;
 
-    const getMemberSession = () => sessionStorage.getItem('member');
-
-    const setPage = ()=>{
-            let member = getMemberSession();
-            if(member){
-              navigate(-1);
-            }
-    };
-    
     useEffect(
       () => {
           initNaverLogin();
-          setPage();
+
+          if(window.performance.navigation.type === 2||window.performance.getEntriesByType("navigation")[0].type === "back_forward") {
+            window.location.reload();
+          }
+        
       }, []
     );
 
@@ -54,11 +50,12 @@ const SocialLogin = (props)=> {
       <>
         <Routes>
           <Route path="/" element={loginButton} />
-          <Route path="/naver/*" element={<NaverLogin naverLogin={naverLogin}/>} />
+          <Route path="/naver/*" element={<NaverLogin naverLogin={naverLogin} />} />
           <Route path="/kakao/*" element={<KakaoLogin />} />
           <Route path="*" element={<NotFound/>} />
         </Routes>
         <div id='naverIdLogin' />
+        { useContext(LoginedContext) && navigate(-1) }
       </>
     );
   }
