@@ -7,6 +7,8 @@ import LJW from "components/common/TestUser/LJW"
 import SWY from "components/common/TestUser/SWY"
 import NotFound from "components/common/NotFound";
 import LogInOutButton from "components/member/LogInOutButton"
+import HeaderJ from "components/common/Header/HeaderJ"
+
 
 import {LoginedContext,MemNickContext} from "components/member/LoginProvider";
 
@@ -15,7 +17,7 @@ const TestPage = ()=> {
 
   return (
     <>
-     
+    <HeaderJ/>
     <Link to="/MJH">명준희 </Link> 
     <Link to="/JYH">정영훈 </Link> 
     <Link to="/LDS">이덕수 </Link> 
