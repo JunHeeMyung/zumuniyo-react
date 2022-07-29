@@ -78,6 +78,11 @@ export const SidebarDataA = [
 
 
 export const SidebarData = [
+    {
+        title:'로그인',
+        path:'/MJH/sociallogin',
+    }
+
     // {
     //     title: 'Home',
     //     path: '/',
