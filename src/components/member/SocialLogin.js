@@ -40,6 +40,11 @@ const SocialLogin = (props)=> {
     useEffect(
       () => {
           initNaverLogin();
+
+          if(window.performance.navigation.type === 2||window.performance.getEntriesByType("navigation")[0].type === "back_forward") {
+            window.location.reload();
+          }
+        
       }, []
     );
 
