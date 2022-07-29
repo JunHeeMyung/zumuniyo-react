@@ -13,30 +13,46 @@ import * as AiIcons from "react-icons/ai";
 
 export const SidebarDataN = [
     {
-        title: 'Home',
+        title: '회원정보',
         path: '/',
         icon: <AiIcons.AiFillHome />,
         cName: 'nav-text',
     },
     {
-        title: '일반회원',
+        title: '리뷰',
         path: '/LDS',
         icon: <FarIcons.FaEnvelopeOpenText />,
         cName: 'nav-text'
     },
-
-
+    {
+        title: '주문목록',
+        path: '/LDS',
+        icon: <FarIcons.FaEnvelopeOpenText />,
+        cName: 'nav-text'
+    },
 ]
 
 export const SidebarDataB = [
     {
-        title: 'Home',
+        title: '회원정보',
         path: '/',
         icon: <AiIcons.AiFillHome />,
         cName: 'nav-text',
     },
     {
-        title: '사업자',
+        title: '매장리뷰관리',
+        path: '/LDS',
+        icon: <FarIcons.FaEnvelopeOpenText />,
+        cName: 'nav-text'
+    },
+    {
+        title: '매장등록',
+        path: '/LDS',
+        icon: <FarIcons.FaEnvelopeOpenText />,
+        cName: 'nav-text'
+    },
+    {
+        title: '주문관리 & QR코드생성',
         path: '/LDS',
         icon: <FarIcons.FaEnvelopeOpenText />,
         cName: 'nav-text'
@@ -46,13 +62,13 @@ export const SidebarDataB = [
 
 export const SidebarDataA = [
     {
-        title: 'Home',
+        title: '회원관리',
         path: '/',
         icon: <AiIcons.AiFillHome />,
         cName: 'nav-text',
     },
     {
-        title: '관리자',
+        title: '통계',
         path: '/LDS',
         icon: <FarIcons.FaEnvelopeOpenText />,
         cName: 'nav-text'
@@ -62,18 +78,18 @@ export const SidebarDataA = [
 
 
 export const SidebarData = [
-    {
-        title: 'Home',
-        path: '/',
-        icon: <AiIcons.AiFillHome />,
-        cName: 'nav-text',
-    },
-    {
-        title: 'LDS',
-        path: '/LDS',
-        icon: <FarIcons.FaEnvelopeOpenText />,
-        cName: 'nav-text'
-    },
+    // {
+    //     title: 'Home',
+    //     path: '/',
+    //     icon: <AiIcons.AiFillHome />,
+    //     cName: 'nav-text',
+    // },
+    // {
+    //     title: 'LDS',
+    //     path: '/LDS',
+    //     icon: <FarIcons.FaEnvelopeOpenText />,
+    //     cName: 'nav-text'
+    // },
     // {
     //     title: 'Home',
     //     path: '/',

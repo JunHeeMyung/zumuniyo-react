@@ -12,18 +12,17 @@ import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { styled, useTheme } from '@mui/material/styles';
-// import { SidebarData, sidebarData } from 'components/common/Header/SidebarData';
 
 import { useContext } from "react";
-import { LoginedContext, MemNickContext, MemTypeContext } from "components/member/LoginProvider"
 import { SidebarData, SidebarDataN, SidebarDataB, SidebarDataA } from 'components/common/Header/SidebarData';
+import {GlobalContext} from "components/member/GlobalProvider";
 
-
-
-// useContext(MemTypeContext)=="일반회원"? setSidedata={SidebarDataN}:setSidedata={SidebarDataB}
 
 
 export default function TemporaryDrawer() {
+
+  const {logined,memNick,memType,globalAxios} = useContext(GlobalContext);
+
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -31,18 +30,7 @@ export default function TemporaryDrawer() {
     right: false,
   });
 
-  const [sidedata, setSidedata] = React.useState(SidebarData);
-  // const {aa} = useContext(MemTypeContext)
-  // (function aa(){
-  //   const sdata = this.context.MemTypeContext;    
-  //   console.log={sdata};
-  //   if(sdata == '일반회원'){
-  //     setSidedata = SidebarDataN;
-  //   }else{
-  //     setSidedata = SidebarData;
-  //   }    
-  // })();
-
+  const [sidedata, setSidedata] = React.useState(SidebarData);  
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -50,6 +38,16 @@ export default function TemporaryDrawer() {
     }
 
     setState({ ...state, [anchor]: open });
+    
+    if (memType === '관리자') {
+      setSidedata(SidebarDataA);
+    } else if(memType === '사업자회원'){
+      setSidedata(SidebarDataB);
+    } else if(memType === '일반회원'){
+      setSidedata(SidebarDataN);
+    } else {
+      setSidedata(SidebarData);
+    }  
   };
 
   const DrawerHeader = styled('div')(({ theme }) => ({
@@ -67,7 +65,7 @@ export default function TemporaryDrawer() {
     setOpen(true);
   };
   const handleDrawerClose = () => {
-    setOpen(false);
+    setOpen(false);    
   };
 
   const list = (anchor) => (
@@ -80,14 +78,16 @@ export default function TemporaryDrawer() {
       <DrawerHeader>
         <IconButton onClick={handleDrawerClose}>
           {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-        </IconButton>
-      </DrawerHeader>
-      <Divider />
-      
+        </IconButton>            
+      </DrawerHeader>      
+      {logined? <Divider> {memType}  {memNick}님  </Divider> : <Divider/> }           
       <List>
+
         {/* {MemTypeContext ==='일반회원'?"일반":"일반아님" } */}        
         {/* {SidebarData.map((item, index) => ( */}
         {/* {SidebarData.map((item, index) => ( */}
+        
+
         {sidedata.map((item, index) => (
           <ListItem key={index} disablePadding>
             <ListItemButton to={item.path} >
