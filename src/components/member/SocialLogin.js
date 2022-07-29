@@ -3,12 +3,14 @@ import NaverLoginButton from 'images/naverlogin/naverlogin.png';
 import KaKaoLoginButton from 'images/kakaologin/kakaologin.png';
 import { Route, Routes,useNavigate} from "react-router-dom";
 import NotFound from "components/common/NotFound";
-import "./SocialLogin.css";
 import NaverLogin from "components/member/NaverLogin";
 import KakaoLogin from "components/member/KakaoLogin";
-import {LoginedContext} from "components/member/LoginProvider";
+import {GlobalContext} from "components/member/GlobalProvider";
+import "./SocialLogin.css";
 
 const SocialLogin = (props)=> {
+
+    const {logined} = useContext(GlobalContext);
 
     const { naver } = window;
     const navigate = useNavigate();
@@ -55,7 +57,7 @@ const SocialLogin = (props)=> {
           <Route path="*" element={<NotFound/>} />
         </Routes>
         <div id='naverIdLogin' />
-        { useContext(LoginedContext) && navigate(-1) }
+        { logined && navigate(-1) }
       </>
     );
   }

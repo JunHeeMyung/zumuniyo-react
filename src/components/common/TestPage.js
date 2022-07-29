@@ -10,10 +10,12 @@ import LogInOutButton from "components/member/LogInOutButton"
 import HeaderJ from "components/common/Header/HeaderJ"
 
 
-import {LoginedContext,MemNickContext} from "components/member/LoginProvider";
+import {GlobalContext} from "components/member/GlobalProvider";
 
 
 const TestPage = ()=> {
+
+  const {logined,memNick} = useContext(GlobalContext);
 
   return (
     <>
@@ -24,7 +26,7 @@ const TestPage = ()=> {
     <Link to="/LJW">이정우 </Link> 
     <Link to="/SWY">서원영 </Link> 
     ...............
-    {useContext(MemNickContext)} {useContext(LoginedContext)?'님 안녕하세요':''}
+    {memNick} {logined?'님 안녕하세요':''}
     <LogInOutButton/>
 
     <hr/>
