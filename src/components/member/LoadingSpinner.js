@@ -2,7 +2,7 @@ import React,{  useState,useEffect, useContext} from "react";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import CircularProgress from '@mui/material/CircularProgress';
-import { GlobalContext } from "components/member/GlobalProvider";
+import { GlobalContext } from "components/common/GlobalProvider";
 
 const LoadingSpinner = (props)=> {
 

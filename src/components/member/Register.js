@@ -9,7 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Button from '@mui/material/Button';  
 import "./Register.css";
-import { GlobalContext } from "components/member/GlobalProvider";
+import { GlobalContext } from "components/common/GlobalProvider";
 
 const Register = (props)=> {
 

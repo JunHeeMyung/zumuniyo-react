@@ -5,7 +5,7 @@ import { Route, Routes,useNavigate} from "react-router-dom";
 import NotFound from "components/common/NotFound";
 import NaverLogin from "components/member/NaverLogin";
 import KakaoLogin from "components/member/KakaoLogin";
-import {GlobalContext} from "components/member/GlobalProvider";
+import {GlobalContext} from "components/common/GlobalProvider";
 import "./SocialLogin.css";
 
 const SocialLogin = (props)=> {

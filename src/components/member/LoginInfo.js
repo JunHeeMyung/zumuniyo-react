@@ -1,5 +1,5 @@
 import React,{ useContext ,useEffect} from "react";
-import {GlobalContext} from "components/member/GlobalProvider";
+import {GlobalContext} from "components/common/GlobalProvider";
 
 const LoginInfo = ()=> {
 

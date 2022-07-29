@@ -8,7 +8,7 @@ import SWY from "components/common/TestUser/SWY"
 import NotFound from "components/common/NotFound";
 import LogInOutButton from "components/member/LogInOutButton"
 
-import {GlobalContext} from "components/member/GlobalProvider";
+import {GlobalContext} from "components/common/GlobalProvider";
 
 
 const TestPage = ()=> {

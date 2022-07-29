@@ -2,7 +2,7 @@ import NotFound from "components/common/NotFound";
 import React,{  useState,useEffect, useContext } from "react";
 import { Route, Routes ,useNavigate,} from "react-router-dom";
 import Register from 'components/member/Register'
-import { GlobalContext } from "components/member/GlobalProvider";
+import { GlobalContext } from "components/common/GlobalProvider";
 
 const NaverLogin = (props)=> {
 
