@@ -12,8 +12,15 @@ import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { styled, useTheme } from '@mui/material/styles';
-import { SidebarData, sidebarData } from 'components/common/Header/SidebarData';
+// import { SidebarData, sidebarData } from 'components/common/Header/SidebarData';
 
+import { useContext } from "react";
+import { LoginedContext, MemNickContext, MemTypeContext } from "components/member/LoginProvider"
+import { SidebarData, SidebarDataN, SidebarDataB, SidebarDataA } from 'components/common/Header/SidebarData';
+
+
+
+// useContext(MemTypeContext)=="일반회원"? setSidedata={SidebarDataN}:setSidedata={SidebarDataB}
 
 
 export default function TemporaryDrawer() {
@@ -23,6 +30,18 @@ export default function TemporaryDrawer() {
     bottom: false,
     right: false,
   });
+
+  const [sidedata, setSidedata] = React.useState(SidebarData);
+  // const {aa} = useContext(MemTypeContext)
+  // (function aa(){
+  //   const sdata = this.context.MemTypeContext;    
+  //   console.log={sdata};
+  //   if(sdata == '일반회원'){
+  //     setSidedata = SidebarDataN;
+  //   }else{
+  //     setSidedata = SidebarData;
+  //   }    
+  // })();
 
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -53,30 +72,32 @@ export default function TemporaryDrawer() {
 
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250  }}
+      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-       <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-
-
+      <DrawerHeader>
+        <IconButton onClick={handleDrawerClose}>
+          {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+        </IconButton>
+      </DrawerHeader>
+      <Divider />
+      
       <List>
-        {SidebarData.map((item, index) => (
-          <ListItem key={index} disablePadding>            
-            <ListItemButton to={item.path} >               
-              <ListItemIcon>                
+        {/* {MemTypeContext ==='일반회원'?"일반":"일반아님" } */}        
+        {/* {SidebarData.map((item, index) => ( */}
+        {/* {SidebarData.map((item, index) => ( */}
+        {sidedata.map((item, index) => (
+          <ListItem key={index} disablePadding>
+            <ListItemButton to={item.path} >
+              <ListItemIcon>
                 {item.icon}
               </ListItemIcon>
               <ListItemText primary={item.title} />
-            </ListItemButton>              
-          </ListItem>          
-          ))}
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
       <Divider />
     </Box>
@@ -84,17 +105,18 @@ export default function TemporaryDrawer() {
 
   return (
     <div>
-      <Box>        
+      <Box>
+        
         {['right'].map((anchor) => (
           <React.Fragment key={anchor}>
-             <IconButton size="large"
-                  edge="end"
-                  color="inherit"
-                  aria-label="open drawer"
-                  sx={{ mr: 3 }}
-                  onClick={toggleDrawer(anchor, true)}>                    
-                    <MenuIcon />
-                  </IconButton>
+            <IconButton size="large"
+              edge="end"
+              color="inherit"
+              aria-label="open drawer"
+              sx={{ mr: 3 }}
+              onClick={toggleDrawer(anchor, true)}>
+              <MenuIcon />
+            </IconButton>            
             <Drawer
               anchor={anchor}
               open={state[anchor]}
@@ -104,7 +126,7 @@ export default function TemporaryDrawer() {
             </Drawer>
           </React.Fragment>
         ))}
-    </Box >
+      </Box >
     </div>
   );
 }

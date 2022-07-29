@@ -11,54 +11,54 @@ import * as AiIcons from "react-icons/ai";
 
 
 
-// export const SidebarDataN = [
-//     {
-//         title: 'Home',
-//         path: '/',
-//         icon: <AiIcons.AiFillHome />,
-//         cName: 'nav-text',
-//     },
-//     {
-//         title: '일반회원',
-//         path: '/LDS',
-//         icon: <FarIcons.FaEnvelopeOpenText />,
-//         cName: 'nav-text'
-//     },
+export const SidebarDataN = [
+    {
+        title: 'Home',
+        path: '/',
+        icon: <AiIcons.AiFillHome />,
+        cName: 'nav-text',
+    },
+    {
+        title: '일반회원',
+        path: '/LDS',
+        icon: <FarIcons.FaEnvelopeOpenText />,
+        cName: 'nav-text'
+    },
 
 
-// ]
+]
 
-// export const SidebarDataB = [
-//     {
-//         title: 'Home',
-//         path: '/',
-//         icon: <AiIcons.AiFillHome />,
-//         cName: 'nav-text',
-//     },
-//     {
-//         title: '사업자',
-//         path: '/LDS',
-//         icon: <FarIcons.FaEnvelopeOpenText />,
-//         cName: 'nav-text'
-//     },
+export const SidebarDataB = [
+    {
+        title: 'Home',
+        path: '/',
+        icon: <AiIcons.AiFillHome />,
+        cName: 'nav-text',
+    },
+    {
+        title: '사업자',
+        path: '/LDS',
+        icon: <FarIcons.FaEnvelopeOpenText />,
+        cName: 'nav-text'
+    },
 
-// ]
+]
 
-// export const SidebarDataA = [
-//     {
-//         title: 'Home',
-//         path: '/',
-//         icon: <AiIcons.AiFillHome />,
-//         cName: 'nav-text',
-//     },
-//     {
-//         title: '관리자',
-//         path: '/LDS',
-//         icon: <FarIcons.FaEnvelopeOpenText />,
-//         cName: 'nav-text'
-//     },
+export const SidebarDataA = [
+    {
+        title: 'Home',
+        path: '/',
+        icon: <AiIcons.AiFillHome />,
+        cName: 'nav-text',
+    },
+    {
+        title: '관리자',
+        path: '/LDS',
+        icon: <FarIcons.FaEnvelopeOpenText />,
+        cName: 'nav-text'
+    },
 
-// ]
+]
 
 
 export const SidebarData = [
