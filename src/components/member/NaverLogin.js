@@ -1,10 +1,12 @@
 import NotFound from "components/common/NotFound";
-import React,{  useState,useEffect } from "react";
+import React,{  useState,useEffect, useContext } from "react";
 import { Route, Routes ,useNavigate,} from "react-router-dom";
-import ZumuniyoAxios from 'components/common/ZumuniyoAxios';
 import Register from 'components/member/Register'
+import { GlobalContext } from "components/member/GlobalProvider";
 
 const NaverLogin = (props)=> {
+
+    const {globalAxios} = useContext(GlobalContext);
 
     const [email,setEmail] = useState('');
     const [registered,setRegistered] = useState('');
@@ -12,7 +14,6 @@ const NaverLogin = (props)=> {
 
     const loginResult = (result)=>{
       setRegistered(result);
-
       if (result === '아이디없음'){
         navigate('register');
       }
@@ -32,18 +33,16 @@ const NaverLogin = (props)=> {
             setEmail(memEmail);
 
             if(registered===''){
-              ZumuniyoAxios('/member/login/naver/','post',{memEmail:memEmail,memToken:memToken},result=>{loginResult(result)});
+              globalAxios('/member/login/naver/','post',{memEmail:memEmail,memToken:memToken},result=>{loginResult(result)});
             }
           
         }
       })
     };
 
-    useEffect(
-      () => {
-        login();
-      }, []
-    );
+    useEffect(() => {
+      login();
+    }, []);
 
     return (
         <>

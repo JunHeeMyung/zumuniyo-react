@@ -1,10 +1,21 @@
-import React,{  useState,useEffect } from "react";
+import React,{  useState,useEffect,useContext } from "react";
 import {useNavigate} from "react-router-dom";
-import ZumuniyoAxios from 'components/common/ZumuniyoAxios';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import Button from '@mui/material/Button';  
+import "./Register.css";
+import { GlobalContext } from "components/member/GlobalProvider";
 
 const Register = (props)=> {
 
     const navigate = useNavigate();
+
+    const {globalAxios} = useContext(GlobalContext);
 
     const [member,setMember] = useState({
         memNick : '',
@@ -29,7 +40,7 @@ const Register = (props)=> {
 
     const onSubmit = e => {
         e.preventDefault();
-        ZumuniyoAxios('/member/naver/','post',member,result=>{registerResult(result)});
+        globalAxios('/member/'+member.socialType+'/','post',member,result=>{registerResult(result)});
     }
 
     useEffect(
@@ -39,30 +50,56 @@ const Register = (props)=> {
       );
 
 return (
-    <>
+    <div id="register">
 
-    저장값 : {JSON.stringify(member)}
+        <Box
+            id="registerbox"
+            component="form"
+            noValidate
+            autoComplete="off"
+            onSubmit={onSubmit}
+        >
 
-    <h1>네이버 계정으로 회원가입</h1>
+        <h2 id="registertitle">{member.socialType==='naver'?'네이버':'카카오'} 계정으로 가입</h2>
+        
+        <hr className="registerhr"/>
 
-    <form className="" onSubmit={onSubmit}>
-        <div className="memNickBox">
-            <h4>닉네임</h4>
-            <input name="memNick" onChange={onChange}/>
-        </div>
-        <div className="memTypeBox">
-            <h4>타입</h4>
-            <input type="radio" id="memType1" name="memType" value="일반회원" onChange={onChange} defaultChecked/>
-            <label htmlFor="memType1">일반회원</label>
-            <input type="radio" id="memType2" name="memType" value="사업자회원" onChange={onChange}/>
-            <label htmlFor="memType2">사업자회원</label>
-        </div>
-        <div>
-            <input type="submit" value="가입하기"/>
-        </div>
-    </form>
+            <TextField  name="memNick" 
+                        label="닉네임" 
+                        variant="standard" 
+                        helperText="한글 2~8 자" 
+                        fullWidth 
+                        onChange={onChange} 
+                        sx={{input:{color: 'rgb(71, 30, 30)'},
+                            '& label.Mui-focused': {color: 'rgb(71, 30, 30)',fontWeight: 'bold'},
+                            '& .MuiInput-underline:after': {borderBottomColor: 'rgb(71, 30, 30)'},
+                            }}
+                        />
+                        
+        <hr className="registerhr"/>
+            <FormControl>
+                <FormLabel sx={{color: 'rgb(71, 30, 30)','&.Mui-focused': {color: 'rgb(71, 30, 30)',fontWeight: 'bold'}}}>회원분류</FormLabel>
+                    <RadioGroup
+                        row
+                        defaultValue="일반회원"
+                        name="memType" 
+                        onChange={onChange}
+                        sx={{color: 'rgb(71, 30, 30)'}}
+                    >
+                    <FormControlLabel value="일반회원" control={<Radio sx={{color: 'rgb(71, 30, 30)','&.Mui-checked': {color: 'rgb(71, 30, 30)',}}}/>} label="일반회원"  />
+                    <FormControlLabel value="사업자회원" control={<Radio sx={{color: 'rgb(71, 30, 30)','&.Mui-checked': {color: 'rgb(71, 30, 30)',}}}/>} label="사업자회원" />
+                </RadioGroup>
+            </FormControl>
+        <hr className="registerhr"/>
+        <div></div>
+            <Button id="registerbtn" type="submit" variant="outlined" size="medium">
+                가입하기
+            </Button>
 
-    </>
+        </Box>
+
+    </div>
 );
 }
 export default Register;
+
