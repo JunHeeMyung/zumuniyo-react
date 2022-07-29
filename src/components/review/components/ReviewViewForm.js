@@ -1,6 +1,6 @@
 // import React from 'react'
 import React, { useState, useEffect } from "react";
-import { Button, Grid, Grow } from '@mui/material'
+import { Button, Grid } from '@mui/material'
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 
@@ -88,8 +88,9 @@ export default function ReviewViewForm() {
   return (
     <>
       {/* <h1>리뷰</h1>  */}
-      {reviews.slice(offset, offset + limit).map(review => {
+      {reviews.slice(offset, offset + limit).map(review =>   {
         return (
+          
           <Grid key={review.id}
             style={{ maxWidth: 700, minWidth: 500, margin: "0 auto" }}
           >
@@ -101,27 +102,23 @@ export default function ReviewViewForm() {
                 </Grid>
                 <Grid item xs={4}>
                   {/* 별점 */}
-                  <Rating size='large' readOnly precision={0.5} value={((review.reviewService + review.reviewTaste + review.reviewAmount) / 3).toFixed(1)} />
+                  {/* <Rating size='large' readOnly precision={0.5} value={((review.reviewService + review.reviewTaste + review.reviewAmount) / 3).toFixed(1)} /> */}
+                  <Rating size='large' readOnly precision={0.5} value={((review.reviewService + review.reviewTaste + review.reviewAmount) / 3)} />
                 </Grid>
                 <Grid item xs={4}>
                   {/* 날짜 */}
                   {convertDate(review.reviewRegdate)}
                 </Grid>
-              </Grid>
-              <Grid>
-                {/* <Grid >
-                <Item style={{ height: 200, margin: "0 auto" }}>사진영역</Item>
-              </Grid> */}
+              </Grid>                            
                 <Grid>
                   <Item style={{ height: 400, margin: "0 auto", overflowY: "auto" }}>
                     <Viewer content={review.reviewContent} />
                   </Item>
-                </Grid>
-              </Grid>
+                </Grid>              
               <Button onClick={(e) => { deleteClick(review.reviewSeq, e) }}>삭제</Button>
             </Item>
           </Grid>
-        )
+        );
       })}
       <Pagination total={reviews.length} limit={limit} page={page} setPage={setPage} />
     </>

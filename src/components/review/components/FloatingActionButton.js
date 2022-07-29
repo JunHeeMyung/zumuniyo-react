@@ -10,6 +10,9 @@ import { green } from '@mui/material/colors';
 import Box from '@mui/material/Box';
 
 import ReviewViewForm from 'components/review/components/ReviewViewForm';
+import ReviewInsert from 'components/review/components/ReviewInsert';
+
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -103,18 +106,16 @@ export default function FloatingActionButtonZoom() {
         onChangeIndex={handleChangeIndex}
       >
 
-        <TabPanel value={value} index={0} dir={theme.direction}>          
+        <TabPanel value={value} index={0} dir={theme.direction}> 
+        <ReviewInsert/>     
         </TabPanel>
+
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <Box sx={{ width: "50%" }}
-            style={{
-              margin: "0 auto"
-            }}
-          >
+          <Box sx={{ width: "50%" }} style={{ margin: "0 auto" }}>
             <ReviewViewForm style={{ margin: "0 auto", minHeight: 393, minWidth: 300 }} />
-          </Box>
-         
+          </Box>         
         </TabPanel>
+
         <TabPanel value={value} index={2} dir={theme.direction}>
           Item Three
         </TabPanel>
