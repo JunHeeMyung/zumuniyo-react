@@ -10,13 +10,25 @@ const LoadingSpinner = (props)=> {
 
     const [open, setOpen] = useState(false);
 
-    const style = {
+    const boxStyle = {
         position: 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         "&:focus":{ outline: 'none' }
     };
+
+    const counterStyle = {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      width: '15em',
+      transform: 'translate(-50%, -145%)',
+      color:'orange',
+      fontWeight:'bold',
+      textAlign:'center'
+
+   };
 
     useEffect(
         () => {
@@ -27,8 +39,9 @@ const LoadingSpinner = (props)=> {
     return (
       <>
             <Modal open={open}>
-                <Box sx={style}>
+                <Box sx={boxStyle}>
                 <CircularProgress sx={{circle:{color:'orange'}}}/>
+                <p style={counterStyle}>{axiosCounter}</p>
                 </Box>
             </Modal>
             {props.children}

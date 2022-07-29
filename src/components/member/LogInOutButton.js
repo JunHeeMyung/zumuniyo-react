@@ -1,4 +1,4 @@
-import React,{ useContext ,useEffect,useState} from "react";
+import React,{ useContext ,useEffect} from "react";
 import {GlobalContext} from "components/common/GlobalProvider";
 import { Link } from "react-router-dom";
 

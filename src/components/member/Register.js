@@ -1,5 +1,5 @@
 import React,{  useState,useEffect,useContext } from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate,useLocation} from "react-router-dom";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Radio from '@mui/material/Radio';
@@ -14,14 +14,15 @@ import { GlobalContext } from "components/common/GlobalProvider";
 const Register = (props)=> {
 
     const navigate = useNavigate();
+    const location = useLocation();
 
-    const {globalAxios} = useContext(GlobalContext);
+    const {globalAxios,backLocation} = useContext(GlobalContext);
 
     const [member,setMember] = useState({
         memNick : '',
-        memEmail : props.memEmail,
+        memEmail : location.state!==null?location.state.memEmail:"",
         memType : '일반회원',
-        socialType : props.socialType
+        socialType : location.state!==null?location.state.socialType:""
     });
 
     const onChange = e => {
@@ -30,12 +31,12 @@ const Register = (props)=> {
     }
 
     const emailCheck = () => {
-        if(props.memEmail ==='') navigate(-3,{replace:true});
+        if(member.memEmail ==='') navigate(backLocation);
     }
 
     const registerResult = result => {
         alert(result);
-        if(result==='가입성공') navigate(-3,{replace:true});
+        if(result==='가입성공') navigate(backLocation);
     }
 
     const onSubmit = e => {
@@ -46,7 +47,7 @@ const Register = (props)=> {
     useEffect(
         () => {
             emailCheck();
-        }, []
+        }, [emailCheck]
       );
 
 return (
@@ -91,7 +92,6 @@ return (
                 </RadioGroup>
             </FormControl>
         <hr className="registerhr"/>
-        <div></div>
             <Button id="registerbtn" type="submit" variant="outlined" size="medium">
                 가입하기
             </Button>
