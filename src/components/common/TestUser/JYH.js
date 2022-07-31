@@ -2,6 +2,8 @@ import MenuListTest from "components/menu/menuTest/MenuListTest";
 import React from "react";
 import { Route, Routes ,Link} from "react-router-dom";
 import MenuHello from "components/menu/menuTest/MenuHello";
+import Counter from "components/menu/menuTest/Counter";
+import InputSample from "components/menu/menuTest/InputSample";
 
 
 
@@ -14,10 +16,18 @@ const JYH = ()=> {
           <hr/>
 
         <Routes>
-          <Route path="/" element={<MenuHello name="jyh" color="blue" isSpecial={true} />} />
+          <Route path="/" element={<MenuHello name="jyh" color="blue" isSpecial />} />
+        </Routes>
+        
+        <Routes>
+          <Route path="/" element={<Counter />} />
         </Routes>
 
-          
+        <Routes>
+          <Route path="/" element={<InputSample />} />
+        </Routes>  
+
+
         <Routes>
           <Route path="/" element={<><h2>기능선택</h2></>} />
           <Route path="/menuListTest/*" element={<MenuListTest/>} />
@@ -28,4 +38,6 @@ const JYH = ()=> {
       </>
     );
   }
+
+
   export default JYH;

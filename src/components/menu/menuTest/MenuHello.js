@@ -15,7 +15,7 @@ function MenuHello({name, color, isSpecial}){
     <>
     <Wrapper>
     <div onClick={onClick} style={{color: color}}> 
-    { isSpecial ? <b>***</b> : null }
+    { isSpecial && <b>***</b> }
         반갑습니다~  {result} 입니다~ 
     </div>
     </Wrapper>
