@@ -2,16 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from "reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import LoginProvider from 'components/member/LoginProvider';
+import {GlobalProvider} from 'components/common/GlobalProvider';
 import TestPage from 'components/common/TestPage';
+import LoadingSpinner from 'components/member/LoadingSpinner';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
       {/*<React.StrictMode>*/}
-        <LoginProvider>
-          <TestPage/>
-        </LoginProvider>
+        
+          <GlobalProvider>
+            <LoadingSpinner>
+              <TestPage/>
+            </LoadingSpinner>
+          </GlobalProvider>
+        
       {/*</React.StrictMode>*/}
   </BrowserRouter>
 );
