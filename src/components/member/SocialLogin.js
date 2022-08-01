@@ -5,12 +5,12 @@ import { Route, Routes,useNavigate} from "react-router-dom";
 import NotFound from "components/common/NotFound";
 import NaverLogin from "components/member/NaverLogin";
 import KakaoLogin from "components/member/KakaoLogin";
-import {GlobalContext} from "components/member/GlobalProvider";
+import {GlobalContext} from "components/common/GlobalProvider";
 import "./SocialLogin.css";
 
 const SocialLogin = (props)=> {
 
-    const {logined} = useContext(GlobalContext);
+    const {logined,setLogined,beforeLocation,backLocation,setBackLocation} = useContext(GlobalContext);
 
     const { naver } = window;
     const navigate = useNavigate();
@@ -29,7 +29,7 @@ const SocialLogin = (props)=> {
     const naverLogin = new naver.LoginWithNaverId({
       clientId: 'BR7MTDuiJVo2gsGBsL57',
       callbackUrl: 'http://localhost:3000/MJH/sociallogin/naver',
-      isPopup: false,
+      isPopup: true,
       loginButton: { color: 'white', type: 1, height: '1' },
     });
 
@@ -41,11 +41,39 @@ const SocialLogin = (props)=> {
       () => {
           initNaverLogin();
 
-          if(window.performance.navigation.type === 2||window.performance.getEntriesByType("navigation")[0].type === "back_forward") {
-            window.location.reload();
+          if(backLocation!==beforeLocation&&String(beforeLocation).indexOf("sociallogin")<0){
+            setBackLocation(beforeLocation);
           }
+
+          if(logined)navigate(backLocation);
         
-      }, []
+      }, [beforeLocation,logined]
+    );
+
+    useEffect(      
+      () => {
+
+        window.addEventListener("message",m=>{
+
+          if(m.origin!==window.origin) return;
+
+          if(m.data==="loginSuccess"){
+            setLogined(true);
+            navigate(backLocation);
+          }
+
+          if(String(m.data).substr(0,9)==="register:"){
+            navigate(m.data.split(":")[2]+"/register",
+              {
+                state:{memEmail:m.data.split(":")[1],
+                socialType:m.data.split(":")[2]}
+              });
+            }
+          }
+
+        );
+
+      }, [backLocation]
     );
 
     return (
@@ -57,7 +85,6 @@ const SocialLogin = (props)=> {
           <Route path="*" element={<NotFound/>} />
         </Routes>
         <div id='naverIdLogin' />
-        { logined && navigate(-1) }
       </>
     );
   }

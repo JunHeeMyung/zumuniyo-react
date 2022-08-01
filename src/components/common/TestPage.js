@@ -10,7 +10,7 @@ import LogInOutButton from "components/member/LogInOutButton"
 import HeaderJ from "components/common/Header/HeaderJ"
 
 
-import {GlobalContext} from "components/member/GlobalProvider";
+import {GlobalContext} from "components/common/GlobalProvider";
 
 
 const TestPage = ()=> {

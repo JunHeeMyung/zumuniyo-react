@@ -1,5 +1,5 @@
-import React,{ useContext ,useEffect,useState} from "react";
-import {GlobalContext} from "components/member/GlobalProvider";
+import React,{ useContext ,useEffect} from "react";
+import {GlobalContext} from "components/common/GlobalProvider";
 import { Link } from "react-router-dom";
 
 const LogInOutButton = () => {

@@ -1,5 +1,6 @@
-import React,{  useState,createContext } from "react";
+import React,{  useState,createContext,useEffect } from "react";
 import axios from 'axios'
+import {useLocation} from "react-router-dom";
 
 const GlobalContext = createContext();
 
@@ -8,10 +9,15 @@ const GlobalProvider = (props)=> {
     const [logined,setLogined] = useState(false);
     const [memNick,setMemNick] = useState('');
     const [memType,setMemType] = useState('');
+    const [backLocation,setBackLocation] = useState('/');
+    const [beforeLocation,setBeforeLocation] = useState('/');
+    const [currentLocation,setCurrentLocation] = useState('/');
     const [axiosCounter,setAxiosCounter] = useState(0);
-    const plusAxiosCounter = () => {setAxiosCounter(axiosCounter+1);};
-    const minusAxiosCounter = () => {setAxiosCounter(axiosCounter-1);};
-
+    const plusAxiosCounter = () => {setAxiosCounter(c=>c+1);};
+    const minusAxiosCounter = () => {setAxiosCounter(c=>c-1);};
+    const location = useLocation();
+    const path =location.pathname;
+    
     const globalAxios =   (url, method,params, callback) =>  {
     
       const data = new URLSearchParams();
@@ -42,16 +48,31 @@ const GlobalProvider = (props)=> {
         }
       ).then( response => {
           callback(response.data);
-      }).catch(e=>{
-        console.log(e);
+      }).catch(error=>{
+        console.log(error);
       });
     } ;
 
+    useEffect(
+      () => {
+        if(currentLocation!==beforeLocation){
+          setBeforeLocation(currentLocation);
+        }
+        setCurrentLocation(path);
+      }, [path]
+    );
+
     return (
       <>
+        {/*<p>{backLocation}</p>*/}
+        {/*<p>{beforeLocation}</p>*/}
+        {/*<p>{currentLocation}</p>*/}
         <GlobalContext.Provider value={{logined,setLogined,
                                         memNick,setMemNick,
                                         memType,setMemType,
+                                        currentLocation,
+                                        beforeLocation,
+                                        backLocation,setBackLocation,
                                         axiosCounter,
                                         globalAxios}}>
             {props.children}
