@@ -1,24 +1,18 @@
 // import React from 'react'
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Button, Grid } from '@mui/material'
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
-
-import axios from 'axios';
-
 import Rating from '@mui/material/Rating';
-
-import 'components/review/components/ReviewViewForm.css';
+import axios from 'axios';
 import Pagination from "components/review/components/Pagination";
-// import './Products.css';
-
-
-
-
+import {GlobalContext} from "components/member/GlobalProvider";
+import './ReviewViewForm.css';
 
 
 export default function ReviewViewForm() {
 
+  const {logined,memNick,memType,globalAxios} = useContext(GlobalContext);
   const Viewer = ({ content }) => (
     <div style={{ width: "640", height: "200" }}
       className="ck-content"
@@ -45,17 +39,15 @@ export default function ReviewViewForm() {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
 
-
-
+  
   useEffect(() => {
-    axios.get("/review/reviewList").then((response) => {
-      if (response.data) {
-        console.log(response.data);
-        setReview(response.data);
-
-      } else {
-        alert("failed to ");
-      }
+    globalAxios('/review/reviewList','get', {},response=>{       
+      if (response) {
+          console.log(response);
+          setReview(response);  
+        } else {
+          alert("failed to ");
+        }    
     });
   }, []);
 
@@ -68,20 +60,28 @@ export default function ReviewViewForm() {
 
   const deleteClick = (params, e) => {
     console.log(params);
-    axios({
-      method: "delete",
-      url: `/review/reviewDelete/${params}`,
-    })
-      .then((res) => {
-        //console.log(res);
-        //console.log(reviewInsert);
+    globalAxios(`/review/reviewDelete/${params}`,'delete', {}, response=>{       
+      if (response) {
         alert("삭제에 성공했습니다.")
+        } else {
+          alert("failed to ");
+        }    
+    });
 
-      })
-      .catch((error) => {
-        console.log(error);
-        throw new Error(error);
-      });
+
+
+    // axios({
+    //   method: "delete",
+    //   url: `/review/reviewDelete/${params}`,
+    // })
+    //   .then((res) => {
+    //     alert("삭제에 성공했습니다.")
+
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     throw new Error(error);
+    //   });
   }
 
 

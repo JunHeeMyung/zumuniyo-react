@@ -13,8 +13,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { styled, useTheme } from '@mui/material/styles';
 
-import { useContext } from "react";
 import { SidebarData, SidebarDataN, SidebarDataB, SidebarDataA } from 'components/common/Header/SidebarData';
+
+import { useContext } from "react";
 import {GlobalContext} from "components/member/GlobalProvider";
 
 
@@ -83,14 +84,11 @@ export default function TemporaryDrawer() {
       {logined? <Divider> {memType}  {memNick}님  </Divider> : <Divider/> }           
       <List>
 
-        {/* {MemTypeContext ==='일반회원'?"일반":"일반아님" } */}        
-        {/* {SidebarData.map((item, index) => ( */}
-        {/* {SidebarData.map((item, index) => ( */}
-        
 
         {sidedata.map((item, index) => (
           <ListItem key={index} disablePadding>
-            <ListItemButton to={item.path} >
+            {/* <ListItemButton to={item.path} > */}
+            <ListItemButton href={item.path} >
               <ListItemIcon>
                 {item.icon}
               </ListItemIcon>
