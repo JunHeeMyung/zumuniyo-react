@@ -1,38 +1,74 @@
-import React, { Component } from 'react';
-import axios from 'axios'; 
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+
+const NoticeDetail = () => {
+  const { noticeBoardSeq } = useParams();
+  console.log(`empid는 ${noticeBoardSeq}`);
+  const [notice, setNotice] = useState({});
+  const navigate2 = useNavigate();
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: `/NoticeBoard/Noticedetail.do/${noticeBoardSeq}`
+    })
+      .then((res) => {
+        console.log(res);
+        setNotice(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        throw new Error(error);
+      });
+  }, [noticeBoardSeq]);
+  
+  const Viewer = ({ content }) => (
+    <div style={{ width: "640", height: "200" }}
+      className="ck-content"
+      dangerouslySetInnerHTML={{ __html: content }}
+    ></div>
+  );
  
-class EmpDetailComponent extends Component {
+  function convertDate(longValue) {
+    return new Date(longValue).toLocaleString();
+  }
 
-    constructor(props){
-        super(props);
-        this.state = {emp:[]};
-    }
-    componentDidMount() {
-        // (1)
-        const res  = axios.get('/emp/empdetail.do/103');
-        // CORS 문제 발생하여 package.json 에 "proxy": "http://localhost:8080" 추가
-        // package.json 수정 후 다시 실행
-       res.then(re=>{
-        console.log(re.data);
-        this.setState({emp:re.data});
-        });
-    }
-     
-    // (0)
-    render() {
-        return (
-            <div>
-                               <h2 className="text-center">emp Detail</h2>
-                            {
-                                 <ul>
-                                    <li>{this.state.emp.first_name}</li>
-                               </ul> 
-                            }
-                       
-           
-            </div>
-        );
-    }
-}
+  return (
+    <>
+      <h2 align="center"> 공지사항</h2>
+      <div className="emp-view-wrapper">
+        <div className="emp-view-row">
+          <label>번호</label>
+          <label>{notice.noticeBoardSeq}</label>
+        </div>
+        <div className="emp-view-row">
+          <label>제목</label>
+          <label>{notice.title}</label>
+        </div>
+        <div className="emp-view-row">
+          <label>내용</label>
+          <Viewer content={notice.content} />
+  
+          {/* <label>{notice.content}</label> */}
+        </div>
+        <div className="emp-view-row">
+          <label>작성자</label>
+          <div>{notice.writer}</div>
+        </div>
+        <div className="emp-view-row">
+          <label>조회수</label>
+          <div>{notice.hitCount}</div>
+        </div> 
+        <button onClick={() => navigate2(-1)}>리스트보기</button>
+        <Link to="/SWY/Noticeboard/NoticeUpdate" state={{ notice: notice }}>
+          수정
+        </Link>
+        <Link to="/SWY/Noticeboard/NoticeDelete" state={{ noticeBoardSeq: notice.noticeBoardSeq }}>
+          삭제
+        </Link>  
+      </div>
+    </>
+  );
+};
 
-export default EmpDetailComponent;
+export default NoticeDetail;

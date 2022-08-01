@@ -1,12 +1,26 @@
+import CkNoticeInsert from "components/noticeboard/CkNoticeInsert";
+import NoticeDelete from "components/noticeboard/NoticeDelete";
+import NoticeDetail from "components/noticeboard/NoticeDetail";
 import NoticeInsert from "components/noticeboard/NoticeInsert";
 import NoticeList from "components/noticeboard/NoticeList";
+import NoticeUpdate from "components/noticeboard/NoticeUpdate";
 import React from "react";
-
+import {Routes,Route} from 'react-router'
 const SWY = ()=> {
     return (
       <div>
           <h1>서원영 테스트 페이지</h1>
-          <NoticeList></NoticeList>
+        
+        <Routes>
+          <Route path="/" element={<NoticeList/>} />
+          <Route path="/NoticeBoard/NoticeInsert" element={<NoticeInsert/>} />
+          <Route path="/NoticeBoard/NoticeDetail/:noticeBoardSeq" element={<NoticeDetail/>} />
+          <Route path="/NoticeBoard/NoticeUpdate" element={<NoticeUpdate/>} />
+          <Route path="/NoticeBoard/NoticeDelete" element={<NoticeDelete/>} />
+          <Route path="/NoticeBoard/CkNoticeInsert" element={<CkNoticeInsert/>} />
+        </Routes>
+
+     
       </div>
     );
   }
