@@ -6,6 +6,8 @@ import { GlobalContext } from "components/common/GlobalProvider";
 import "./NaverLogin.css";
 
 const NaverLogin = (props)=> {
+
+    const { kakao } = window;
   
     const {globalAxios,logined,backLocation} = useContext(GlobalContext);
     const navigate = useNavigate();

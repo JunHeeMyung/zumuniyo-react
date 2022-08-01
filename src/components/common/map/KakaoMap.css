@@ -1,0 +1,22 @@
+
+.markerbox{
+transform: translate(0px, 1em);
+color: rgba(255, 138, 0);
+font-weight:bold;
+background: rgba(0, 0, 0, 0.3);
+
+}
+
+.markerbox > a{
+text-decoration-line: none;
+color: rgba(255, 138, 0);
+font-weight:bold;
+background: rgba(0, 0, 0, 0.3);
+
+}
+
+.markerbox > a:hover {
+text-decoration-line: none;
+color:white;
+background: rgba(0, 0, 0, 1.0);
+}
