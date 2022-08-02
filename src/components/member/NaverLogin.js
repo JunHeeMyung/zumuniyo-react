@@ -1,5 +1,5 @@
 import NotFound from "components/common/NotFound";
-import React,{  useState,useEffect, useContext } from "react";
+import React,{  useEffect, useContext } from "react";
 import { Route, Routes,useNavigate} from "react-router-dom";
 import Register from 'components/member/Register'
 import { GlobalContext } from "components/common/GlobalProvider";
@@ -11,20 +11,22 @@ const NaverLogin = (props)=> {
   
     const {globalAxios,logined,backLocation} = useContext(GlobalContext);
     const navigate = useNavigate();
-    const [email,setEmail] = useState('');
-    const [registered,setRegistered] = useState('');
 
     const loginResult = (result,email)=>{
-      setRegistered(result);
       if (result === '아이디없음'){
         window.opener.postMessage("register:"+email+":naver",window.origin);
+        window.self.close();
       }
       else if(result === '로그인성공'){
         window.opener.postMessage("loginSuccess",window.origin);
-      }else{
-        alert(result);
+        window.self.close();
+      }else if(result === '토큰이상'){
+        window.location.reload();
       }
-      window.self.close();
+      else{
+        alert(result);
+        window.self.close();
+      }
     };
 
     const login = () => {
@@ -32,12 +34,9 @@ const NaverLogin = (props)=> {
         if(status){
             const memEmail = JSON.stringify(props.naverLogin.user.email).replaceAll('"','');
             const memToken = JSON.stringify(props.naverLogin.accessToken.accessToken).replaceAll('"','');
-            setEmail(memEmail);
 
-            if(registered===''){
-              globalAxios('/member/login/naver/','post',{memEmail:memEmail,memToken:memToken},result=>{loginResult(result,memEmail)});
-            }
-          
+            globalAxios('/member/login/naver/','post',{memEmail:memEmail,memToken:memToken},result=>{loginResult(result,memEmail)});
+            
         }
       })
     };
