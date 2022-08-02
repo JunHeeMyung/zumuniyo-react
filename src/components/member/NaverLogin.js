@@ -6,10 +6,8 @@ import { GlobalContext } from "components/common/GlobalProvider";
 import "./NaverLogin.css";
 
 const NaverLogin = (props)=> {
-
-    const { kakao } = window;
   
-    const {globalAxios,logined,backLocation} = useContext(GlobalContext);
+    const {globalAxios,logined,backLocation,currentLocation} = useContext(GlobalContext);
     const navigate = useNavigate();
 
     const loginResult = (result,email)=>{
@@ -45,7 +43,7 @@ const NaverLogin = (props)=> {
       if(logined)navigate(backLocation);
       if(window.opener===null)return;
       login();
-    }, [logined]);
+    }, [logined,currentLocation]);
 
     return (
         <>

@@ -209,7 +209,7 @@ const KakaoMap = () => {
             })
             
             $("#locationSearchbox").on('keydown',key=> {
-                    if( key.keyCode == 13 ){
+                    if( key.keyCode === 13 ){
                         $("#locationSearchbtn").trigger("click");
                     }
             });
