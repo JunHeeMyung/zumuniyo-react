@@ -1,32 +1,33 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios'; 
 import {Link} from  "react-router-dom";
 import Pagination from './Pagination';
 
-class NoticeList extends Component {
-    
-    
-    constructor(props){
-        super(props);
-        this.state = {noticelist:[]};
-    }
-    componentDidMount() {
+
+
+const NoticeList2 = () => {
+    const [noticelist,setNoticelist] = useState([]);
+    const [limit,setLimit] = useState(5);
+    const [page,setPage] = useState(1);
+    const offset = (page-1 )*limit;
+
+    useEffect(() => {
+       
         const res  = axios.get('/noticeboard/Noticelist.go');
-        // CORS 문제 발생하여 package.json 에 "proxy": "http://localhost:8080" 추가
-        // package.json 수정 후 다시 실행
-       res.then(re=>{
-        console.log(re.data);
-        this.setState({noticelist:re.data});
+            // CORS 문제 발생하여 package.json 에 "proxy": "http://localhost:8080" 추가
+            // package.json 수정 후 다시 실행
+        res.then(re=>{
+            console.log(re.data);
+            setNoticelist(re.data);
         });
-    } 
-     
+    }, []); 
+   
     // (0)
-    render() {
-        const imgURL = "/images/red_icon03.png"
-        return (
-            <div> 
+    const imgURL = "/images/red_icon03.png"
+    return (
             
-                <div>
+            
+                <div> 
                 <h2 className="text-center">notice List</h2>
                 <Link to="/SWY/NoticeBoard/NoticeInsert">
                 <button className="insertNotice">글쓰기</button>
@@ -46,9 +47,10 @@ class NoticeList extends Component {
                         </thead>
                         <tbody>
                             {
-                                this.state.noticelist.map(
-                                    list => 
-                                    <tr key = {list.noticeBoardSeq}>
+                                noticelist.slice(offset, offset+limit).map((
+                                    list, index) => 
+                                    <tr key = {index}>
+                                    {/* <tr key = {list.noticeBoardSeq}> */}
                                         <td>{list.noticeBoardSeq}</td>
                                         <td> 
                                         <Link to={`/SWY/NoticeBoard/NoticeDetail/${list.noticeBoardSeq}`}>{list.title} </Link>  
@@ -63,10 +65,13 @@ class NoticeList extends Component {
                         </tbody>
                     </table>
                 </div>
-            </div>
-            </div>
+               
+                <Pagination total={noticelist.length} limit={limit} page={page} setPage={setPage}/>
+            </div>   
         );
+        
+    };
 
-    }
-}
-export default NoticeList;
+export default NoticeList2;
+
+ 

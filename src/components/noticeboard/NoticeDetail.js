@@ -4,13 +4,13 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 
 const NoticeDetail = () => {
   const { noticeBoardSeq } = useParams();
-  console.log(`empid는 ${noticeBoardSeq}`);
   const [notice, setNotice] = useState({});
   const navigate2 = useNavigate();
   useEffect(() => {
+    console.log(`empid는 ${noticeBoardSeq}`);
     axios({
       method: "get",
-      url: `/NoticeBoard/Noticedetail.do/${noticeBoardSeq}`
+      url: `/noticeboard/Noticedetail.do/${noticeBoardSeq}`
     })
       .then((res) => {
         console.log(res);
@@ -48,7 +48,7 @@ const NoticeDetail = () => {
         <div className="emp-view-row">
           <label>내용</label>
           <Viewer content={notice.content} />
-  
+        
           {/* <label>{notice.content}</label> */}
         </div>
         <div className="emp-view-row">
@@ -60,10 +60,15 @@ const NoticeDetail = () => {
           <div>{notice.hitCount}</div>
         </div> 
         <button onClick={() => navigate2(-1)}>리스트보기</button>
-        <Link to="/SWY/Noticeboard/NoticeUpdate" state={{ notice: notice }}>
+        <Link to="/SWY/NoticeBoard/NoticeUpdate" state={{ notice: notice }}>
           수정
         </Link>
-        <Link to="/SWY/Noticeboard/NoticeDelete" state={{ noticeBoardSeq: notice.noticeBoardSeq }}>
+      <div>
+        <Link to="/SWY/NoticeBoard/CkNoticeUpdate" state={{ notice: notice }}>
+          CK수정
+        </Link>
+        </div>
+        <Link to="/SWY/noticeboard/NoticeDelete" state={{ noticeBoardSeq: notice.noticeBoardSeq }}>
           삭제
         </Link>  
       </div>

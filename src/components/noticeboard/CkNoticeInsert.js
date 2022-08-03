@@ -10,8 +10,46 @@ import axios from "axios";
     const CkNoticeInsert = () => {
         const [board, setBoard] = useState({title:"", content:"", boardTop:0,writer:"관리자"});
         //const [content,setContent] = useState();
-       
+        const[show,setShow ] = useState(false);
+        const[image,setImage] = useState();
+        const[flag,setFlag] = useState(false);
 
+        const imgLink = `${process.env.PUBLIC_URL}/images`
+
+        const customUploadAdapter = (loader)=>{
+            return {
+                upload(){
+                    return new Promise((resolve,reject)=> {
+                        const data = new FormData();
+                        loader.file.then((file)=>{
+                            data.append("name",file.name);
+                            data.append("file",file);
+     
+                            console.log("AA:", file);
+                            console.log(data);
+
+                            axios.post('/noticeboard/NoticeUpload.do',data)
+                            .then((res)=>{
+                                if(!flag){
+                                    setFlag(true);
+                                    setImage(`${imgLink}/${file.name}`);
+                                }
+                                resolve({
+                                    default:`${imgLink}/${file.name}`
+                                })
+                            })
+                            .catch((err)=>reject(err));
+                        })
+                    })
+                }
+            }
+        }
+        function uploadPlugin(editor){
+            editor.plugins.get('FileRepository').createUploadAdapter = (loader)=>{
+                return customUploadAdapter(loader);
+            }
+
+        }
         const navigate = useNavigate();
        
         const handleCkeditorState = (event,editor) =>{
@@ -37,7 +75,7 @@ import axios from "axios";
       
            axios({
             method: "post",
-            url: "/NoticeBoard/NoticeInsert.go",
+            url: "/noticeboard/NoticeInsert.go",
             data:board,
           })
             .then((res) => {
@@ -50,8 +88,7 @@ import axios from "axios";
               throw new Error(error);
             });
         };
-
-        
+     
         return (
             <form id="empfrm" onSubmit={handleSubmit}>
             <div className="App">
@@ -78,6 +115,7 @@ import axios from "axios";
                     editor={ ClassicEditor }
                     // data={board.content}
                     config={{
+                        extraPlugins:[uploadPlugin],
                         placeholder: "내용을 입력하세요.",
                     }}
                     onReady={ editor => {

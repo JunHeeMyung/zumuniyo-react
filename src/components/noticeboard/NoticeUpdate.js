@@ -24,7 +24,7 @@ const NoticeUpdate = () => {
 
     axios({
       method: "post",
-      url: "/NoticeBoard/NoticeUpdate.do",
+      url: "/noticeboard/NoticeUpdate.do",
       data: notice,
     })
       .then((res) => {
