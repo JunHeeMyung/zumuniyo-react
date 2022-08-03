@@ -11,16 +11,7 @@ export default function Admin() {
 
   return (
     <>
-     { memType==='관리자'? 
-      <div>
-          <h1>관리영역</h1>
-          <AdminFloatingAction/>
-      </div>
-      :
-      <div>
-        <h1>관리자외 접근불가</h1>
-      </div> 
-      }
+     
 
       
     </>
