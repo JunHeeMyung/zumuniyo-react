@@ -20,7 +20,7 @@ const AuthChecker = (props) => {
                 alert('권한이 없습니다');
                 navigate('/');
             }
-        },[logined,memType]
+        }
       );
 
     return (
