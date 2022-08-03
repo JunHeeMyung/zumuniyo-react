@@ -13,8 +13,8 @@ const GlobalProvider = (props)=> {
     const [beforeLocation,setBeforeLocation] = useState('/');
     const [currentLocation,setCurrentLocation] = useState('/');
     const [axiosCounter,setAxiosCounter] = useState(0);
-    const plusAxiosCounter = () => {setAxiosCounter(c=>c+1);};
-    const minusAxiosCounter = () => {setAxiosCounter(c=>c-1);};
+    const plusAxiosCounter = () => setAxiosCounter(c=>c+1);
+    const minusAxiosCounter = () => setAxiosCounter(c=>c-1);
     const location = useLocation();
     const path =location.pathname;
     
@@ -26,20 +26,8 @@ const GlobalProvider = (props)=> {
         data.append(key,params[key]);
       };
 
-      axios.interceptors.request.use(function (config) {
-        plusAxiosCounter();
-        return config;
-      }, function (error) {
-        console.log(error);
-      });
-
-      axios.interceptors.response.use(function (config) {
-        minusAxiosCounter();
-        return config;
-      }, function (error) { 
-        console.log(error);
-      });
-
+      plusAxiosCounter();
+      
       axios(
         {
           url: url,
@@ -47,10 +35,12 @@ const GlobalProvider = (props)=> {
           data:data
         }
       ).then( response => {
+          minusAxiosCounter();
           callback(response.data);
       }).catch(error=>{
         console.log(error);
       });
+
     } ;
 
     useEffect(
