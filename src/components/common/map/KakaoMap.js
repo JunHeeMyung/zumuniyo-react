@@ -10,7 +10,7 @@ const KakaoMap = () => {
 
     const {globalAxios} = useContext(GlobalContext);
 
-    const setMap = () => {
+    const openMap = () => {
         
         if(!window.navigator.geolocation){
             alert('지원하지 않는 브라우져입니다');    
@@ -24,7 +24,7 @@ const KakaoMap = () => {
         })
     }
 
-    useEffect(() => {
+    const setMap = () => {
 
         if(mapVisibility){
 
@@ -215,6 +215,10 @@ const KakaoMap = () => {
             });
         }
         
+    }
+
+    useEffect(() => {
+        setMap();
     }, [mapVisibility]);
 
 
@@ -233,7 +237,7 @@ const KakaoMap = () => {
         </>
         :
         <div id= "mapWrapper">
-            <button onClick={setMap}>지도보기</button>
+            <button onClick={openMap}>지도보기</button>
         </div>
         }
     </>
