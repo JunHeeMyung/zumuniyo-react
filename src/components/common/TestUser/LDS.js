@@ -21,7 +21,7 @@ import StoreReviewManage from "components/review/mempage/business/StoreReviewMan
 import OrderManageQR from "components/review/mempage/business/OrderManageQR";
 import OrderList from "components/review/mempage/normal/OrderList";
 
-
+import AuthChecker from "components/common/auth/AuthChecker";
 
 
 const LDS = () => {
@@ -37,27 +37,31 @@ const LDS = () => {
         <Route path="/reviewInsert" element={<ReviewInsert />} />
 
         {/* 관리자 */}
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" exact element={<Admin />} />
         <Route path="/admin/management" element={<Management />} />
         <Route path="/admin/statistics" element={<AdminStatistics />} />
 
 
         {/* 사업자회원 */}
-        <Route path="/business" element={<Business />} />
-        <Route path="/business/nickModify" element={<NickModify />} />
-        <Route path="/business/storeReviewManage" element={<StoreReviewManage />} />
-        <Route path="/business/orderManageQR" element={<OrderManageQR />} />
+        <Route path="/business" exact element={<AuthChecker memType="사업자회원"><Business /></AuthChecker>} />
+        <Route path="/business/nickModify" element={<AuthChecker memType="사업자회원"><NickModify /></AuthChecker>} />
+        <Route path="/business/storeReviewManage" element={<AuthChecker memType="사업자회원"><StoreReviewManage /></AuthChecker>} />
+        <Route path="/business/orderManageQR" element={<AuthChecker memType="사업자회원"><OrderManageQR /></AuthChecker>} />
 
 
 
         {/* 일반회원 */}
-        <Route path="/normal" element={<Normal />} />
-        <Route path="/normal/nickmodify" element={<NickModify />} />
-        <Route path="/normal/reviewMemList" element={<ReviewViewForm />} />
-        <Route path="/normal/orderList" element={<OrderList />} />
-        <Route path="/normal/*" element={<NotFound />} />
+        <Route path="/normal" exact element={<AuthChecker memType="일반회원"><Normal /></AuthChecker>} />
+        <Route path="/normal/nickmodify" element={<AuthChecker memType="일반회원"><NickModify /></AuthChecker>} />
+        <Route path="/normal/reviewMemList" element={<AuthChecker memType="일반회원"><ReviewViewForm /></AuthChecker>} />
+        <Route path="/normal/orderList" element={<AuthChecker memType="일반회원"><OrderList /></AuthChecker>} />        
+        
+        
+        
 
 
+
+        
         <Route path="*" element={<NotFound />} />
         <Route path="/admin/*" element={<NotFound />} />
         <Route path="/business/*" element={<NotFound />} />
