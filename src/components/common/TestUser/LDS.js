@@ -1,8 +1,8 @@
 import React from "react";
 import FloatingActionButtonZoom from "components/review/components/FloatingActionButton";
 
-// import { useContext } from "react";
-// import { GlobalContext } from "components/common/GlobalProvider";
+import { useContext } from "react";
+import { GlobalContext } from "components/common/GlobalProvider";
 import { Route, Routes } from "react-router-dom";
 
 
@@ -25,10 +25,11 @@ import AuthChecker from "components/common/auth/AuthChecker";
 
 
 const LDS = () => {
-  // const { logined, memNick, memType, globalAxios } = useContext(GlobalContext);
+  const { logined, memNick, memType, globalAxios } = useContext(GlobalContext);
 
   return (
     <>
+    {logined?"됨":"안됨"}
       <Routes>
         <Route path="/" element={<><h1>이덕수 테스트 페이지</h1> <div><FloatingActionButtonZoom /> </div></>} />
 
@@ -51,7 +52,8 @@ const LDS = () => {
 
 
         {/* 일반회원 */}
-        <Route path="/normal" exact element={<AuthChecker memType="일반회원"><Normal /></AuthChecker>} />
+        {/* <Route path="/normal" exact element={<AuthChecker memType="일반회원"><Normal /></AuthChecker>} /> */}
+        <Route path="/normal" element={<AuthChecker memType="일반회원"><h1>1234</h1></AuthChecker>} />
         <Route path="/normal/nickmodify" element={<AuthChecker memType="일반회원"><NickModify /></AuthChecker>} />
         <Route path="/normal/reviewMemList" element={<AuthChecker memType="일반회원"><ReviewViewForm /></AuthChecker>} />
         <Route path="/normal/orderList" element={<AuthChecker memType="일반회원"><OrderList /></AuthChecker>} />        
@@ -60,12 +62,12 @@ const LDS = () => {
         
 
 
-
+{/* 
         
         <Route path="*" element={<NotFound />} />
         <Route path="/admin/*" element={<NotFound />} />
         <Route path="/business/*" element={<NotFound />} />
-        <Route path="/normal/*" element={<NotFound />} />
+        <Route path="/normal/*" element={<NotFound />} /> */}
       </Routes>
 
 
