@@ -3,6 +3,7 @@ import { Route, Routes ,Link} from "react-router-dom";
 import SocialLogin from "components/member/SocialLogin"
 import LoginInfo from "components/member/LoginInfo";
 import KakaoMap from "components/common/map/KakaoMap";
+import AuthChecker from "components/common/auth/AuthChecker";
 
 const MJH = ()=> {
 
@@ -12,6 +13,11 @@ const MJH = ()=> {
        <Link to="/"><button>홈으로</button></Link>
        <Link to="logindata"><button>로그인정보보기</button></Link>
        <Link to="map"><button>카카오맵</button></Link>
+       <Link to="auth1"><button>로그인만필요</button></Link>
+       <Link to="auth2"><button>권한체크(일반회원)</button></Link>
+       <Link to="auth3"><button>권한체크(사업자회원)</button></Link>
+       <Link to="auth4"><button>권한체크(관리자)</button></Link>
+
         <hr/>
       
         <Routes>
@@ -19,6 +25,10 @@ const MJH = ()=> {
           <Route path="/sociallogin/*" element={<SocialLogin/>} />
           <Route path="/logindata" element={<LoginInfo/>} />
           <Route path="/map" element={<KakaoMap/>} />
+          <Route path="/auth1" element={<AuthChecker>로그인한사람볼수있는내용</AuthChecker>} />
+          <Route path="/auth2" element={<AuthChecker memType="일반회원">일반회원만볼수있는내용</AuthChecker>} />
+          <Route path="/auth3" element={<AuthChecker memType="사업자회원">사업자회원만볼수있는내용</AuthChecker>} />
+          <Route path="/auth4" element={<AuthChecker memType="관리자">관리자만볼수있는내용</AuthChecker>} />
           <Route path="*" element={<><h1>주소값 이상</h1></>} />
         </Routes>
 

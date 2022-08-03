@@ -1,0 +1,40 @@
+import React,{ useEffect,useContext} from "react";
+import { GlobalContext } from "components/common/GlobalProvider";
+import {useNavigate} from "react-router-dom";
+
+const AuthChecker = (props) => {
+
+    const {logined,memType} = useContext(GlobalContext);
+    const navigate = useNavigate();
+
+    useEffect(
+        () => { 
+            if(!logined) {
+              navigate('/MJH/sociallogin');
+              return;
+            }
+
+            if(memType==='') return;
+
+            if((props.memType)&&[props.memType,'관리자'].indexOf(memType)===-1){
+                alert('권한이 없습니다');
+                navigate('/');
+            }
+        },[logined,memType]
+      );
+
+    return (
+      <>
+        {
+          logined?
+            (props.memType?
+              ([props.memType,'관리자'].indexOf(memType)===-1?
+              '':props.children)
+              :props.children)
+          :''
+        }
+      </>
+    );
+
+  }
+  export default AuthChecker;
