@@ -16,7 +16,8 @@ import { styled, useTheme } from '@mui/material/styles';
 import { SidebarData, SidebarDataN, SidebarDataB, SidebarDataA } from 'components/common/Header/SidebarData';
 
 import { useContext } from "react";
-import {GlobalContext} from "components/member/GlobalProvider";
+import {GlobalContext} from "components/common/GlobalProvider";
+
 
 
 

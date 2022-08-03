@@ -1,18 +1,27 @@
-// import React from 'react'
-import React, { useState, useEffect, useContext } from "react";
-import { Button, Grid } from '@mui/material'
+import React, { useState, useEffect, useContext, useReducer } from "react";
+import { Button, ButtonGroup, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid } from '@mui/material'
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import Rating from '@mui/material/Rating';
-import axios from 'axios';
 import Pagination from "components/review/components/Pagination";
-import {GlobalContext} from "components/member/GlobalProvider";
+import { GlobalContext } from "components/common/GlobalProvider";
+import { ArrowUpwardRounded, ArrowDownwardRounded } from "@mui/icons-material";
+
+
+import Alert from '@mui/material/Alert';
 import './ReviewViewForm.css';
 
+let rNumber = 0;
 
 export default function ReviewViewForm() {
 
-  const {logined,memNick,memType,globalAxios} = useContext(GlobalContext);
+  const { logined, memNick, memType, globalAxios } = useContext(GlobalContext);
+
+  const [any, forceUpdate] = useReducer(num => num + 1, 0);
+  function handleChange() {
+    forceUpdate();
+  }
+
   const Viewer = ({ content }) => (
     <div style={{ width: "640", height: "200" }}
       className="ck-content"
@@ -29,27 +38,23 @@ export default function ReviewViewForm() {
   }));
 
 
-
-  
-
   const [reviews, setReview] = useState([]);
-
-
   const [limit, setLimit] = useState(5);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
 
-  
-  useEffect(() => {
-    globalAxios('/review/reviewList','get', {},response=>{       
+
+  const selectReviewList = () => {
+    globalAxios('/review/reviewList', 'get', {}, response => {
       if (response) {
-          console.log(response);
-          setReview(response);  
-        } else {
-          alert("failed to ");
-        }    
+        console.log(response);
+        setReview(response);
+      } else {
+        alert("failed to ");
+      }
     });
-  }, []);
+  }
+  useEffect(selectReviewList, []);
 
 
   function convertDate(longValue) {
@@ -58,40 +63,117 @@ export default function ReviewViewForm() {
 
 
 
-  const deleteClick = (params, e) => {
-    console.log(params);
-    globalAxios(`/review/reviewDelete/${params}`,'delete', {}, response=>{       
-      if (response) {
-        alert("삭제에 성공했습니다.")
-        } else {
-          alert("failed to ");
-        }    
-    });
 
 
-
-    // axios({
-    //   method: "delete",
-    //   url: `/review/reviewDelete/${params}`,
-    // })
-    //   .then((res) => {
-    //     alert("삭제에 성공했습니다.")
-
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     throw new Error(error);
-    //   });
+  const sortPhandle = () => {
+    console.log("과거순 누름");
+    const aa = reviews;
+    aa.sort((a, b) => a.reviewSeq - b.reviewSeq);
+    setReview(aa);
+    setStateDay(false)
+    handleChange();
+    // console.log(reviews);
+  }
+  const sortRhandle = () => {
+    console.log("최신순 누름");
+    const aa = reviews;
+    aa.sort((a, b) => b.reviewSeq - a.reviewSeq);
+    setReview(aa);
+    setStateDay(true)
+    handleChange();
+    // console.log(reviews);
+  }
+  const sortRaLhandle = () => {
+    console.log("별점 높은순 누름");
+    const aa = reviews;
+    aa.sort((a, b) => (b.reviewAmount + b.reviewService + b.reviewTaste) - (a.reviewAmount + a.reviewService + a.reviewTaste));
+    setReview(aa);
+    setStateRaty(true);
+    handleChange();
+    // console.log(reviews);
+  }
+  const sortRaShandle = () => {
+    console.log("별점 낮은순 누름");
+    const aa = reviews;
+    aa.sort((a, b) => (a.reviewAmount + a.reviewService + a.reviewTaste) - (b.reviewAmount + b.reviewService + b.reviewTaste));
+    setReview(aa);
+    setStateRaty(false);
+    handleChange();
+    // console.log(reviews);    
   }
 
+  const [stateDay, setStateDay] = useState(true);
+  const changeSortIcon = stateDay ? <ArrowUpwardRounded /> : <ArrowDownwardRounded />;
+
+  const handlesortDay = () => {
+    stateDay ? sortPhandle() : sortRhandle();
+  }
+
+  const [stateRaty, setStateRaty] = useState(true);
+  const changeSortIcon2 = stateRaty ? <ArrowUpwardRounded /> : <ArrowDownwardRounded />;
+
+  const handlesortRaty = () => {
+    stateRaty ? sortRaShandle() : sortRaLhandle();
+  }
+  const [delOpen, setDelOpen] = useState(false);
+
+  const openDeldialog = (params) => {
+    setDelOpen(true);
+    rNumber = params;
+    console.log(rNumber);
+  }
+
+  const [show, setShow] = useState(false);
+
+  const deleteClick = (params, e) => {
+    console.log(params);
+    setDelOpen(false);
+    globalAxios(`/review/reviewDelete/${params}`, 'delete', {memNick}, response => {
+      if (response==="success") {
+        // alert("삭제에 성공했습니다.");       
+        //window.location.reload("/LDS"); //리로드
+        setShow(true);
+
+      } else {
+        alert(response);
+        // alert("failed to ");
+      }
+      
+    });
+  }
 
   return (
     <>
+      <Dialog open={show}>
+        <Alert severity="info"> 성공적으로 삭제 되었습니다. <Button variant="outlined" onClick={() => { setShow(false); selectReviewList(); }}>확인</Button></Alert>
+      </Dialog>
+
+      <Dialog open={delOpen}>
+        <DialogTitle>삭제</DialogTitle>
+        <DialogContent>
+          <DialogContentText>리뷰를 삭제하시겠습니까?</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="outlined" onClick={() => { deleteClick(rNumber) }}>확인</Button>
+          <Button variant="outlined" onClick={() => { setDelOpen(false) }}>취소</Button>
+        </DialogActions>
+      </Dialog>
+
+
+      <Grid style={{ maxWidth: 169, minWidth: 169, margin: "0 auto" }}>
+        <ButtonGroup>
+          <Button variant="outlined" endIcon={changeSortIcon} onClick={handlesortDay}>날짜</Button>
+          <Button variant="outlined" endIcon={changeSortIcon2} onClick={handlesortRaty}>별점</Button>
+        </ButtonGroup>
+      </Grid>
+      <br />
       {/* <h1>리뷰</h1>  */}
-      {reviews.slice(offset, offset + limit).map(review =>   {
+
+
+      {reviews.slice(offset, offset + limit).map((review, index )=> {
         return (
-          
-          <Grid key={review.id}
+
+          <Grid key={index}
             style={{ maxWidth: 700, minWidth: 500, margin: "0 auto" }}
           >
             <Item>
@@ -109,13 +191,13 @@ export default function ReviewViewForm() {
                   {/* 날짜 */}
                   {convertDate(review.reviewRegdate)}
                 </Grid>
-              </Grid>                            
-                <Grid>
-                  <Item style={{ height: 400, margin: "0 auto", overflowY: "auto" }}>
-                    <Viewer content={review.reviewContent} />
-                  </Item>
-                </Grid>              
-              <Button onClick={(e) => { deleteClick(review.reviewSeq, e) }}>삭제</Button>
+              </Grid>
+              <Grid>
+                <Item style={{ height: 400, margin: "0 auto", overflowY: "auto" }}>
+                  <Viewer content={review.reviewContent} />
+                </Item>
+              </Grid>
+              <Button onClick={() => { openDeldialog(review.reviewSeq) }}>삭제</Button>
             </Item>
           </Grid>
         );

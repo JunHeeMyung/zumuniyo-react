@@ -2,7 +2,7 @@ import React from "react";
 import FloatingActionButtonZoom from "components/review/components/FloatingActionButton";
 
 import { useContext } from "react";
-import {GlobalContext} from "components/member/GlobalProvider";
+import {GlobalContext} from "components/common/GlobalProvider";
 
 
 const LDS = ()=> {  

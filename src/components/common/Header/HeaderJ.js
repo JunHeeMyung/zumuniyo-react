@@ -77,10 +77,10 @@ export default function PrimarySearchAppBar() {
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 
-              <IconButton>
+              {/* <IconButton> */}
                 {/* LOGIN */}
                 <LogInOutButton/>
-              </IconButton>
+              {/* </IconButton> */}
             </Box>
             <SideBar />
           </Toolbar>

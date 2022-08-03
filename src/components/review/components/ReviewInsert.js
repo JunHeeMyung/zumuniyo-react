@@ -1,17 +1,23 @@
-import React from 'react'
-import { useState } from "react";
-
+// import React from 'react'
 import axios from "axios";
+
+import React, { useState, useEffect, useContext } from "react";
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import Alert from '@mui/material/Alert';
 
+import '@ckeditor/ckeditor5-build-classic/build/translations/ko.js'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { Button } from '@mui/material';
+import { Button, Dialog } from '@mui/material';
+import { GlobalContext } from "components/common/GlobalProvider";
+import './ReviewInsert.css';
 
 
 export default function ReviewInsert() {
+
+
+  const { logined, memNick, memType, globalAxios } = useContext(GlobalContext);
 
   const [reviewInsert, setReviewInsert] = useState({});
 
@@ -33,23 +39,37 @@ export default function ReviewInsert() {
     e.preventDefault();
     console.log(reviewInsert);
 
-    axios({
-      method: "post",
-      url: "/review/reviewInsert",
-
-      data: reviewInsert
-
-    })
-      .then((res) => {
-        console.log(res);
+    globalAxios(`/review/reviewInsert/${memNick}`, 'post', reviewInsert, response => {
+      console.log("respose");
+      console.log(response);
+      if (response == 1) {
         console.log(reviewInsert);
         setShow(true);  //성공알림
+      } else {
+        alert("failed to ");
+      }
+    });
 
-      })
-      .catch((error) => {
-        console.log(error);
-        throw new Error(error);
-      });
+
+
+
+    // axios({
+    //   method: "post",
+    //   url: "/review/reviewInsert",
+
+    //   data: reviewInsert
+
+    // })
+    //   .then((res) => {
+    //     console.log(res);
+    //     console.log(reviewInsert);
+    //     setShow(true);  //성공알림
+
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     throw new Error(error);
+    //   });
   };
 
   const [show, setShow] = useState(false);
@@ -103,17 +123,10 @@ export default function ReviewInsert() {
           position: 'relative',
           minHeight: 500,
         }}>
-        <Box sx={{ width: '100%' }} spacing={2}>
-          {show &&
-            <Alert
-              onClose={() => setShow(false)}
-              severity="info"
-            >
-              성공적으로 입력 되었습니다.
-            </Alert>}
-        </Box>
 
-
+        <Dialog open={show}>
+          <Alert severity="info">성공적으로 입력 되었습니다.<Button variant="outlined" onClick={() => { setShow(false)}} href="/LDS">확인</Button></Alert>
+        </Dialog>
 
         <Box
           sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">
@@ -121,10 +134,7 @@ export default function ReviewInsert() {
             <h1>입력 테스트</h1>
 
             <Box style={{ margin: "0 auto" }}
-              sx={{
-                width: "30%",
-                // position: 'relative',        
-              }}>
+              sx={{width: "30%"}}>
               <div>
                 <p style={{ margin: "0 auto", textAlign: "center" }}>
 
@@ -156,25 +166,23 @@ export default function ReviewInsert() {
                     .parentElement.insertBefore(
                       editor.ui.view.toolbar.element,
                       editor.ui.getEditableElement()
+                      // , editor.config.allowedContent = true
                     );
                 }}
                 editor={ClassicEditor}
                 data={reviewInsert.reviewContent}
                 config={{ // (4)
-                  extraPlugins: [uploadPlugin]
+                  extraPlugins: [uploadPlugin],
+                  language: 'ko'
                 }}
                 onChange={handleCkeditorState}
+
               />
             </div>
             <br />
             <div style={{ margin: "0 auto", textAlign: "center" }}>
               <Button type="submit" variant="contained" color="primary" >입력하기</Button>
             </div>
-
-
-            {/* <div className='form-goup'>
-              <input type="submit" name="submit" className="btn btn-secondary" value={"입력하기"} />
-            </div> */}
           </form>
         </Box>
       </Box>
