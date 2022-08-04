@@ -37,6 +37,28 @@ const SocialLogin = (props)=> {
 
     const loginButton = <> {naverLoginButton} {kakaoLoginButton} </>;
 
+    const getLoginResultMessage = () => {
+
+      window.addEventListener("message",m=>{
+
+        if(m.origin!==window.origin) return;
+
+        if(m.data==="loginSuccess"){
+          setLogined(true);
+          navigate(backLocation);
+        }
+
+        if(String(m.data).substr(0,9)==="register:"){
+          navigate(m.data.split(":")[2]+"/register",
+            {
+              state:{memEmail:m.data.split(":")[1],
+              socialType:m.data.split(":")[2]}
+            });
+          }
+        }
+      );
+    }
+
     useEffect(
       () => {
           initNaverLogin();
@@ -45,34 +67,14 @@ const SocialLogin = (props)=> {
             setBackLocation(beforeLocation);
           }
 
-          if(logined)navigate(backLocation);
+          if(logined) navigate(backLocation);
         
       }, [beforeLocation,logined]
     );
 
     useEffect(      
       () => {
-
-        window.addEventListener("message",m=>{
-
-          if(m.origin!==window.origin) return;
-
-          if(m.data==="loginSuccess"){
-            setLogined(true);
-            navigate(backLocation);
-          }
-
-          if(String(m.data).substr(0,9)==="register:"){
-            navigate(m.data.split(":")[2]+"/register",
-              {
-                state:{memEmail:m.data.split(":")[1],
-                socialType:m.data.split(":")[2]}
-              });
-            }
-          }
-
-        );
-
+        getLoginResultMessage();
       }, [backLocation]
     );
 
