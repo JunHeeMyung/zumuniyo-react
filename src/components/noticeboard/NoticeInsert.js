@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 // import { CKEditor } from '@ckeditor/ckeditor5-react';
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { height, style, width } from '@mui/system';

@@ -1,29 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios'; 
+import React,{ useContext ,useEffect,useState} from "react";
+import {GlobalContext} from "components/common/GlobalProvider";
+
 import {Link} from  "react-router-dom";
 import Pagination from './Pagination';
 
-
-
 const NoticeList2 = () => {
+
+    const {globalAxios} = useContext(GlobalContext);
     const [noticelist,setNoticelist] = useState([]);
     const [limit,setLimit] = useState(5);
     const [page,setPage] = useState(1);
     const offset = (page-1 )*limit;
+    const imgURL = "/images/red_icon03.png"
+    const getNoticeList = () => {
+
+        globalAxios("/noticeboard/Noticelist.go","get",{},data=>{
+            console.log(data);
+            setNoticelist(data);
+        })
+    }
 
     useEffect(() => {
-       
-        const res  = axios.get('/noticeboard/Noticelist.go');
-            // CORS 문제 발생하여 package.json 에 "proxy": "http://localhost:8080" 추가
-            // package.json 수정 후 다시 실행
-        res.then(re=>{
-            console.log(re.data);
-            setNoticelist(re.data);
-        });
+
+        getNoticeList();
+
     }, []); 
-   
-    // (0)
-    const imgURL = "/images/red_icon03.png"
+    
     return (
             
             
