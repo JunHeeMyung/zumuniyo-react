@@ -26,11 +26,16 @@ background: rgba(0, 0, 0, 1.0);
 }
 
 #locationSearchdiv {
-    margin-top: 3em;
-    margin-left: 1.5em;
-    z-index: 1500;
+    margin: 1em;
+    text-align: left;
     position: absolute;
-    top:5em;
+    z-index: 800;
+    height: 1.6em;
+}
+
+#getMyLocation,#locationSearchbox,#locationSearchbtn{
+    height: 100%;
+    box-sizing: border-box;
 }
 
 #map {
