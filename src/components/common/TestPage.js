@@ -7,6 +7,8 @@ import LJW from "components/common/TestUser/LJW"
 import SWY from "components/common/TestUser/SWY"
 import NotFound from "components/common/NotFound";
 import LogInOutButton from "components/member/LogInOutButton"
+import HeaderJ from "components/common/Header/HeaderJ"
+
 
 import {GlobalContext} from "components/common/GlobalProvider";
 
@@ -17,7 +19,7 @@ const TestPage = ()=> {
 
   return (
     <>
-     
+    <HeaderJ/>
     <Link to="/MJH">명준희 </Link> 
     <Link to="/JYH">정영훈 </Link> 
     <Link to="/LDS">이덕수 </Link> 
@@ -25,7 +27,6 @@ const TestPage = ()=> {
     <Link to="/SWY">서원영 </Link> 
     ...............
     {memNick} {logined?'님 안녕하세요':''}
-    <LogInOutButton/>
 
     <hr/>
 
