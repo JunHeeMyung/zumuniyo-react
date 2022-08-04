@@ -11,7 +11,7 @@ module.exports = function(app) {
             '/location',
             '/menucategory',
             '/menu',
-            '/noticeborad',
+            '/noticeboard',
             '/order',
             '/ordergroup',
             '/review',
