@@ -187,7 +187,7 @@ const KakaoMap = () => {
                                         position: position,
                                         content: content,
                                         yAnchor: 1 ,
-                                        zIndex:999
+                                        zIndex:900
                                     });
                                     
                                     marker.setMap(map);
