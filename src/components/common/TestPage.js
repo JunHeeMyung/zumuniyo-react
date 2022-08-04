@@ -27,6 +27,7 @@ const TestPage = ()=> {
     <Link to="/SWY">서원영 </Link> 
     ...............
     {memNick} {logined?'님 안녕하세요':''}
+    <LogInOutButton/>
 
     <hr/>
 
