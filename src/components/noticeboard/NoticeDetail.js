@@ -1,26 +1,42 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+
+import {GlobalContext} from "components/common/GlobalProvider";
+import React,{ useContext ,useEffect,useState} from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 const NoticeDetail = () => {
   const { noticeBoardSeq } = useParams();
   const [notice, setNotice] = useState({});
   const navigate2 = useNavigate();
-  useEffect(() => {
-    console.log(`empid는 ${noticeBoardSeq}`);
-    axios({
-      method: "get",
-      url: `/noticeboard/Noticedetail.do/${noticeBoardSeq}`
-    })
-      .then((res) => {
-        console.log(res);
-        setNotice(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-        throw new Error(error);
+  const {globalAxios} = useContext(GlobalContext);
+
+  useEffect(()=>{
+      
+    console.log("보드 seq: " +noticeBoardSeq);
+    globalAxios(`/noticeboard/Noticedetail.do/${noticeBoardSeq}`,"get",{},data=>{
+      console.log(data);
+      setNotice(data);
       });
-  }, [noticeBoardSeq]);
+      
+    },[])
+
+
+
+
+  // useEffect(() => {
+  //   console.log(`id는 ${noticeBoardSeq}`);
+  //   axios({
+  //     method: "get",
+  //     url: `/noticeboard/Noticedetail.do/${noticeBoardSeq}`
+  //   })
+  //     .then((res) => {
+  //       console.log(res);
+  //       setNotice(res.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       throw new Error(error);
+  //     });
+  // }, [noticeBoardSeq]);
   
   const Viewer = ({ content }) => (
     <div style={{ width: "640", height: "200" }}

@@ -12,6 +12,7 @@ const NoticeList2 = () => {
     const [page,setPage] = useState(1);
     const offset = (page-1 )*limit;
     const imgURL = "/images/red_icon03.png"
+   
     const getNoticeList = () => {
 
         globalAxios("/noticeboard/Noticelist.go","get",{},data=>{
@@ -30,7 +31,7 @@ const NoticeList2 = () => {
             
             
                 <div> 
-                <h2 className="text-center">notice List</h2>
+                <h2 className="text-center">공지사항</h2>
                 <Link to="/SWY/NoticeBoard/NoticeInsert">
                 <button className="insertNotice">글쓰기</button>
                 </Link>

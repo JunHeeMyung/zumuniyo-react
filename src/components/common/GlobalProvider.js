@@ -19,7 +19,7 @@ const GlobalProvider = (props)=> {
     const path =location.pathname;
     
     const globalAxios =   (url, method, params, callback, contentType='application/x-www-form-urlencoded') =>  {
-
+      
       const data = new URLSearchParams();
 
       for(let key in params){
@@ -39,6 +39,7 @@ const GlobalProvider = (props)=> {
           }
         }
       ).then( response => {
+       
           minusAxiosCounter();
           callback(response.data);
       }).catch(error=>{
