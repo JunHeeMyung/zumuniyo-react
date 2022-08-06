@@ -6,6 +6,7 @@ import KakaoMap from "components/common/map/KakaoMap";
 import AuthChecker from "components/common/auth/AuthChecker";
 import OrderTest from "components/order/OrderTest";
 import CRUDTest from "components/common/test/CRUDTest"
+import MyOrderList from "components/order/MyOrderList";
 
 const MJH = ()=> {
 
@@ -21,6 +22,8 @@ const MJH = ()=> {
        <Link to="auth4"><button>권한체크(관리자)</button></Link>
        <Link to="ordertest"><button>주문테스트</button></Link>
        <Link to="crudtest"><button>crud 예시배포</button></Link>
+       <Link to="orderlist"><button>내주문리스트</button></Link>
+
 
         <hr/>
       
@@ -35,6 +38,7 @@ const MJH = ()=> {
           <Route path="/auth4" element={<AuthChecker memType="관리자">관리자만볼수있는내용</AuthChecker>} />
           <Route path="/ordertest" element={<OrderTest/>} />
           <Route path="/crudtest" element={<CRUDTest/>} />
+          <Route path="/orderlist/*" element={<MyOrderList/>} />
           <Route path="*" element={<><h1>주소값 이상</h1></>} />
         </Routes>
 
@@ -42,3 +46,4 @@ const MJH = ()=> {
     );
   }
   export default MJH;
+  
