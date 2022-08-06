@@ -6,7 +6,8 @@ import Rating from '@mui/material/Rating';
 import Pagination from "components/review/components/Pagination";
 import { GlobalContext } from "components/common/GlobalProvider";
 import { ArrowUpwardRounded, ArrowDownwardRounded } from "@mui/icons-material";
-
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
+import StarIcon from '@mui/icons-material/Star';
 
 import Alert from '@mui/material/Alert';
 import './ReviewViewForm.css';
@@ -14,7 +15,6 @@ import './ReviewViewForm.css';
 let rNumber = 0;
 
 export default function ReviewViewForm(props) {
-// export default function ReviewViewForm({reviewss}) {
 
   const { logined, memNick, memType, globalAxios } = useContext(GlobalContext);
 
@@ -129,6 +129,21 @@ export default function ReviewViewForm(props) {
     });
   }
 
+  
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const exposureClick = (params, bool) =>{
+    console.log("reviewseq: "+params);
+    console.log("bool :"+bool);    
+
+    globalAxios(`/review/reviewUpdate/${params}`, 'put', bool, response => {
+      if (response) {
+        console.log("성공");
+      } else {
+        alert(response);
+      }      
+    });
+  }
+
   return (
     <>  
       <Dialog open={show}>
@@ -186,9 +201,15 @@ export default function ReviewViewForm(props) {
                 </Item> */}
                 <Item style={{ height: 400, margin: "0 auto", overflowY: "auto" }}>
                   <Viewer content={review.reviewContent} />
-                </Item>
+                </Item>                
               </Grid>
-              <Button onClick={() => { openDeldialog(review.reviewSeq) }}>삭제</Button>
+              {memType==='사업자회원'?
+              <Grid>
+              <Button onClick={() => { exposureClick(review.reviewSeq, review.reviewExposure==1?false:true);  }}>{review.reviewExposure==1?<>매장추천 <StarIcon/></>:<>매장추천 <StarOutlineIcon/></>}</Button>
+              </Grid>:
+              ""}              
+              {memNick===review.member.memNick? <Button onClick={() => { openDeldialog(review.reviewSeq); }}>삭제</Button>:""}
+              {/* <Button onClick={() => { openDeldialog(review.reviewSeq) }}>삭제</Button> */}
             </Item>
             <br />
           </Grid>

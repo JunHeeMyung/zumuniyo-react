@@ -16,8 +16,9 @@ import './ReviewInsert.css';
 import MyReview from "../mempage/normal/MyReview";
 
 
-export default function ReviewInsert() {
+export default function ReviewInsert(props) {
   const navigate = useNavigate();
+  const orderSeq = props.orderseq;
 
   const { logined, memNick, memType, globalAxios } = useContext(GlobalContext);
 
@@ -28,20 +29,25 @@ export default function ReviewInsert() {
     setReviewInsert({ ...reviewInsert, reviewContent: data });
     console.log(data);
   }
+ 
 
+  
+  // const cancleW = ()=>{
+  //   props.cancle;
+  //   console.log("cancleW실행됨")
+  // }
 
-  // const navigate = useNavigate();
   const handleChange = (e) => {
     console.log(e);
     setReviewInsert({ ...reviewInsert, [e.target.name]: e.target.value });
   };
 
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(reviewInsert);
 
-    globalAxios('/review/reviewInsert/', 'post', reviewInsert, response => {
+    globalAxios(`/review/reviewInsert/${orderSeq}`, 'post', reviewInsert, response => {
       console.log("respose");
       console.log(response);
       if (response == 1) {
@@ -51,6 +57,17 @@ export default function ReviewInsert() {
         alert("failed to ");
       }
     });
+
+    // globalAxios('/review/reviewInsert/', 'post', reviewInsert, response => {
+    //   console.log("respose");
+    //   console.log(response);
+    //   if (response == 1) {
+    //     console.log(reviewInsert);
+    //     setShow(true);  //성공알림
+    //   } else {
+    //     alert("failed to ");
+    //   }
+    // });
 
 
 
@@ -107,7 +124,9 @@ export default function ReviewInsert() {
       }
     }
   }
-  // const customUploadAdapter1 = (loader) => { // (2)
+
+
+  // const customUploadAdapter1 = (loader) => {
   //   return {
   //     upload() {
   //       return new Promise((resolve, reject) => {
@@ -133,7 +152,7 @@ export default function ReviewInsert() {
   //   }
   // }
 
-  function uploadPlugin(editor) { // (3)
+  function uploadPlugin(editor) { 
     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
       return customUploadAdapter(loader);
     }
@@ -144,7 +163,7 @@ export default function ReviewInsert() {
 
   return (
     <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-      <h1>입력 테스트</h1>
+      <h1>입력 테스트</h1>      
       <Box style={{ margin: "0 auto" }}
         sx={{
           width: "80%",
@@ -154,6 +173,7 @@ export default function ReviewInsert() {
 
         <Dialog open={show}>
           <Alert severity="info">성공적으로 입력 되었습니다.<Button variant="outlined" onClick={() => { setShow(false); navigate('/LDS/normal/reviewMemList'); }} >확인</Button></Alert>
+          {/* <Alert severity="info">성공적으로 입력 되었습니다.<Button variant="outlined" onClick={() => { setShow(false); navigate('/LDS/normal/orderList'); }} >확인</Button></Alert> */}
         </Dialog>
 
         <Box
@@ -210,6 +230,7 @@ export default function ReviewInsert() {
             <br />
             <div style={{ margin: "0 auto", textAlign: "center" }}>
               <Button type="submit" variant="contained" color="primary" >입력하기</Button>
+              <Button variant="contained" color="primary" onClick={props.cancle} >취소하기</Button>
             </div>
           </form>
         </Box>
