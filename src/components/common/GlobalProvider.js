@@ -18,8 +18,8 @@ const GlobalProvider = (props)=> {
     const location = useLocation();
     const path =location.pathname;
     
-    const globalAxios =   (url, method,params, callback) =>  {
-    
+    const globalAxios =   (url, method, params, callback, contentType='application/x-www-form-urlencoded') =>  {
+
       const data = new URLSearchParams();
 
       for(let key in params){
@@ -32,7 +32,11 @@ const GlobalProvider = (props)=> {
         {
           url: url,
           method: method,
-          data:data
+          data:(contentType==='multipart/form-data')?params:data,
+          params:(contentType==='multipart/form-data')?null:(method==='get'?data:null),
+          headers:{
+              'Content-Type': contentType // 필요시 'multipart/form-data'
+          }
         }
       ).then( response => {
           minusAxiosCounter();
