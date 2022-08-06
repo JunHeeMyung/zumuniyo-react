@@ -5,6 +5,7 @@ import React, { useState, useEffect, useContext } from "react";
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import Alert from '@mui/material/Alert';
+import { useNavigate } from "react-router-dom";
 
 import '@ckeditor/ckeditor5-build-classic/build/translations/ko.js'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
@@ -12,10 +13,11 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Button, Dialog } from '@mui/material';
 import { GlobalContext } from "components/common/GlobalProvider";
 import './ReviewInsert.css';
+import MyReview from "../mempage/normal/MyReview";
 
 
 export default function ReviewInsert() {
-
+  const navigate = useNavigate();
 
   const { logined, memNick, memType, globalAxios } = useContext(GlobalContext);
 
@@ -39,7 +41,7 @@ export default function ReviewInsert() {
     e.preventDefault();
     console.log(reviewInsert);
 
-    globalAxios(`/review/reviewInsert/${memNick}`, 'post', reviewInsert, response => {
+    globalAxios('/review/reviewInsert/', 'post', reviewInsert, response => {
       console.log("respose");
       console.log(response);
       if (response == 1) {
@@ -76,26 +78,27 @@ export default function ReviewInsert() {
   const [image, setImage] = useState();
   const [flag, setFlag] = useState(false);
 
-  const imgLink = `${process.env.PUBLIC_URL}/img`
+  const imgLink = `${process.env.PUBLIC_URL}/img`;
 
-  const customUploadAdapter = (loader) => { // (2)
+  const customUploadAdapter = (loader) => {
     return {
       upload() {
         return new Promise((resolve, reject) => {
           const data = new FormData();
           loader.file.then((file) => {
             data.append("name", file.name);
-            data.append("file", file);
+            data.append("file", file);            
             console.log(data);
 
-            axios.post('/review/upload', data)
+            axios.post('/review/upload', data)            
               .then((res) => {
+                console.log("res"+res.data);
                 if (!flag) {
                   setFlag(true);
-                  setImage(`${imgLink}/${file.name}`);
+                  setImage(`${imgLink}/${res.data}`);
                 }
                 resolve({
-                  default: `${imgLink}/${file.name}`
+                  default: `${imgLink}/${res.data}`
                 });
               })
               .catch((err) => reject(err));
@@ -104,6 +107,31 @@ export default function ReviewInsert() {
       }
     }
   }
+  // const customUploadAdapter1 = (loader) => { // (2)
+  //   return {
+  //     upload() {
+  //       return new Promise((resolve, reject) => {
+  //         const data = new FormData();
+  //         loader.file.then((file) => {
+  //           data.append("name", file.name);
+  //           data.append("file", file);
+  //           console.log(data);
+
+  //           globalAxios('/review/upload', 'post', data, res => {
+  //             console.log(res);
+  //             if (!flag) {
+  //               setFlag(true);
+  //               setImage(`${imgLink}/${file.name}`);
+  //             }
+  //             resolve({
+  //               default: `${imgLink}/${file.name}`
+  //             });
+  //           })
+  //         })
+  //       })
+  //     }
+  //   }
+  // }
 
   function uploadPlugin(editor) { // (3)
     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
@@ -115,8 +143,8 @@ export default function ReviewInsert() {
 
 
   return (
-    <>
-
+    <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+      <h1>입력 테스트</h1>
       <Box style={{ margin: "0 auto" }}
         sx={{
           width: "80%",
@@ -125,16 +153,16 @@ export default function ReviewInsert() {
         }}>
 
         <Dialog open={show}>
-          <Alert severity="info">성공적으로 입력 되었습니다.<Button variant="outlined" onClick={() => { setShow(false)}} href="/LDS">확인</Button></Alert>
+          <Alert severity="info">성공적으로 입력 되었습니다.<Button variant="outlined" onClick={() => { setShow(false); navigate('/LDS/normal/reviewMemList'); }} >확인</Button></Alert>
         </Dialog>
 
         <Box
           sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">
           <form id="rewviewfrm" onSubmit={handleSubmit}>
-            <h1>입력 테스트</h1>
+
 
             <Box style={{ margin: "0 auto" }}
-              sx={{width: "30%"}}>
+              sx={{ width: "30%" }}>
               <div>
                 <p style={{ margin: "0 auto", textAlign: "center" }}>
 
@@ -186,6 +214,6 @@ export default function ReviewInsert() {
           </form>
         </Box>
       </Box>
-    </>
+    </div>
   )
 }

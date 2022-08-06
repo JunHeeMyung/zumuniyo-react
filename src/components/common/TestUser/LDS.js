@@ -22,6 +22,7 @@ import OrderManageQR from "components/review/mempage/business/OrderManageQR";
 import OrderList from "components/review/mempage/normal/OrderList";
 
 import AuthChecker from "components/common/auth/AuthChecker";
+import MyReview from "components/review/mempage/normal/MyReview";
 
 
 const LDS = () => {
@@ -33,7 +34,7 @@ const LDS = () => {
         <Route path="/" element={<><h1>이덕수 테스트 페이지</h1> <div><FloatingActionButtonZoom /> </div></>} />
 
         {/* 리뷰 */}
-        <Route path="/reviewAllList" element={<ReviewViewForm />} />
+        {/* <Route path="/reviewAllList" element={<MyReview />} /> */}
         <Route path="/reviewInsert" element={<ReviewInsert />} />
 
         {/* 관리자 */}
@@ -52,7 +53,7 @@ const LDS = () => {
         {/* 일반회원 */}
         <Route path="/normal" exact element={<AuthChecker memType="일반회원"><Normal /></AuthChecker>} />        
         <Route path="/normal/nickmodify" element={<AuthChecker memType="일반회원"><NickModify /></AuthChecker>} />
-        <Route path="/normal/reviewMemList" element={<AuthChecker memType="일반회원"><ReviewViewForm /></AuthChecker>} />
+        <Route path="/normal/reviewMemList" element={<AuthChecker memType="일반회원"><MyReview /></AuthChecker>} />
         <Route path="/normal/orderList" element={<AuthChecker memType="일반회원"><OrderList /></AuthChecker>} />  
 
 
