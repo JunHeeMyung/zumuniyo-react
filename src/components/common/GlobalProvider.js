@@ -17,7 +17,7 @@ const GlobalProvider = (props)=> {
     const minusAxiosCounter = () => setAxiosCounter(c=>c-1);
     const location = useLocation();
     const path =location.pathname;
-    
+      //
     const globalAxios =   (url, method, params, callback, contentType='application/x-www-form-urlencoded') =>  {
       
       const data = new URLSearchParams();

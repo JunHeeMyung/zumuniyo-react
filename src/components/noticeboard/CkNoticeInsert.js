@@ -15,6 +15,7 @@ const CkNoticeInsert = () => {
     const[flag,setFlag] = useState(false);
 
     const imgLink = `${process.env.PUBLIC_URL}/images`
+    
     const getNoticeInsert =()=> {
         globalAxios("/noticeboard/NoticeInsert.go","post",board ,data=>{
             console.log(data);
@@ -45,19 +46,8 @@ const CkNoticeInsert = () => {
     
                     
                     //키밸류형식 key:value
-                    globalAxios("/noticeboard/NoticeUpload.do","post",data,uploadCallback , 'multipart/form-data');
-                //     axios.post('/noticeboard/NoticeUpload.do',data)
-                //     .then((res)=>{
-                //         if(!flag){
-                //             setFlag(true);
-                //             setImage(`${imgLink}/${file.name}`);
-                //         }
-                //         resolve({
-                //             default:`${imgLink}/${file.name}`
-                //         })
-                //     })
-                //     .catch((err)=>reject(err));
-                // })  
+                    globalAxios("/noticeboard/NoticeUpload.do","post",data,uploadCallback, 'multipart/form-data' );//, 'multipart/form-data'
+           
 
                     
                 })
