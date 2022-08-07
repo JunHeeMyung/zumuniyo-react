@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Header2 from '../components/Header2.js';
+import Header2 from '../components/ShopHeader.js';
 // import Button from '@mui/material/Button';
 import Mylike from '../components/Mylike.js';
 

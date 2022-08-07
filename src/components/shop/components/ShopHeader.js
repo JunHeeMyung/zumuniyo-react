@@ -14,7 +14,8 @@ import UpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { green } from '@mui/material/colors';
 import Box from '@mui/material/Box';
 
-import Table1 from './Table2.js';
+import ShopTalbe from './ShopTable.js';
+import Test123 from '../pages/Test123.js';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -127,12 +128,13 @@ export default function FloatingActionButtonZoom() {
         index={value}
         onChangeIndex={handleChangeIndex}>
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <Table1 />
+          <ShopTalbe />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           전체메뉴
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
+          <Test123 />
           리뷰
         </TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
