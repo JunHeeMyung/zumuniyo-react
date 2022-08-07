@@ -48,7 +48,7 @@ const MenuListManage = (props) => {
     const handleModalClose = () => setDetailModalOpen(false);
 
     const menuDetailClick = row => {
-        alert(row.menuSeq+"메뉴 상세보기 시동");
+        //alert(row.menuSeq+"메뉴 상세보기 시동");
         setMenuData(row);
         setMenuSeq(row.menuSeq);
         handleModalOpen();
@@ -72,13 +72,7 @@ const MenuListManage = (props) => {
 
     return (
         <>
-        <hr/>
-        클릭한것
-        <hr/>
-        {menuData?JSON.stringify(menuData):""}
-        <hr/>
         
-
         <Button onClick={reRender}>전체메뉴</Button>
         
         <br></br>
@@ -110,7 +104,7 @@ const MenuListManage = (props) => {
                         <TableCell align="center">{row.menuCategory.menuCategoryName}</TableCell>
                         <TableCell align="right"><span className='menuPrice'>{row.menuPrice}</span></TableCell>
                         <TableCell align="left">{row.menuSimpleInfo}</TableCell>
-                        <TableCell align="center">{row.menuImage}</TableCell>
+                        <TableCell align="center"><img className="menuImage" src={"/image/"+row.menuImage}/></TableCell>
                         
                         <TableCell align="center">
                         <IconButton edge="end" aria-label="menu-detail" onClick={() => {menuDetailClick(row)}}>
