@@ -70,7 +70,8 @@ export const SidebarDataN = [
     },
     {
         title: '주문목록',
-        path: '/LDS/normal/orderList',
+        // path: '/LDS/normal/orderList',
+        path: '/MJH/orderlist',
         icon: <ListAltIcon />,
         cName: 'nav-text'
     },

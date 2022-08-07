@@ -1,7 +1,7 @@
 // import React from 'react'
 import axios from "axios";
 
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useLocation  } from "react";
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import Alert from '@mui/material/Alert';
@@ -16,10 +16,15 @@ import './ReviewInsert.css';
 import MyReview from "../mempage/normal/MyReview";
 
 
+// export default function ReviewInsert(props) {
 export default function ReviewInsert(props) {
   const navigate = useNavigate();
+  // const {orderseq2} = useLocation();
   const orderSeq = props.orderseq;
+  // const orderSeq = location.state.orderseq;
+  // const orderSeq = orderseq2
 
+  
   const { logined, memNick, memType, globalAxios } = useContext(GlobalContext);
 
   const [reviewInsert, setReviewInsert] = useState({});
@@ -230,7 +235,7 @@ export default function ReviewInsert(props) {
             <br />
             <div style={{ margin: "0 auto", textAlign: "center" }}>
               <Button type="submit" variant="contained" color="primary" >입력하기</Button>
-              <Button variant="contained" color="primary" onClick={props.cancle} >취소하기</Button>
+              {/* <Button variant="contained" color="primary" onClick={props.cancle} >취소하기</Button> */}
             </div>
           </form>
         </Box>

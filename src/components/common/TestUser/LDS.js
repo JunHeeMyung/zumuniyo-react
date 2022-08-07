@@ -51,11 +51,11 @@ const LDS = () => {
 
 
         {/* 일반회원 */}
-        <Route path="/normal" exact element={<AuthChecker memType="일반회원"><Normal /></AuthChecker>} />        
+        <Route path="/normal" element={<AuthChecker memType="일반회원"><Normal /></AuthChecker>} />        
         <Route path="/normal/nickmodify" element={<AuthChecker memType="일반회원"><NickModify /></AuthChecker>} />
         <Route path="/normal/reviewMemList" element={<AuthChecker memType="일반회원"><MyReview /></AuthChecker>} />
+        <Route path="/normal/reviewInsert" element={<AuthChecker memType="일반회원"><ReviewInsert /></AuthChecker>} />
         <Route path="/normal/orderList" element={<AuthChecker memType="일반회원"><OrderList /></AuthChecker>} />  
-
 
         
         <Route path="/admin/*" element={<NotFound />} />
