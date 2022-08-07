@@ -52,7 +52,7 @@ const OrderList = (props)=> {
 
     return (
       <>
-        {orderGroup!==''?
+        {orderGroup!==''&&isLoaded()?
         <Box    display="flex"
                 justifyContent="center"
                 alignItems="center">
@@ -70,19 +70,19 @@ const OrderList = (props)=> {
                         <TableCell sx={tableHeadStyle}> 주문번호 </TableCell><TableCell> {params.orderGroupSeq} </TableCell>
                         <TableCell sx={tableHeadStyle}> 주문시간 </TableCell>
                         <TableCell> 
-                            {isLoaded()?
+                            {
                             ((String)(orderGroup.orderGroupRegdate)).split('T')[0]+" "+
-                            ((String)(orderGroup.orderGroupRegdate)).split('T')[1].split('+')[0].split('.')[0]:""}
+                            ((String)(orderGroup.orderGroupRegdate)).split('T')[1].split('+')[0].split('.')[0]}
                         </TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell sx={tableHeadStyle}> 매장이름 </TableCell>
                         <TableCell>  
-                            {isLoaded()?orderGroup.shop.shopName:""}
+                            {orderGroup.shop.shopName}
                         </TableCell>
                         <TableCell sx={tableHeadStyle}> 주문상태 </TableCell>
                         <TableCell>
-                            {isLoaded()?orderGroup.orderStatus +" ("+orderGroup.tableNum+"번 테이블)":""}
+                            {orderGroup.orderStatus +" ("+orderGroup.tableNum+"번 테이블)"}
                         </TableCell>
                     </TableRow>
                     </TableBody>
@@ -138,7 +138,7 @@ const OrderList = (props)=> {
                 </TableContainer>
             </Paper>
         </Box>
-        :"잘못된 접근입니다"}
+        :""}
       </>
     );
   }
