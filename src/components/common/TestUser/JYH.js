@@ -15,6 +15,7 @@ const JYH = ()=> {
           <Link to="/"><button>홈으로</button></Link>
           <Link to="menu"><button>메뉴</button></Link>
           <Link to="menu/4882"><button>메뉴4882</button></Link>
+          <Link to="menu/4883"><button>메뉴4883</button></Link>
             <hr/>
           
             <Routes>

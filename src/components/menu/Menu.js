@@ -3,16 +3,13 @@ import {GlobalContext} from "components/common/GlobalProvider";
 import { useLocation } from 'react-router';
 import { useNavigate } from "react-router-dom";
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+
 import "./Menu.css";
-import MenuListManage from './MenuListManage';
+import MenuListManage from 'components/menu/MenuListManage';
 import MenuListShopView from './MenuListShopView';
+import MenuCategory from 'components/menucategory/MenuCategory';
+import MenuInsertModal from 'components/menu/MenuInsertModal';
+import MenuCategoryModal from 'components/menucategory/MenuCategoryModal';
 
 const Menu = (props) => {
 
@@ -22,10 +19,19 @@ const Menu = (props) => {
     const location = useLocation();
     const {logined,globalAxios,beforeLocation,currentLocation} = useContext(GlobalContext);
     
+    const [reRender,setReRender] = useState(0);
+    const doReRender = () =>{setReRender(c=>c+1)};
+    
 
     const getMenuList = shopSeq => {
 
         globalAxios('/menu/menulist/'+shopSeq,'get',{},data=>{setMenuData(data)});
+
+    }
+
+    const getMenuListByMenuCategory = menuCategorySeq => {
+
+        globalAxios('/menu/menucategoryview/'+menuCategorySeq,'get',{},data=>{setMenuData(data)});
 
     }
 
@@ -38,19 +44,44 @@ const Menu = (props) => {
             setShopSeq(addrParts[3]);
 
             if(addrParts[3]!==''){
-                getMenuList(addrParts[3]);
+                    getMenuList(addrParts[3]);
             }
 
-        }, [location.pathname]
+        }, [location.pathname,reRender]
       );
+
+      useEffect(
+        () => {
+        }, [menuData]
+      );
+
+
       
     return (
         <>
            { shopSeq===''||menuData===''?<></>
            :<>
+            <div>
+            <MenuCategory   shopSeq={shopSeq} 
+                            menuData={menuData} getMenuList={getMenuList} 
+                            getMenuListByMenuCategory={getMenuListByMenuCategory} 
+                            reRender={reRender} doReRender={doReRender}
+                            />
+            </div>
+            <div>
+            <MenuCategoryModal shopSeq={shopSeq} getMenuList={getMenuList} doReRender={doReRender} reRender={reRender}/>    
+            </div>
 
-            <MenuListManage menuData={menuData} />
-            
+            <hr></hr>
+
+            <div>
+            <MenuInsertModal shopSeq={shopSeq} menuData={menuData} getMenuList={getMenuList}/>
+            </div>
+
+            <div>
+            <MenuListManage shopSeq={shopSeq} menuData={menuData} getMenuList={getMenuList} reRender={reRender} doReRender={doReRender} />
+            </div>
+
             <br></br>
             <hr></hr>
             <br></br>

@@ -7,7 +7,10 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import { GlobalContext } from 'components/common/GlobalProvider';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from '@mui/material';
+import { FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, TextField } from '@mui/material';
+import axios from 'axios';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import { ClassicEditor } from '@ckeditor/ckeditor5-build-classic';
 
 
 
@@ -37,12 +40,16 @@ const MenuInsertModal = (props) => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const {globalAxios, backLocation} = useContext(GlobalContext);
+    const { logined, memType, globalAxios, backLocation} = useContext(GlobalContext);
 
     const [disabled, setDisabled] = useState(false);
 
-    const [menu, setMenu] = useState({
-        // shop : (shop),
+    const [menuCategoryList, setMenuCategoryList] = useState('');
+
+    const [menuCategorySeq,setMenuCategorySeq] = useState(0);
+
+    const [menuInsert, setMenuInsert] = useState({
+        // shop : (shop)
 		menuName : '',
         // menuCategory : (menuCategory),
 		menuPrice : 0, 
@@ -56,8 +63,9 @@ const MenuInsertModal = (props) => {
 
     const onChange = event => {
         const { name , value } = event.target;
-        setMenu({ ...menu, [name] : value });
+        setMenuInsert({ ...menuInsert, [name] : value });
     };
+
 
 
     // const menuNameCheck = () => {
@@ -65,33 +73,66 @@ const MenuInsertModal = (props) => {
     // };
 
     const insertResult = result => {
+        props.getMenuList(props.shopSeq);
+        closeModal();
         alert(result);
-        if(result==="메뉴 등록이 완료되었습니다.") navigate(backLocation);
-    };
-
-    const onSubmit = async(event) => {
-        setDisabled(true);
-        event.preventDefault();
-        await new Promise((r) => setTimeout(r, 1000));
-        globalAxios('/menu/' + menu.shop + '/', 'post', menu, result=>{insertResult(result)});
-        setDisabled(false);
     };
 
     
+    const [shopSeq, setShopSeq] = useState(props.shopSeq);
 
-    // useEffect(
-    //     () => {
-    //         menuNameCheck();
-    //     }, [menuNameCheck]  
-    // );
+    const onSubmit = async(event) => {
+        setDisabled(true);
+        console.log(menuInsert);
+        
+        console.log(shopSeq);
+        event.preventDefault();
+        await new Promise((r) => setTimeout(r, 1000));
+        
+        // alert(menuCategorySeq);
+
+        globalAxios(`/menu/menuInsert/${shopSeq}`, 'post', 
+        {
+            menuName:menuInsert.menuName,
+            menuPrice:menuInsert.menuPrice,
+            menuImage:menuInsert.menuImage,
+            menuTop:menuInsert.menuTop,
+            menuSimpleInfo:menuInsert.menuSimpleInfo,
+            menuDetailInfo:menuInsert.menuDetailInfo,
+            menuCategorySeq:menuCategorySeq
+        }, 
+        result=>{insertResult(result)});
+        setDisabled(false);
+    };
 
 
+
+    //const [show, setShow] = useState(false);
+    const [image, setImage] = useState();
+    const [flag, setFlag] = useState(false);
+
+
+    useEffect(
+        () => {
+            getMenuCategory(props.shopSeq);
+        },[showModal]
+     );
+
+
+
+    const getMenuCategory = shopSeq => {
+        globalAxios('/menu/menucategory/'+shopSeq, 'get', {}, data=>{setMenuCategoryList(data)});
+    }
+
+    const onChangeSelect = (e) => {
+        setMenuCategorySeq(e.target.value);
+    }
 
 
     return (
       <>
       
-      <div id="menuInsert">
+      <div id="menuInsertContainer">
         <Button onClick={openModal}>메뉴등록</Button>
         
         <Modal open={showModal}>       
@@ -109,7 +150,7 @@ const MenuInsertModal = (props) => {
         
             <div className="modal-header">
             <button className='modal-close' onClick={closeModal}> X </button>
-            <h4 className="modal-title" align='center'>메뉴 추가</h4>
+            <h4 className="modal-title" align='center'>메뉴 추가</h4>            
             </div>      
             <hr></hr>
 
@@ -118,17 +159,42 @@ const MenuInsertModal = (props) => {
             <TextField sx={{ m: 1, width: '25ch' }} variant='standard' 
                     name="menuName"
                     label="메뉴이름"
-                    value={menu.menuName}
+                    value={menuInsert.menuName}
                     helperText="한글 2~16자 이내 입력"
                     onChange={onChange}
             />
             <br></br>
 
+            <div>
+            <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="menucategory-inputlabel">카테고리</InputLabel>
+                <Select
+                    labelId="menucategory-selectlabel"
+                    id="menuCategorySeq"
+                    value={menuCategorySeq}
+                    onChange={onChangeSelect}
+                >
+                    <MenuItem value="">
+                    
+                    </MenuItem>
+                    {Object.values(menuCategoryList).map(category=>
+
+                        <MenuItem key={category.menuCategorySeq} value={category.menuCategorySeq}> {category.menuCategoryName} </MenuItem>
+                        
+                    )} 
+
+                </Select>
+            </FormControl>
+            </div>                
+
+            
+
+
             <TextField type="number" InputProps={{ inputProps: { max: 99999999, min: 0 }
                     }} sx={{ m: 1, width: '25ch' }} variant='standard' 
                     name="menuPrice"
                     label="가격"
-                    value={menu.menuPrice}
+                    value={menuInsert.menuPrice}
                     helperText="숫자만 입력"
                     onChange={onChange}        
             />
@@ -140,7 +206,7 @@ const MenuInsertModal = (props) => {
                 multiline
                 fullWidth 
                 maxRows={4}
-                value={menu.menuSimpleInfo}
+                value={menuInsert.menuSimpleInfo}
                 onChange={onChange}
             />
             <br></br>
@@ -151,13 +217,14 @@ const MenuInsertModal = (props) => {
                 multiline
                 fullWidth 
                 rows={4}
-                value={menu.menuDetailInfo}
+                value={menuInsert.menuDetailInfo}
                 onChange={onChange}
             />
             <br></br>
 
+
             <br></br>
-            <FormControl sx={{ mx: 1 }}>
+            <FormControl sx={{ m: 1 }}>
                 <FormLabel>추천메뉴여부</FormLabel>
                 <RadioGroup 
                     row
