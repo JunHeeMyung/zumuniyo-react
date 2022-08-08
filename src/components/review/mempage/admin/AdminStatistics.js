@@ -17,10 +17,7 @@ export default function AdminStatistics() {
   const { globalAxios } = useContext(GlobalContext);
   
   const [review, setReview] = useState([]);
-  const [reviewc, setReviewc] = useState([
-    // review_regdate: '',
-    // cnt:''
-  ]);
+  const [reviewc, setReviewc] = useState([]);
 
   const [members, setMembers] = useState([]);
   const [shops, setShops] = useState([]);
