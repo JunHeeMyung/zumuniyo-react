@@ -5,7 +5,7 @@ import React, { useState, useEffect, useContext, useLocation  } from "react";
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import Alert from '@mui/material/Alert';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import '@ckeditor/ckeditor5-build-classic/build/translations/ko.js'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
@@ -20,7 +20,9 @@ import MyReview from "../mempage/normal/MyReview";
 export default function ReviewInsert(props) {
   const navigate = useNavigate();
   // const {orderseq2} = useLocation();
-  const orderSeq = props.orderseq;
+
+  const params = useParams();
+  const orderSeq = params.orderGroupSeq;
   // const orderSeq = location.state.orderseq;
   // const orderSeq = orderseq2
 
