@@ -2,10 +2,7 @@
 import {GlobalContext} from "components/common/GlobalProvider";
 import React,{ useContext ,useEffect,useState} from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
+
 const NoticeDetail = () => {
   const { noticeBoardSeq } = useParams();
   const [notice, setNotice] = useState({});
@@ -54,52 +51,29 @@ const NoticeDetail = () => {
 
   return (
     <>
-            
       <h2 align="center"> 공지사항</h2>
       <div className="emp-view-wrapper">
-        <div className="emp-view-row" >
-        <label>번호</label>
-        <TextField
-          required
-          id="outlined-required"
-          value={notice.noticeBoardSeq||''}
-          style={{padding:'1em'}}
-        />
+        <div className="emp-view-row">
+          <label>번호</label>
+          <label>{notice.noticeBoardSeq}</label>
         </div>
         <div className="emp-view-row">
-        <label>제목</label>
-          <TextField value={notice.title||''} id="outlined-basic"  variant="outlined" style={{padding:'1em'}} />
+          <label>제목</label>
+          <label>{notice.title}</label>
         </div>
         <div className="emp-view-row">
           <label>내용</label>
-          <TextField
-          id="outlined-multiline-static"
-          label="Multiline"
-          multiline
-          rows={4}
-          defaultValue="Default Value"
-          style={{padding:'1em'}}
-          //<Viewer content={notice.content}>
-        />
+          <Viewer content={notice.content} />
+        
+          {/* <label>{notice.content}</label> */}
         </div>
         <div className="emp-view-row">
           <label>작성자</label>
-          <TextField
-          required
-          id="outlined-required"
-          value={notice.writer||''}
-          style={{padding:'1em'}} 
-        
-        />
+          <div>{notice.writer}</div>
         </div>
         <div className="emp-view-row">
           <label>조회수</label>
-          <TextField
-          required
-          id="outlined-required"
-          value={notice.hitCount||''}
-          style={{padding:'1em'}} 
-        />
+          <div>{notice.hitCount}</div>
         </div> 
         <button onClick={() => navigate2(-1)}>리스트보기</button>
         <Link to="/SWY/NoticeBoard/NoticeUpdate" state={{ notice: notice }}>

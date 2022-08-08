@@ -69,7 +69,7 @@ const CustomizedTables= () => {
     <div>
    <TableContainer component={Paper}>
       
-        <Link to="/SWY/advertisement/AdInsert">
+        <Link to="/SWY/advertisement/AdInsert2">
         <button className="insertAdvertisement">광고등록</button>
         </Link>
       

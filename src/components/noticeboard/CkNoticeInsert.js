@@ -4,7 +4,7 @@ import { useContext ,useState} from "react";
 import {GlobalContext} from "components/common/GlobalProvider";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import  ClassicEditor  from "@ckeditor/ckeditor5-build-classic";
-
+import TextField from '@mui/material/TextField';
 const CkNoticeInsert = () => {
        
     const {globalAxios} = useContext(GlobalContext);
@@ -13,7 +13,7 @@ const CkNoticeInsert = () => {
     const[show,setShow ] = useState(false);
     const[image,setImage] = useState();
     const[flag,setFlag] = useState(false);
-
+    const imgURL = "/img/red_icon03.png"
     const imgLink = `${process.env.PUBLIC_URL}/images`
     
     const getNoticeInsert =()=> {
@@ -21,7 +21,7 @@ const CkNoticeInsert = () => {
             console.log(data);
             alert(` 성공적으로 입력 되었습니다.`);
             navigate("/SWY");
-        })
+        },'multipart/form-data')
     };
 
    
@@ -47,7 +47,7 @@ const CkNoticeInsert = () => {
                     
                     //키밸류형식 key:value
                     globalAxios("/noticeboard/NoticeUpload.do","post",data,uploadCallback, 'multipart/form-data' );//, 'multipart/form-data'
-           
+
 
                     
                 })
@@ -87,7 +87,7 @@ const handleSubmit = (e) => {
 return (
     <form id="empfrm" onSubmit={handleSubmit}>
     <div className="App">
-    <div> <label>공지사항상단고정</label>
+    <div style={{padding:'1em'}}><label> <img src={imgURL} width="20px" height="20px"/ > 공지사항상단고정</label>
     <input
     // className="form-control"
     type="checkbox"
@@ -97,13 +97,7 @@ return (
     /></div>
 
     <div className="form-group">
-    <input
-        className="form-control"
-        type="text"
-        name="title"
-        placeholder='제목을 입력하세요'
-        onChange={handleChange}
-    />
+    <TextField placeholder="제목을 입력하세요" id="outlined-basic" name="owner" variant="outlined" onChange={handleChange} />
     </div>
     <div className="form-group">
         <CKEditor

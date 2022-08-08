@@ -59,7 +59,7 @@ return(
         
           <div>
           <label>상호명</label>
-          <TextField id="outlined-basic" name="owner" variant="outlined" onChange={handlerChange} />
+          <TextField  id="outlined-basic" name="owner" variant="outlined" onChange={handlerChange} />
           </div>
           <label>시작날짜</label>
          <input type="date" name="startTime" onChange={handlerChange}></input>

@@ -51,7 +51,7 @@ const CustomizedTables= () => {
     const [limit,setLimit] = useState(5);
     const [page,setPage] = useState(1);
     const offset = (page-1 )*limit;
-    const imgURL = "/images/red_icon03.png"
+    const imgURL = "/img/red_icon03.png"
    
     const getNoticeList = () => {
 
@@ -73,7 +73,7 @@ const CustomizedTables= () => {
         <div>
 
      <TableContainer component={Paper}>
-                <h2 className="text-center">공지사항</h2>
+     <h2 align="center" className="text-center">공지사항</h2>
                 <Link to="/SWY/NoticeBoard/CkNoticeInsert">
                 <button className="insertNotice2">CK글쓰기</button>
                 </Link>
