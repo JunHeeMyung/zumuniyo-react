@@ -135,11 +135,13 @@ export default function ReviewViewForm(props) {
     console.log("reviewseq: "+params);
     console.log("bool :"+bool);    
 
-    globalAxios(`/review/reviewUpdate/${params}`, 'put', bool, response => {
-      if (response) {
-        console.log("성공");
+    globalAxios(`/review/reviewUpdate/${params}`, 'put', {}, response => {
+      if (response ==='성공') {
+        console.log("성공");   
+        selectReviewList();     
       } else {
-        alert(response);
+        console.log("실패");        
+        // alert(response);
       }      
     });
   }

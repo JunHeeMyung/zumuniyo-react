@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { GlobalContext } from "components/common/GlobalProvider";
-import Chartsss from "components/review/components/Chartsss";
+// import Chartsss from "components/review/components/Chartsss";
 import { Box, Container, Grid } from '@mui/material';
 // import { PieChart, Pie, Cell } from "recharts";
 
 
 
+import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 
 
 
@@ -15,15 +16,15 @@ import { Box, Container, Grid } from '@mui/material';
 
 export default function AdminStatistics() {
   const { globalAxios } = useContext(GlobalContext);
-  
+
   const [review, setReview] = useState([]);
   const [reviewc, setReviewc] = useState([]);
 
   const [members, setMembers] = useState([]);
   const [shops, setShops] = useState([]);
-  
 
-  const reviewList = () => {     
+
+  const reviewList = () => {
     globalAxios('/review/reviewList', 'get', {}, response => {
       if (response) {
         setReview(response);
@@ -32,21 +33,21 @@ export default function AdminStatistics() {
       }
     });
   }
-  
-  const reviewCList = () => {     
+
+  const reviewCList = () => {
     globalAxios('/review/reviewDayCount', 'get', {}, response => {
       if (response) {
-        setReviewc(response);        
+        setReviewc(response);
       } else {
         alert("failed to ");
       }
     });
   }
   const memList = () => {
-    globalAxios('/review/memList', 'post', {}, res => {      
+    globalAxios('/review/memList', 'post', {}, res => {
       if (res) {
-        console.log(res);        
-        setMembers(res);        
+        console.log(res);
+        setMembers(res);
       } else {
         alert("failed to ");
       }
@@ -55,9 +56,9 @@ export default function AdminStatistics() {
 
 
   const shopList = () => {
-    globalAxios('/review/shopList', 'post', {}, res => {      
+    globalAxios('/review/shopList', 'post', {}, res => {
       if (res) {
-        console.log(res);        
+        console.log(res);
         setShops(res);
       } else {
         alert("failed to ");
@@ -80,17 +81,17 @@ export default function AdminStatistics() {
   //     </text>
   //   );
   // };
-  
 
 
 
 
-  const 사업자회원 = members.filter(item=>item.memType==='사업자회원');
-  const 일반회원 = members.filter(item=>item.memType==='일반회원');
-  const 전체회원 = members.filter(item=>item.memType!='관리자');
 
-  const 영업 = shops.filter(item =>item.shopStatus==='활성');
-  const 폐업 = shops.filter(item =>item.shopStatus==='비활성');
+  const 사업자회원 = members.filter(item => item.memType === '사업자회원');
+  const 일반회원 = members.filter(item => item.memType === '일반회원');
+  const 전체회원 = members.filter(item => item.memType != '관리자');
+
+  const 영업 = shops.filter(item => item.shopStatus === '활성');
+  const 폐업 = shops.filter(item => item.shopStatus === '비활성');
 
 
 
@@ -100,11 +101,26 @@ export default function AdminStatistics() {
   //   { name: '일반회원', value: 일반회원 }
   // ];
 
+  // const data = [{ name: 'Page A', uv: 600, pv: 2400, amt: 2400 }, { name: 'Page B', uv: 800, pv: 2400, amt: 2400 }, { name: 'Page C', uv: 400, pv: 2400, amt: 2400 }];
+  const dataMember = [{ name: '전체회원', uv: 전체회원.length }, { name: '사업자회원', uv: 사업자회원.length }, { name: '일반회원', uv: 일반회원.length}];
+  const dataShop = [{ name: '전체매장', uv: shops.length }, { name: '영업중', uv: 영업.length }, { name: '폐업', uv: 폐업.length}];
+  
 
+  // const renderBarChart = (
+  //   <BarChart width={600} height={300} data={data}>
+  //     <XAxis dataKey="name" stroke="#8884d8" />
+  //     <YAxis />
+  //     <Tooltip />
+  //     <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+  //     <Bar dataKey="uv" fill="#8884d8" barSize={30} />
+  //   </BarChart>
+  // );
   useEffect(memList, []);
   useEffect(shopList, []);
   useEffect(reviewList, []);
   useEffect(reviewCList, []);
+  
+  // useEffect(renderBarChart, []);
 
 
   return (
@@ -124,40 +140,66 @@ export default function AdminStatistics() {
 
 
       <h2>리뷰</h2>
-      <p>리뷰 {review.length}</p>  
+      <p>리뷰 {review.length}</p>
 
 
 
       <div>
-      <h1>리뷰 날짜, 등록건수</h1> 
-      
-      <table>
-        <thead>
-          <tr>
-            <th >날짜</th>
-            <th></th>
-            <th></th>
-            <th >등록건수</th>
-          </tr>
-        </thead>
-        <tbody>
-      {reviewc.map((rc, index)=>{
-        return(
-          <tr key={index}>            
-            <td>{rc.REVIEW_REGDATE}</td>
-            <td></td>
-            <td></td>
-            <td>{rc.CNT}</td>            
-          </tr>
-        )
-      })}
-       </tbody>
-      </table>
+        <h1>리뷰 날짜, 등록건수</h1>
+
+        <table>
+          <thead>
+            <tr>
+              <th >날짜</th>
+              <th></th>
+              <th></th>
+              <th >등록건수</th>
+            </tr>
+          </thead>
+          <tbody>
+            {reviewc.map((rc, index) => {
+              return (
+                <tr key={index}>
+                  <td>{rc.REVIEW_REGDATE}</td>
+                  <td></td>
+                  <td></td>
+                  <td>{rc.CNT}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
 
       </div>
+      <div>        
+        <BarChart width={600} height={300} data={dataMember}>
+          <XAxis dataKey="name" stroke="#8884d8" />
+          <YAxis />
+          <Tooltip />
+          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+          <Bar dataKey="uv" fill="#8884d8" barSize={30} />
+        </BarChart>
+      </div>
+      <div>        
+        <BarChart width={600} height={300} data={dataShop}>
+          <XAxis dataKey="name" stroke="#8884d8" />
+          <YAxis />
+          <Tooltip />
+          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+          <Bar dataKey="uv" fill="#8884d8" barSize={30} />
+        </BarChart>
+      </div>
+      {/* <div>        
+        <BarChart width={600} height={300} data={dataReview}>
+          <XAxis dataKey="name" stroke="#8884d8" />
+          <YAxis />
+          <Tooltip />
+          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+          <Bar dataKey="uv" fill="#8884d8" barSize={30} />
+        </BarChart>
+      </div> */}
 
 
-      
       {/* <PieChart width={500} height={500} style={{margin:"0 auto"}}>
       <Pie
         data={data}
@@ -174,23 +216,23 @@ export default function AdminStatistics() {
         ))}
       </Pie>
     </PieChart> */}
-       <Box
-          sx={{
-            display: 'flex',
-            flex: '1 1 auto',
-            flexDirection: 'column',
-            width: '100%'
-          }}
-        >
-          <Grid
-        item
-        lg={4}
-        md={6}
-        xl={3}
-        xs={12}
-      ></Grid>
-    <Chartsss/>
-    </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flex: '1 1 auto',
+          flexDirection: 'column',
+          width: '100%'
+        }}
+      >
+        <Grid
+          item
+          lg={4}
+          md={6}
+          xl={3}
+          xs={12}
+        ></Grid>
+        {/* <Chartsss/> */}
+      </Box>
     </div>
   )
 }
