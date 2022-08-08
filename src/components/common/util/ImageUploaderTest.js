@@ -22,7 +22,7 @@ const ImageUploaderTest = () => {
     const uploadImages = () => {
 
         // 하나는 업로드 해야할경우
-        if(Object.keys(images).length==0){
+        if(Object.keys(images).length===0){
             alert("업로드할 이미지가 없습니다");
             return;
         }
@@ -85,7 +85,7 @@ const ImageUploaderTest = () => {
             return (
             <>
                 <h3>파일이름:{fileName}</h3>
-                <img src={"/image/"+fileName}/>
+                <img src={"/image/"+fileName} alt={fileName}/>
             </>
             )
         })}
