@@ -16,7 +16,8 @@ module.exports = function(app) {
             '/ordergroup',
             '/review',
             '/reviewrecommend',
-            '/shop',], 
+            '/shop',
+            '/image',], 
         {
             target: 'http://localhost:7777',
             changeOrigin: true
