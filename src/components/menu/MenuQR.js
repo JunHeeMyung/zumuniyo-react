@@ -1,73 +1,68 @@
-import React,{useContext,useEffect, useState} from 'react';
-import {GlobalContext} from "components/common/GlobalProvider";
-import { useLocation } from 'react-router';
-import { useNavigate } from "react-router-dom";
-
-
+import React,{ useContext,useEffect, useState } from 'react';
+import { GlobalContext } from "components/common/GlobalProvider";
+import { useParams } from "react-router-dom";
+import { Box, Collapse, List, ListItem, ListItemButton, ListItemText, Paper } from '@mui/material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import "./MenuQR.css";
-import MenuListManage from 'components/menu/MenuListManage';
-import MenuListShopView from './MenuListShopView';
-import MenuCategory from 'components/menucategory/MenuCategory';
-import MenuInsertModal from 'components/menu/MenuInsertModal';
-import MenuCategoryModal from 'components/menucategory/MenuCategoryModal';
-import { Paper } from '@mui/material';
 
-const MenuQR = (props) => {
+const menuListStyle = { 
+    width: '100%', 
+    minWidth: 500,
+    maxWidth: 700, 
+    bgcolor: 'background.paper',
+    border: '1px solid gray' 
+}
 
-    const {logined,globalAxios,beforeLocation,currentLocation} = useContext(GlobalContext);
-    const navigate = useNavigate();
-    const location = useLocation();
 
-    const [shopSeq,setShopSeq] = useState('');
-    const [menuData,setMenuData] = useState('');
 
-    const [reRender,setReRender] = useState(0);
-    const doReRender = () =>{setReRender(c=>c+1)};
+const MenuQR = () => {
 
+    const {globalAxios} = useContext(GlobalContext);
+    const params = useParams();
+
+    const [menuList,setMenuList] = useState('');
+    const [menuCategoryList,setMenuCategoryList] = useState('');
+    const [menuTopList,setMenuTopList] = useState('');
     
+    const [topOpen, setTopOpen] = useState(true);
+    const [menuOpen, setMenuOpen] = useState(false);
+
+
     const getMenuList = shopSeq => {
-
-        globalAxios('/menu/menulist/'+shopSeq,'get',{},data=>{setMenuData(data)});
+        globalAxios('/menu/menulist/'+shopSeq,'get',{},data=>{setMenuList(data)});
     }
-
-    const getMenuListByMenuCategory = menuCategorySeq => {
-
-        globalAxios('/menu/menucategoryview/'+menuCategorySeq,'get',{},data=>{setMenuData(data)});
-    }
-    
-
-
+    const getMenuCategoryList = shopSeq => {
+        globalAxios('/menu/menucategory/'+shopSeq, 'get', {}, data=>{setMenuCategoryList(data)});
+    };
+    const getMenuTopList = shopSeq => {
+        globalAxios('/menu/menutopview/'+shopSeq, 'get',  {}, data=>{setMenuTopList(data)});
+    };
 
     useEffect(
         () => {
-        }, [props.menuData]
+            getMenuList(params.shopSeq);
+            getMenuCategoryList(params.shopSeq)
+            getMenuTopList(params.shopSeq)
+        }, []
       );
-
-
-
-
 
     return (
         <>
-        <div id="menuQRWrapper" >
-        <Paper id="menuQRChildWrapper">
-        { shopSeq===''||menuData===''?<><h2>매장시퀀스 또는 메뉴데이터가 없습니다.</h2></>
-            :<>
-            <div>
-                <MenuListQR shopSeq={shopSeq} menuData={menuData} 
-                getMenuListByMenuCategory={getMenuListByMenuCategory} 
-                getMenuList={getMenuList} reRender={reRender} doReRender={doReRender} />
-            </div>
-            
-            <div></div>
-            
-            <div></div>
-            
-            
+        {JSON.stringify(menuList)}
+        <hr/>
+        {JSON.stringify(menuCategoryList)}
+        <hr/>
+        {JSON.stringify(menuTopList)}
+
+
+        
+        {menuList&&menuCategoryList&&menuTopList?
+            <>
+
+
+
             </>
-        }
-        </Paper>
-        </div>
+        :""}
         </>
     );
 

@@ -17,7 +17,7 @@ import { Paper } from '@mui/material';
 
 
 
-const Menu = (props) => {
+const Menu = () => {
 
     const [shopSeq,setShopSeq] = useState('');
     const [menuData,setMenuData] = useState('');

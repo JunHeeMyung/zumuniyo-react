@@ -15,7 +15,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 
 import "./MenuListManage.css";
 import { Button, IconButton } from '@mui/material';
-import MenuDetailModal from './MenuDetailModal';
+import MenuDetailModal from 'components/menu/MenuDetailModal';
 
 
 
