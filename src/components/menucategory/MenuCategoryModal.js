@@ -82,7 +82,7 @@ const MenuCategoryModal = (props) => {
     return (
     <>
     <div id="menuCategoryContainer">
-        <Button onClick={openModal}>카테고리등록</Button>
+        <Button onClick={openModal}>새 카테고리 추가</Button>
 
         <Modal open={showModal}>
             <Box sx={style}

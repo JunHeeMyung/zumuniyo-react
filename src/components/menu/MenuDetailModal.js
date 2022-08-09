@@ -7,19 +7,54 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { List, ListItem, ListItemText, TableBody, TableCell, TableRow } from '@mui/material';
+import { CardActionArea, List, ListItem, ListItemText, TableBody, TableCell, TableRow, TextField } from '@mui/material';
+
+import { styled } from '@mui/material/styles';
+
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Collapse from '@mui/material/Collapse';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import ClearIcon from '@mui/icons-material/Clear';
+import { red, yellow } from '@mui/material/colors';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import StarIcon from '@mui/icons-material/Star';
+import "./MenuDetailModal.css"; 
+
+
+
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
+
 
 
 const style = {
   position: 'absolute',
-  top: '40%',
+  top: '5%',
   left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 500,
+  transform: 'translate(-50%, 0)',
+  height:'35em',
+  width: '24em',
   bgcolor: 'background.paper',
   border: '1px solid gray',
   boxShadow: 18,
-  p: 4,
+  p: 1,
 
   borderRadius: 2,
   
@@ -29,43 +64,28 @@ const style = {
 const MenuDetailModal = (props) => {
 
   
-  const ref = useRef(null);
-  
   const [menuData,setMenuData] = useState('');
   const [menuDetail,setMenuDetail] = useState('');
   
-  const [text, setText] = useState('테스트');
-  const [editable, setEditable] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
+  const [value, setValue] = useState('Controlled');
+
+  const onChange = (event) => {
+    setValue(event.target.value);
+  };
   
 
-  const editOn = () => {
-    setEditable(true);
-  };
-  const handleChange = (e) => {
-    setText(e.target.value);
-  };
 
   // const handleChangeData = (e) => {
   //   setMenuData(e.target.value);
   // };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      setEditable(!editable);
-    }
-  };
-
-  const handleClickOutside = (e) => {
-    if (editable == true && !ref.current.contains(e.target)) setEditable(false);
-  };
-
-  // const getMenuDetail = menuSeq => {
-  //   globalAxios('/menu/menudetail/'+menuSeq, 'get', {}, result=>{setMenuDetail(result)});
-  // }
-
-
+ 
 
 
 
@@ -83,92 +103,134 @@ const MenuDetailModal = (props) => {
       <div id="menuDetailContainer">
         
         <Modal open={props.detailModalOpen} >
-        
-          <Box sx={style}
+          
+          {/* <Box sx={style}
                id="menuDetailBox"
                component="form"
                noValidate
                autoComplete='off'
-               //onSubmit={}  
-                
-          >
+               //onSubmit={}      
+          > */}
             
             <div className="modal" id="detailModal">
-            <div className="modal-dialog">
-            <div className="modal-content">
-        
-            <div className="modal-header">
-            <button className='modal-close' onClick={props.handleModalClose}> X </button>
-            <h4 className="modal-title" align='center'>메뉴상세</h4>            
-            </div>      
-            <hr></hr>
-            <br></br>
+            
+            <Card sx={style} id="menuDetailCard">
+            <CardHeader
+              avatar={ 
+                menuData.menuTop?  
+                <div><StarIcon sx={{ color: yellow[500] }} aria-label="recommended" /></div> : <div></div>
+              }
+              className="modal-title" align='center' 
+              action={
+                <div>
+              <IconButton edge="end" aria-label="modal-close" onClick={props.handleModalClose} >
+                <ClearIcon />
+              </IconButton>
+              </div>
+              }
+              title={
+                <Typography gutterBottom variant="h5" component="div" >
+                  {menuData.menuName}
+                </Typography>
+                }
+              subheader={
+                <Typography variant="body2" color="text.secondary" >
+                  {menuData.menuCategory.menuCategoryName}
+                </Typography>
+                }
+            />
+            <div id="menuDetailWrapper">
+            <CardMedia
+              component="img"
+              height="194"
+              image={"/image/"+menuData.menuImage}
+              alt="detail-image"
+            />
+            <CardContent>
+              
+              <Typography variant="subtitle2" color="text.secondary">메뉴소개</Typography>
+                <div>
+                {/* <TextField
+                  id="menuDetailInfo-textField"  
+                  multiline
+                  fullWidth 
+                  maxRows={1}
+                  value={menuData.menuSimpleInfo}
+                  onChange={onChange}
+                /> */}
+
+                <Typography variant="body1" color="text.primary" >
+                  <span id="menuSimpleInfoSpace" >{menuData.menuSimpleInfo}</span>
+                </Typography>
 
 
-            <div>
-            {menuData.menuSeq}
-            {menuData.menuCategory.menuCategoryName}
+                </div>
+              <br></br>
+              <Typography variant="h6" color="text.primary" align='right'>
+                
+                <div>
+                  {menuData.menuPrice} 원
+                </div>
+                
+              </Typography>  
+            </CardContent>
+
+            <CardActions disableSpacing>
+              <IconButton aria-label="add to favorites">
+                <FavoriteIcon />
+              </IconButton>
+              <IconButton aria-label="share">
+                <ShareIcon />
+              </IconButton>
+                  <ExpandMore
+                    expand={expanded}
+                    onClick={handleExpandClick}
+                    aria-expanded={expanded}
+                    aria-label="show more"
+                  >
+                    <ExpandMoreIcon />
+                  </ExpandMore>
+            </CardActions>
+
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+              <CardContent>
+                
+                <Typography variant="body2" color="text.secondary">메뉴상세</Typography>
+                <div>
+                <TextField
+                  id="menuDetailInfo-textField"
+                  
+                  multiline
+                  fullWidth 
+                  rows={4}
+                  value={menuData.menuDetailInfo}
+                  onChange={onChange}
+                  
+                />
+                </div>
+
+              </CardContent>
+            </Collapse>
+            
 
             </div>
             
-            <div ref={ref}>
-            {editable ? (
-            <input type="text" value={text} onChange={(e) => handleChange(e)} onKeyDown={handleKeyDown} />
-            ) : (
-            <div onClick={() => editOn()}>{text}</div>
-            )}
-            </div>
             
-            {/* <div ref={ref}>
-            {editable ? (
-            <input type="text" value={menuData} onChange={(e) => handleChangeData(e)} onKeyDown={handleKeyDown} />
-            ) : (
-            <div onClick={() => editOn()}>{menuData}</div>
-            )}
-            </div> */}
-            
-            {/* <div>
-            <List
-              sx={{ width: '100%', maxWidth: 500, bgcolor: 'background.paper' }}
-              component="nav"
-              aria-labelledby="nested-list-subheader"
-        
-             >
-             {Object.values(menuData).map((entrie) => (
-             <ListItem disablePadding 
-               key={entrie.menuSeq}
+           <div id="modalBottomWrapper">
           
-               >
-              <ListItemText primary={entrie.menuName} />
+              
+              <Button variant="contained" onClick={props.handleModalClose}>닫기</Button>
+             
+            </div>
 
-              </ListItem>
-              ))}
-            </List> 
-          
-            </div> */}
+            </Card>
             
-            <div>
-
-
-            </div>
-
-
-
-
-
-
-
-
-            </div>
             <br></br>
-            <hr></hr>
             
-            <div>
-            <Button type='reset' onClick={props.handleModalClose}>닫기</Button>
+
             </div>
-            </div>
-            </div>
-          </Box>
+          {/* </Box> */}
+          
         </Modal>
       </div>
 

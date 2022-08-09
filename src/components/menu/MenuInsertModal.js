@@ -1,7 +1,7 @@
 import React,{useContext, useEffect, useState} from 'react';
 
 import "./MenuInsertModal.css";
-
+import $ from "jquery";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
@@ -16,15 +16,15 @@ import { ClassicEditor } from '@ckeditor/ckeditor5-build-classic';
 
 const style = {
   position: 'absolute',
-  top: '40%',
+  top: '0',
   left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 500,
+  transform: 'translate(-50%, 0)',
+  height:'90vh',
+  width: '28em',
   bgcolor: 'background.paper',
   border: '1px solid gray',
   boxShadow: 18,
   p: 4,
-
   borderRadius: 2,
   
 };
@@ -35,7 +35,12 @@ const MenuInsertModal = (props) => {
     
     const [showModal, setShowModal] = useState(false);
     const openModal = () => setShowModal(true);
-    const closeModal = () => setShowModal(false);
+    const closeModal = () => {
+            valueClear();
+            setShowModal(false);
+        }
+
+    const [images, setImages] = useState({});
     
     const navigate = useNavigate();
     const location = useLocation();
@@ -49,16 +54,13 @@ const MenuInsertModal = (props) => {
     const [menuCategorySeq,setMenuCategorySeq] = useState(0);
 
     const [menuInsert, setMenuInsert] = useState({
-        // shop : (shop)
 		menuName : '',
-        // menuCategory : (menuCategory),
+        menuCategorySeq: 0,
 		menuPrice : 0, 
 		menuImage : '',
 		menuTop : 0,
 		menuSimpleInfo : '',
 		menuDetailInfo : '',
-		// menuStatus : (MenuStatus.활성)
-
     });
 
     const onChange = event => {
@@ -81,35 +83,95 @@ const MenuInsertModal = (props) => {
     
     const [shopSeq, setShopSeq] = useState(props.shopSeq);
 
-    const onSubmit = async(event) => {
-        setDisabled(true);
-        console.log(menuInsert);
+    const insertMenu = () => {
+
+        console.log('인서트메뉴'+JSON.stringify(images));
+
+        if(JSON.stringify(images)==='{}'){
+            registMenu();
+        }else{
+            uploadImages();
+        }
         
-        console.log(shopSeq);
-        event.preventDefault();
-        await new Promise((r) => setTimeout(r, 1000));
-        
-        // alert(menuCategorySeq);
+    };
+
+    const registMenu = (url) => {
+
+        console.log({
+            menuName:menuInsert.menuName,
+            menuPrice:menuInsert.menuPrice,
+            menuImage:url,
+            menuTop:menuInsert.menuTop,
+            menuSimpleInfo:menuInsert.menuSimpleInfo,
+            menuDetailInfo:menuInsert.menuDetailInfo,
+            menuCategorySeq:menuCategorySeq
+        });
+
 
         globalAxios(`/menu/menuInsert/${shopSeq}`, 'post', 
         {
             menuName:menuInsert.menuName,
             menuPrice:menuInsert.menuPrice,
-            menuImage:menuInsert.menuImage,
+            menuImage:url===undefined?'':url,
             menuTop:menuInsert.menuTop,
             menuSimpleInfo:menuInsert.menuSimpleInfo,
             menuDetailInfo:menuInsert.menuDetailInfo,
             menuCategorySeq:menuCategorySeq
         }, 
         result=>{insertResult(result)});
-        setDisabled(false);
-    };
+
+    }
+
+    
+
+    const uploadResult = result => {
+
+        console.log('업로드테스트'+JSON.stringify(result));
+        console.log('업로드테스트2'+JSON.stringify(result[0]));
+
+        if(result){
+            registMenu(result);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    const uploadImages = () => {
+
+        const data = new FormData();
+        for (let image of images) {
+            data.append("images", image);
+        }
+
+        globalAxios('/image/upload','post',data,result=>{uploadResult(result);},'multipart/form-data');
+
+    }
+
+    const setImagePreviews = e => {
+
+        $("div#imagePreview").html("");
+        
+        for(let image of e.target.files){
+
+            const reader = new FileReader();
+            reader.onload = e => {
+                const img = document.createElement("img");
+                img.setAttribute("src", e.target.result);
+                img.setAttribute("id","previewImage" );
+                $("div#imagePreview").append(img);
+                
+            };
+            reader.readAsDataURL(image);
+        }
+        
+    }
+
+    const openUploader = () =>{
+        $("#imageUploader").trigger("click");
+    }
 
 
-
-    //const [show, setShow] = useState(false);
-    const [image, setImage] = useState();
-    const [flag, setFlag] = useState(false);
 
 
     useEffect(
@@ -128,20 +190,31 @@ const MenuInsertModal = (props) => {
         setMenuCategorySeq(e.target.value);
     }
 
+    const valueClear = () => {
+
+        setMenuInsert({
+            menuName : '',
+            menuCategorySeq: 0,
+            menuPrice : 0, 
+            menuImage : '',
+            menuTop : 0,
+            menuSimpleInfo : '',
+            menuDetailInfo : '',
+        });
+    }
+
 
     return (
       <>
       
       <div id="menuInsertContainer">
-        <Button onClick={openModal}>메뉴등록</Button>
+        <Button variant="contained" onClick={openModal}>메뉴등록</Button>
         
         <Modal open={showModal}>       
           <Box sx={style}
                id="menuInsertBox"
-               component="form"
-               noValidate
                autoComplete='off'
-               onSubmit={onSubmit}  
+               
           >
 
           <div className="modal" id="insertModal">
@@ -157,11 +230,13 @@ const MenuInsertModal = (props) => {
             <div className="modal-body form-group" >
             
             <TextField sx={{ m: 1, width: '25ch' }} variant='standard' 
+                    id="menuName"
                     name="menuName"
                     label="메뉴이름"
                     value={menuInsert.menuName}
                     helperText="한글 2~16자 이내 입력"
                     onChange={onChange}
+
             />
             <br></br>
 
@@ -236,14 +311,27 @@ const MenuInsertModal = (props) => {
                     <FormControlLabel value="0" control={<Radio sx={{color: 'rgb(160, 160, 160)','&.Mui-checked': {color: 'rgb(50, 50, 50)',}}}/> } label="아니오" />
                 </RadioGroup>
             </FormControl>
-            
-            <br></br>
-            <br></br>
 
-            <hr></hr>
-            <button type='submit' disabled={disabled}>등록하기</button>
+            <br/>
+            
+            <FormControl sx={{ m: 1 }}>
+            <FormLabel>이미지첨부</FormLabel>
+            
+            </FormControl>
+            <br/>
+            <div id="imagePreview"/>
+            <button onClick={openUploader}>파일선택</button>
+            
+            <br/>
+            <br/>
+            <br/>
+
+            <hr/>
+            <br/>
+            <button onClick={insertMenu}>등록하기</button>
             <button type='reset' onClick={closeModal}>취소</button>
             
+            <br/>
 
             </div>
         
@@ -255,7 +343,11 @@ const MenuInsertModal = (props) => {
           </Box>
         </Modal>
       </div>
-        
+      <input type="file" id="imageUploader" accept="image/*" onChange={(e) => {
+                setImages(e.target.files);
+                setImagePreviews(e);
+                }} hidden/>
+            
       </>
     );
   }
