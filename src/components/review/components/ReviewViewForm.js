@@ -131,10 +131,8 @@ export default function ReviewViewForm(props) {
 
   
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  const exposureClick = (params, bool) =>{
+  const exposureClick = (params) =>{
     console.log("reviewseq: "+params);
-    console.log("bool :"+bool);    
-
     globalAxios(`/review/reviewUpdate/${params}`, 'put', {}, response => {
       if (response ==='성공') {
         console.log("성공");   
@@ -207,7 +205,7 @@ export default function ReviewViewForm(props) {
               </Grid>
               {memType==='사업자회원'?
               <Grid>
-              <Button onClick={() => { exposureClick(review.reviewSeq, review.reviewExposure==1?false:true);  }}>{review.reviewExposure==1?<>매장추천 <StarIcon/></>:<>매장추천 <StarOutlineIcon/></>}</Button>
+              <Button onClick={() => { exposureClick(review.reviewSeq);  }}>{review.reviewExposure==1?<>매장추천 <StarIcon/></>:<>매장추천 <StarOutlineIcon/></>}</Button>
               </Grid>:
               ""}              
               {memNick===review.member.memNick? <Button onClick={() => { openDeldialog(review.reviewSeq); }}>삭제</Button>:""}
