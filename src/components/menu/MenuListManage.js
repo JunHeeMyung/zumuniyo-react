@@ -73,7 +73,7 @@ const MenuListManage = (props) => {
     return (
         <>
         
-        <Button onClick={reRender}>전체메뉴</Button>
+        <Button onClick={reRender}>전체메뉴보기</Button>
         
         <br></br>
 
@@ -81,10 +81,14 @@ const MenuListManage = (props) => {
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                     <TableHead>
                     <TableRow id='tableHead'>
-                        <TableCell align='center'> <span className='tableHeadFont'>메뉴이름</span></TableCell>
+                        <TableCell align='center' 
+                            id= "menuNameSpace"
+                        > <span className='tableHeadFont'>메뉴이름</span></TableCell>
                         <TableCell align='center'> <span className='tableHeadFont'>카테고리</span></TableCell>
                         <TableCell align='center'> <span className='tableHeadFont'>가격</span></TableCell>
-                        <TableCell align='center'> <span className='tableHeadFont'>메뉴소개</span></TableCell>
+                        <TableCell align='center'
+                            id= "menuInfoSpace"
+                        > <span className='tableHeadFont'>메뉴소개</span></TableCell>
                         <TableCell align='center'> <span className='tableHeadFont'>이미지</span></TableCell>
                         <TableCell align='center'> <span className='tableHeadFont'>상세보기</span></TableCell>
                         <TableCell align='center'> <span className='tableHeadFont'>삭제</span></TableCell>
@@ -102,7 +106,8 @@ const MenuListManage = (props) => {
                         >
                         <TableCell component="th" scope="row">{row.menuName}</TableCell>
                         <TableCell align="center">{row.menuCategory.menuCategoryName}</TableCell>
-                        <TableCell align="right"><span className='menuPrice'>{row.menuPrice}</span></TableCell>
+                        <TableCell align="right"><span className='menuPrice'>
+                        {((Number)(row.menuPrice)).toLocaleString('ko-KR') +' 원'}</span></TableCell>
                         <TableCell align="left">{row.menuSimpleInfo}</TableCell>
                         <TableCell align="center"><img className="menuImage" src={"/image/"+row.menuImage}/></TableCell>
                         

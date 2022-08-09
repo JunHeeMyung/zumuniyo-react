@@ -17,3 +17,27 @@ width: 15em;
 height: 10em;
 
 }
+
+
+
+#menuInsertBox{
+    max-height: 90vh;
+    overflow-y: scroll;
+}
+    #menuInsertBox::-webkit-scrollbar {
+    width: 10px;
+    }
+    #menuInsertBox::-webkit-scrollbar-thumb{
+    background: #bbbbbb;
+    border-radius: 10px;
+    }
+    #menuInsertBox::-webkit-scrollbar-track {
+    background: F3F3F3;
+    }
+
+
+
+
+
+
+

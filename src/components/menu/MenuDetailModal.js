@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { List, ListItem, ListItemText, TableBody, TableCell, TableRow, TextField } from '@mui/material';
+import { CardActionArea, List, ListItem, ListItemText, TableBody, TableCell, TableRow, TextField } from '@mui/material';
 
 import { styled } from '@mui/material/styles';
 
@@ -26,7 +26,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import StarIcon from '@mui/icons-material/Star';
-
+import "./MenuDetailModal.css"; 
 
 
 
@@ -46,10 +46,11 @@ const ExpandMore = styled((props) => {
 
 const style = {
   position: 'absolute',
-  top: '40%',
+  top: '5%',
   left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
+  transform: 'translate(-50%, 0)',
+  height:'35em',
+  width: '24em',
   bgcolor: 'background.paper',
   border: '1px solid gray',
   boxShadow: 18,
@@ -102,7 +103,7 @@ const MenuDetailModal = (props) => {
       <div id="menuDetailContainer">
         
         <Modal open={props.detailModalOpen} >
-        
+          
           {/* <Box sx={style}
                id="menuDetailBox"
                component="form"
@@ -113,20 +114,32 @@ const MenuDetailModal = (props) => {
             
             <div className="modal" id="detailModal">
             
-            <Card sx={style}>
+            <Card sx={style} id="menuDetailCard">
             <CardHeader
-              avatar={
-                <StarIcon sx={{ color: yellow[500] }} aria-label="recommended" />
+              avatar={ 
+                menuData.menuTop?  
+                <div><StarIcon sx={{ color: yellow[500] }} aria-label="recommended" /></div> : <div></div>
               }
               className="modal-title" align='center' 
               action={
+                <div>
               <IconButton edge="end" aria-label="modal-close" onClick={props.handleModalClose} >
                 <ClearIcon />
               </IconButton>
+              </div>
               }
-              title={menuData.menuName}
-              subheader={menuData.menuCategory.menuCategoryName}
+              title={
+                <Typography gutterBottom variant="h5" component="div" >
+                  {menuData.menuName}
+                </Typography>
+                }
+              subheader={
+                <Typography variant="body2" color="text.secondary" >
+                  {menuData.menuCategory.menuCategoryName}
+                </Typography>
+                }
             />
+            <div id="menuDetailWrapper">
             <CardMedia
               component="img"
               height="194"
@@ -135,22 +148,24 @@ const MenuDetailModal = (props) => {
             />
             <CardContent>
               
-              <br></br>
-              <Typography paragraphvariant="body2" color="text.secondary">메뉴소개</Typography>
+              <Typography variant="subtitle2" color="text.secondary">메뉴소개</Typography>
                 <div>
-                <TextField
-                  id="menuDetailInfo-textField"
-                  
+                {/* <TextField
+                  id="menuDetailInfo-textField"  
                   multiline
                   fullWidth 
                   maxRows={1}
                   value={menuData.menuSimpleInfo}
                   onChange={onChange}
-                  
-                />
+                /> */}
+
+                <Typography variant="body1" color="text.primary" >
+                  <span id="menuSimpleInfoSpace" >{menuData.menuSimpleInfo}</span>
+                </Typography>
+
+
                 </div>
-              
-              <br></br>  
+              <br></br>
               <Typography variant="h6" color="text.primary" align='right'>
                 
                 <div>
@@ -197,21 +212,25 @@ const MenuDetailModal = (props) => {
               </CardContent>
             </Collapse>
             
-            </Card>
+
+            </div>
             
+            
+           <div id="modalBottomWrapper">
+          
+              
+              <Button variant="contained" onClick={props.handleModalClose}>닫기</Button>
+             
+            </div>
+
+            </Card>
             
             <br></br>
             
-            <div>
-
-
-            </div>
-            <div>
-            <Button type='reset' onClick={props.handleModalClose}>닫기</Button>
-            </div>
 
             </div>
           {/* </Box> */}
+          
         </Modal>
       </div>
 

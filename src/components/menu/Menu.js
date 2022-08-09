@@ -10,6 +10,12 @@ import MenuListShopView from './MenuListShopView';
 import MenuCategory from 'components/menucategory/MenuCategory';
 import MenuInsertModal from 'components/menu/MenuInsertModal';
 import MenuCategoryModal from 'components/menucategory/MenuCategoryModal';
+import { Paper } from '@mui/material';
+
+
+
+
+
 
 const Menu = (props) => {
 
@@ -34,7 +40,7 @@ const Menu = (props) => {
         globalAxios('/menu/menucategoryview/'+menuCategorySeq,'get',{},data=>{setMenuData(data)});
 
     }
-
+    
 
     useEffect(
         () => {
@@ -59,6 +65,8 @@ const Menu = (props) => {
       
     return (
         <>
+        <div id="menuWrapper">
+            <Paper id="menuChildWrapper">
            { shopSeq===''||menuData===''?<></>
            :<>
             <div>
@@ -72,12 +80,16 @@ const Menu = (props) => {
             <MenuCategoryModal shopSeq={shopSeq} getMenuList={getMenuList} doReRender={doReRender} reRender={reRender}/>    
             </div>
 
+            <br></br>
             <hr></hr>
+            <br></br>
 
-            <div>
+            
+            <div id="menuInsertModalBtn">
             <MenuInsertModal shopSeq={shopSeq} menuData={menuData} getMenuList={getMenuList}/>
             </div>
-
+            <br></br>
+            
             <div>
             <MenuListManage shopSeq={shopSeq} menuData={menuData} getMenuList={getMenuList} reRender={reRender} doReRender={doReRender} />
             </div>
@@ -89,6 +101,10 @@ const Menu = (props) => {
             {/* <MenuListShopView menuData={menuData} /> */}
             
            </>}
+
+           </Paper>
+           </div>
+
         </>
     );
 }

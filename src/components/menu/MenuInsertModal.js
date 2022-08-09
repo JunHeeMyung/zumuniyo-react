@@ -19,7 +19,7 @@ const style = {
   top: '0',
   left: '50%',
   transform: 'translate(-50%, 0)',
-  height:'55em',
+  height:'90vh',
   width: '28em',
   bgcolor: 'background.paper',
   border: '1px solid gray',
@@ -55,7 +55,7 @@ const MenuInsertModal = (props) => {
 
     const [menuInsert, setMenuInsert] = useState({
 		menuName : '',
-        menuCategorySeq:0,
+        menuCategorySeq: 0,
 		menuPrice : 0, 
 		menuImage : '',
 		menuTop : 0,
@@ -122,9 +122,7 @@ const MenuInsertModal = (props) => {
 
     }
 
-    //const [show, setShow] = useState(false);
-    const [image, setImage] = useState();
-    const [flag, setFlag] = useState(false);
+    
 
     const uploadResult = result => {
 
@@ -196,7 +194,7 @@ const MenuInsertModal = (props) => {
 
         setMenuInsert({
             menuName : '',
-            menuCategorySeq:0,
+            menuCategorySeq: 0,
             menuPrice : 0, 
             menuImage : '',
             menuTop : 0,
@@ -210,12 +208,13 @@ const MenuInsertModal = (props) => {
       <>
       
       <div id="menuInsertContainer">
-        <Button onClick={openModal}>메뉴등록</Button>
+        <Button variant="contained" onClick={openModal}>메뉴등록</Button>
         
         <Modal open={showModal}>       
           <Box sx={style}
                id="menuInsertBox"
                autoComplete='off'
+               
           >
 
           <div className="modal" id="insertModal">
@@ -315,15 +314,24 @@ const MenuInsertModal = (props) => {
 
             <br/>
             
+            <FormControl sx={{ m: 1 }}>
+            <FormLabel>이미지첨부</FormLabel>
+            
+            </FormControl>
+            <br/>
             <div id="imagePreview"/>
             <button onClick={openUploader}>파일선택</button>
-
+            
+            <br/>
+            <br/>
             <br/>
 
             <hr/>
+            <br/>
             <button onClick={insertMenu}>등록하기</button>
             <button type='reset' onClick={closeModal}>취소</button>
             
+            <br/>
 
             </div>
         
