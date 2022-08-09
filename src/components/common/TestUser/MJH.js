@@ -9,6 +9,8 @@ import CRUDTest from "components/common/test/CRUDTest"
 import MyOrderList from "components/order/MyOrderList";
 import ImageUploaderTest from "components/common/util/ImageUploaderTest";
 import Manager from "components/manager/Manager";
+import MyCoupon from "components/coupon/MyCoupon";
+import CouponList from "components/coupon/CouponList";
 
 const MJH = ()=> {
 
@@ -27,7 +29,10 @@ const MJH = ()=> {
        <Link to="orderlist"><button>내주문리스트</button></Link>
        <Link to="imageupload"><button>이미지업로드</button></Link>
        <Link to="manager"><button>매니저</button></Link>
-       <Link to="manager/qrcode/4882"><button>QR코드</button></Link>
+       <Link to="manager/qrcode/9999"><button>QR코드관리</button></Link>
+       <Link to="manager/coupon/9999"><button>쿠폰관리</button></Link>
+       <Link to="mycoupon"><button>내쿠폰</button></Link>
+       <Link to="couponlist"><button>매장쿠폰목록</button></Link>
 
 
         <hr/>
@@ -46,6 +51,8 @@ const MJH = ()=> {
           <Route path="/orderlist/*" element={<MyOrderList/>} />
           <Route path="/imageupload" element={<AuthChecker><ImageUploaderTest/></AuthChecker>} />
           <Route path="/manager/*" element={<AuthChecker memType="사업자회원"><Manager/></AuthChecker>} />
+          <Route path="/mycoupon" element={<AuthChecker><MyCoupon/></AuthChecker>} />
+          <Route path="/couponlist" element={<AuthChecker><CouponList shopSeq = "9999"/></AuthChecker>} />
           <Route path="*" element={<><h1>주소값 이상</h1></>} />
         </Routes>
 
