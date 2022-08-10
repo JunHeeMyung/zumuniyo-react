@@ -9,10 +9,9 @@ import "react-datepicker/dist/react-datepicker.css";
 const AdInsert2 = () =>{ 
     //{new Date(emp.hire_date).toJSON().split("T")[0] }
     const navigate = useNavigate();
-    const {globalAxios} = useContext(GlobalContext);  //스트링으로넣어서 백엔드에서 timestamp스트링으로 받아서 고쳐야됌
-                                                      // 9시간 차이남.
+    const {globalAxios} = useContext(GlobalContext);  
                                                       
-    const [Ad, setAd] = useState({owner:"",endTime:"",startTime:"startDate",image:""});
+    const [Ad, setAd] = useState({owner:"",endTime:"",startTime:"",image:""});
     const [startDate, setStartDate] = useState(new Date());
     useEffect(() => {
 
@@ -70,7 +69,7 @@ return(
           selected={startDate}
           onChange={(date) => setStartDate(date)}
           minDate={new Date()}
-          maxDate={addMonths(new Date(), 5)}
+          //maxDate={addMonths(new Date(), 5)}
           showDisabledMonthNavigation
          /> 
        {/* <div className="calender-container">
