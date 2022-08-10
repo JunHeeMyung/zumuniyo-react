@@ -4,9 +4,9 @@ import {GlobalContext} from "components/common/GlobalProvider";
 
 
 
-const NoticeDelete = () => {
+const AdDelete = () => {
   const location = useLocation();
-  const noticeBoardSeq = location.state.noticeBoardSeq;
+  const adSeq = location.state.adSeq;
   const {globalAxios} = useContext(GlobalContext);
   let navigate = useNavigate();
   
@@ -18,14 +18,19 @@ const NoticeDelete = () => {
   
   useEffect(()=>{
       
-    console.log("보드 seq: " +noticeBoardSeq);
-      globalAxios(`/noticeboard/NoticeDelete.do/${noticeBoardSeq}`,"delete",{},data=>{
+    console.log("보드 seq: " +adSeq);
+    if (window.confirm("정말 삭제합니까?")) { 
+    globalAxios(`/advertisement/deleteAd/${adSeq}`,"delete",{},data=>{
         console.log(data);
         alert(`성공적으로 삭제되었습니다..`);
         navigate("/SWY");
-        })
-      },[])
-    
+        },[]);
+    }else {
+         alert("취소합니다.");
+           }
+     },[]);
+
+
       // axios({
       //   method: "delete",
       //   url: `/noticeboard/NoticeDelete.do/${noticeBoardSeq}`,
@@ -47,5 +52,4 @@ const NoticeDelete = () => {
   return <div></div>;
   }
 
-export default NoticeDelete;
-
+  export default AdDelete;

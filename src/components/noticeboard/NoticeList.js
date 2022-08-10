@@ -1,72 +1,120 @@
-import React, { Component } from 'react';
-import axios from 'axios'; 
+// import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import {Link} from  "react-router-dom";
+import React,{ useContext,useEffect,useState} from "react";
+import {GlobalContext} from "components/common/GlobalProvider";
 import Pagination from './Pagination';
 
-class NoticeList extends Component {
-    
-    
-    constructor(props){
-        super(props);
-        this.state = {noticelist:[]};
+
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
+
+// function createData(name, calories, fat, carbs, protein) {
+//   return { name, calories, fat, carbs, protein };
+// }
+
+// const rows = [
+//   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+ 
+// ];
+const CustomizedTables= () => {
+
+
+
+    const {globalAxios} = useContext(GlobalContext);
+    const [noticelist,setNoticelist] = useState([]);
+    const [limit,setLimit] = useState(5);
+    const [page,setPage] = useState(1);
+    const offset = (page-1 )*limit;
+    const imgURL = "/img/red_icon03.png"
+   
+    const getNoticeList = () => {
+
+        globalAxios("/noticeboard/Noticelist.go","get",{},data=>{
+            console.log(data);
+            setNoticelist(data);
+        })
     }
-    componentDidMount() {
-        const res  = axios.get('/noticeboard/Noticelist.go');
-        // CORS 문제 발생하여 package.json 에 "proxy": "http://localhost:8080" 추가
-        // package.json 수정 후 다시 실행
-       res.then(re=>{
-        console.log(re.data);
-        this.setState({noticelist:re.data});
-        });
-    } 
-     
-    // (0)
-    render() {
-        const imgURL = "/images/red_icon03.png"
-        return (
-            <div> 
-            
-                <div>
-                <h2 className="text-center">notice List</h2>
-                <Link to="/SWY/NoticeBoard/NoticeInsert">
-                <button className="insertNotice">글쓰기</button>
-                </Link>
+
+    useEffect(() => {
+
+        getNoticeList();
+
+    }, []); 
+
+
+  return (
+
+        <div>
+
+     <TableContainer component={Paper}>
+     <h2 align="center" className="text-center">공지사항</h2>
                 <Link to="/SWY/NoticeBoard/CkNoticeInsert">
                 <button className="insertNotice2">CK글쓰기</button>
                 </Link>
-                <div className ="row">
-                    <table className="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>제목 </th>
-                                <th>작성일 </th>
-                                <th>조회수 </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                this.state.noticelist.map(
-                                    list => 
-                                    <tr key = {list.noticeBoardSeq}>
-                                        <td>{list.noticeBoardSeq}</td>
-                                        <td> 
-                                        <Link to={`/SWY/NoticeBoard/NoticeDetail/${list.noticeBoardSeq}`}>{list.title} </Link>  
-                                        {list.boardTop==1?<img src={imgURL} alt={list.noticeBoardSeq} width="100px" height="100px"/>:<div/>}
-                                        </td>
-                                       
-                                        <td> { new Date(list.regdate).toJSON().split("T")[0]} </td>
-                                         <td>{list.hitCount} </td>   
-                                    </tr>
-                                )
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            </div>
-        );
+                <Link to="/SWY/advertisement/AdList">
+                <button className="ad">광고</button>
+                </Link>
+                <Link to="/SWY/advertisement/ImgSlider">
+                <button className="Imgslider">슬라이더</button>
+                </Link>  
+    <Table sx={{ minWidth: 700 }} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+            <StyledTableCell>번호</StyledTableCell>
+            <StyledTableCell >제목</StyledTableCell>
+            <StyledTableCell >작성일</StyledTableCell>
+            <StyledTableCell >조회수</StyledTableCell>
 
-    }
-}
-export default NoticeList;
+            </TableRow>
+         </TableHead>
+         <TableBody>
+        {
+        noticelist.slice(offset, offset+limit).map((
+                                    list, index) => 
+            <StyledTableRow key={index}>
+              <StyledTableCell component="th" scope="row">
+                    {/* {list.boardTop==1?(<img src={imgURL} alt={list.noticeBoardSeq} width="25px" height="25px"/>):({list})}  */}
+              </StyledTableCell>
+              <StyledTableCell  >
+                {list.boardTop==1?<img src={imgURL} alt={list.noticeBoardSeq} width="50px" height="50px"/>:<div/>}
+                 <Link to={`/SWY/NoticeBoard/NoticeDetail/${list.noticeBoardSeq}`}>{list.title} </Link>
+              </StyledTableCell>
+              <StyledTableCell >{ new Date(list.regdate).toJSON().split("T")[0]}</StyledTableCell>
+              <StyledTableCell >{list.hitCount}</StyledTableCell>
+            </StyledTableRow>
+         )
+        }          
+        </TableBody>
+      </Table>
+    </TableContainer>   
+    <Pagination total={noticelist.length} limit={limit} page={page} setPage={setPage}/>
+    </div>
+ );
+};
+export default CustomizedTables;
