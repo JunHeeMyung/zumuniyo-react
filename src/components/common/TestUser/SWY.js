@@ -10,7 +10,6 @@ import AdInsert2  from "components/advertisement/AdInsert2";
 import AdList from "components/advertisement/AdList";
 import AdDetail from "components/advertisement/AdDetail";
 import AdDelete from "components/advertisement/AdDelete";
-import ProductSearch from "components/search/ProductSearch";
 import ImgSlider from "components/advertisement/ImgSlider";
 
 const SWY = ()=> {
@@ -29,7 +28,6 @@ const SWY = ()=> {
           <Route path="/advertisement/AdInsert2" element={<AdInsert2/>} />
           <Route path="/advertisement/AdDetail/:adSeq" element={<AdDetail/>} />
           <Route path="/advertisement/AdDelete" element={<AdDelete/>} />
-          <Route path="/search/ProductSearch/:word" element={<ProductSearch/>} />
           <Route path="/advertisement/ImgSlider" element={<ImgSlider/>} />
         </Routes>
       
