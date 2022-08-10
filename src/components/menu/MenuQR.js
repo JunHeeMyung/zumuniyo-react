@@ -55,7 +55,7 @@ const MenuQR = () => {
         }else{
             setOrderMenuList({...orderMenuList,...tempOrderData});
         }
-        alert("메뉴를 카트에 담았습니다");
+        alert("선택하신 메뉴를 주문목록에 담았습니다.");
         handleClose();
     }
     
@@ -133,7 +133,7 @@ const MenuQR = () => {
     }
 
     const removeCartItem = menuSeq =>{
-        alert("카트에서 메뉴를 제거했습니다");
+        alert("메뉴를 주문목록에서 제거했습니다.");
         delete orderMenuList[menuSeq];
         setRequestData({...requestData,"orderList" : JSON.stringify(orderMenuList)})
     }
@@ -171,7 +171,7 @@ const MenuQR = () => {
         
         {menuList&&menuCategoryList&&menuTopList?
             <>
-                <Box    id="couponDataBox"
+                <Box    id="MenuTableBox"
                         display="flex"
                         justifyContent="center"
                         alignItems="center">
