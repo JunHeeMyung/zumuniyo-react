@@ -1,14 +1,21 @@
-import axios from "axios";
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 
+import React,{ useContext ,useEffect,useState} from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import {GlobalContext} from "components/common/GlobalProvider";
 
 const NoticeUpdate = () => {
+
+
+  const {globalAxios} = useContext(GlobalContext);
   const location = useLocation();
   const originalNotice = location.state.notice;
   const [notice, setNotice] = useState(originalNotice);
   let navigate = useNavigate();
   console.log(notice);
+   
+  
+
+
 
   const handleChange = (e) => {
     console.log(e);
@@ -19,19 +26,12 @@ const NoticeUpdate = () => {
 //   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    
     console.log("저장:", notice);
-
-    axios({
-      method: "post",
-      url: "/noticeboard/NoticeUpdate.do",
-      data: notice,
+    globalAxios("/noticeboard/NoticeUpdate.do","post",{},data=>{
+    console.log(data);
+    alert(`변경사항이 성공적으로 저장되었습니다.`);
+    navigate("/SWY");
     })
-      .then((res) => {
-        console.log(res);
-        alert(`변경사항이 성공적으로 저장되었습니다.`);
-        navigate("/SWY");
-      })
       .catch((error) => {
         console.log(error);
         throw new Error(error);
