@@ -7,7 +7,8 @@ import { Box, Collapse, List, ListItem, ListItemButton, ListItemText, Paper
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import "./MenuListQR.css";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-
+import CouponList from 'components/coupon/CouponList';
+import CouponSelector from "components/coupon/CouponSelector";
 
 const MenuListQR = () => {
 
@@ -23,14 +24,19 @@ const MenuListQR = () => {
     const [orderMenuList,setOrderMenuList] = useState({});
     const [menuCategorySeq,setMenuCategorySeq] = useState(-1);
     const [openList,setOpenList] = useState({});
-  
+    const [selectedCoupon,setSelectedCoupon] = useState(0);
 
     const [requestData,setRequestData] = useState({
             tableNum: params.tableNum ,
             shopSeq: params.shopSeq,
             orderList : JSON.stringify(orderMenuList),
-            couponSeq: 0
+            couponSeq: selectedCoupon
     });
+
+    const couponSelect = couponSeq => {
+        setSelectedCoupon(couponSeq);
+    }
+
 
 
     const [open, setOpen] = useState(false);
@@ -165,6 +171,13 @@ const MenuListQR = () => {
     
     
 
+
+    useEffect(
+      () => {
+        setRequestData({...requestData, "couponSeq" : selectedCoupon})
+      }, [selectedCoupon]
+    );
+
     useEffect(
         () => {
             getMenuList(params.shopSeq);
@@ -200,6 +213,8 @@ const MenuListQR = () => {
         <hr/>
         {JSON.stringify(openList)}
         <hr/>
+        <CouponList shopSeq={params.shopSeq}/>
+        <hr/>
         
         {menuList&&menuCategoryList&&menuTopList?
             <>
@@ -217,6 +232,14 @@ const MenuListQR = () => {
               })()}
             </>
             :""}
+
+
+          <div>
+          <CouponSelector shopSeq={params.shopSeq} couponSelect={couponSelect}/>
+          </div>    
+          <hr/>
+
+
                 <Box    id="MenuCollapseBox"
                         display="flex"
                         justifyContent="center"
