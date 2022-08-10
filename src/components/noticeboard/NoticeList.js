@@ -99,10 +99,12 @@ const CustomizedTables= () => {
                                     list, index) => 
             <StyledTableRow key={index}>
               <StyledTableCell component="th" scope="row">
-               {list.noticeBoardSeq}  
+                    {/* {list.boardTop==1?(<img src={imgURL} alt={list.noticeBoardSeq} width="25px" height="25px"/>):({list})}  */}
               </StyledTableCell>
-              <StyledTableCell  >{list.boardTop==1?<img src={imgURL} alt={list.noticeBoardSeq} width="50px" height="50px"/>:<div/>}
-              <Link to={`/SWY/NoticeBoard/NoticeDetail/${list.noticeBoardSeq}`}>{list.title} </Link></StyledTableCell>
+              <StyledTableCell  >
+                {list.boardTop==1?<img src={imgURL} alt={list.noticeBoardSeq} width="50px" height="50px"/>:<div/>}
+                 <Link to={`/SWY/NoticeBoard/NoticeDetail/${list.noticeBoardSeq}`}>{list.title} </Link>
+              </StyledTableCell>
               <StyledTableCell >{ new Date(list.regdate).toJSON().split("T")[0]}</StyledTableCell>
               <StyledTableCell >{list.hitCount}</StyledTableCell>
             </StyledTableRow>

@@ -101,7 +101,8 @@ const BasicModal = () =>{
   
   const getAdInsert =(result)=> {
     console.log({...Ad, image: result[0]});
-
+                                                      //스트링으로넣어서 백엔드에서 timestamp스트링으로 받아서 고쳐야됌
+                                                      // 9시간 차이남.
       globalAxios("/advertisement/advertisementinsert","post", {...Ad, image: result[0],startTime:startDate,endTime:endDate } ,data=>{
           console.log(data);
           alert(` 성공적으로 입력 되었습니다.`);
