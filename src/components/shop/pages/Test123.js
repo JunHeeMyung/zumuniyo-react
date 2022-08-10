@@ -21,6 +21,12 @@ export default function Test123() {
   function convertDate(longValue) {
     return new Date(longValue).toLocaleString();
   }
+  const Viewer = ({ content }) => (
+    <div style={{ width: "640", height: "200" }}
+      className="ck-content"
+      dangerouslySetInnerHTML={{ __html: content }}
+    ></div>
+  );
 
   useEffect(shopSelect, []);
 
@@ -36,7 +42,11 @@ export default function Test123() {
             <p>{shop.shopSeq}</p>
             <p>{shop.shopName}</p>
             <p>{shop.shopInfo}</p>
-            <p>{convertDate(shop.shopRegdate)}</p>
+            {/* <p><Viewer content={shop.shopDetail} /></p> */}
+            <p>{shop.shopAddrDetail}</p>
+            <p>{shop.shopCategory}</p>
+            {/* <p>{shop.location}</p>
+            <p>{convertDate(shop.shopRegdate)}</p> */}
             <p>{shop.shopStatus}</p>
           </div>
         )

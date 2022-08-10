@@ -8,7 +8,7 @@ function Ckeditorwrite() {
     <>
       <CKEditor
         editor={ClassicEditor}
-        data="왜 안돼 나와라 좀<p>Hello from CKEditor 5!</p>"
+        data="가게 정보를 입력하세요."
 
         onReady={editor => {
           editor.ui

@@ -7,17 +7,15 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 import $ from 'jquery';
 import { Button, TextField } from '@mui/material';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
-export default function Address() {
-  const [values, setValues] = React.useState({
-    amount: '',
-    weight: '',
-    weightRange: '',
-  });
-
+export default function Address({ handleChange3, locAddr, shopAddrDetailParam }) {
+  console.log(shopAddrDetailParam);
   const { daum } = window;
   const { kakao } = window;
-
+  const [location, setLocation] = useState({ locAddr: locAddr });
+  const [shopAddrDetail, setShopAddrDetail] = useState(shopAddrDetailParam);
   const findAddr = () => {
     new daum.Postcode({
       oncomplete: data => {
@@ -25,9 +23,9 @@ export default function Address() {
         const address = data.roadAddress || data.autoRoadAddress;
         geocoder.addressSearch(address, (result, status) => {
           if (status === kakao.maps.services.Status.OK) {
-            $("#addr").val(address);
-            $("#latitude").val(result[0].y);
-            $("#longitude").val(result[0].x);
+
+            setLocation({ ...location, locAddr: address, locLat: result[0].y, locLon: result[0].x });
+
           };
         });
       }
@@ -35,36 +33,33 @@ export default function Address() {
   };
 
 
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
+  useEffect(() => {
+    handleChange3(location, shopAddrDetail);
+  }, [location, shopAddrDetail]);
+
+
   return (
     <Box>
       <div>
-        <Input id="addr" name="loc_addr" type="text" readOnly />
-        <Button variant="outlined" id="findaddr" onClick={findAddr} >주소검색</Button>
-        <Input id="latitude" name="loc_lat" type="hidden" readOnly />
-        <Input id="longitude" name="loc_lon" type="hidden" readOnly />
+        <Input id="addr" name="location" type="text" value={locAddr || " "} readOnly />
+        <Button variant="outlined" id="findaddr" onClick={findAddr || " "} >주소검색</Button>
+        <Input id="latitude" name="loc_lat" value={location.locLat || 0} type="hidden" readOnly />
+        <Input id="longitude" name="loc_lon" value={location.locLon || 0} type="hidden" readOnly />
 
       </div>
 
       <div style={{ marginTop: "16.5px" }}>
         <TextField
           autoComplete="shopDetailAddress"
-          name="shopDetailAddress"
+          name="shopAddrDetail"
           required
           fullWidth
           id="shopDetailAddress"
           label="상세주소"
+          value={shopAddrDetail}
           autoFocus
-        >
-          <InputLabel htmlFor="standard-adornment-amount">상세 주소</InputLabel>
-          <Input
-            id="standard-adornment-amount"
-            value={values.amount}
-            onChange={handleChange('amount')}
-            startAdornment={<InputAdornment position="start">상세 주소</InputAdornment>}
-          />
+          onChange={(e) => setShopAddrDetail(e.target.value)} >
+
         </TextField>
       </div>
     </Box>

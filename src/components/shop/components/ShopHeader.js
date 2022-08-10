@@ -16,6 +16,7 @@ import Box from '@mui/material/Box';
 
 import ShopTalbe from './ShopTable.js';
 import Test123 from '../pages/Test123.js';
+import ShopDetail from './ShopDetail.js';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -138,7 +139,7 @@ export default function FloatingActionButtonZoom() {
           리뷰
         </TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
-          매장정보
+          <ShopDetail shopseq={4882} />
         </TabPanel>
 
       </SwipeableViews>

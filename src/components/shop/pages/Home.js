@@ -11,7 +11,7 @@ export default function home() {
       {/* <Button variant="contained" color="success" href="/Shop">
         매장 관리
       </Button> */}
-
+      <h1 align="center">매장명</h1>
       <Mylike />
 
       <Header2 />
