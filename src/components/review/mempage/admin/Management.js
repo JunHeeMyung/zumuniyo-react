@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useReducer } from "react";
 import { GlobalContext } from "components/common/GlobalProvider";
 
 
@@ -12,16 +12,20 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Pagination from "components/review/components/Pagination";
 import { Divider, FormControl, InputBase, InputLabel, NativeSelect, TextField } from "@mui/material";
-
+import {Stack} from "@mui/material";
 import { Button, Box } from "@mui/material";
 import { event } from "jquery";
 
 export default function Management() {
   const { globalAxios } = useContext(GlobalContext);
-
+  const [any, forceUpdate] = useReducer(num => num + 1, 0);
+  function handleChange11() {
+    forceUpdate();
+  }
 
   const [members, setMembers] = useState([]);
   const [memUp, setMemUp] = useState();
+  const [member, setMember] = useState({});
 
 
 
@@ -38,21 +42,7 @@ export default function Management() {
     });
   }
 
-  const handleSubmit = (e) => {
-    console.log('handleSubmit들어옴');
-    // //e.preventDefault();
-    // console.log(memUp);
-
-    // globalAxios('/review/memManage/', 'put', memUp, response => {
-    //   console.log("respose");
-    //   console.log(response);
-    //   if (response === '성공') {
-    //     //setShow(true);  //성공알림
-    //   } else {
-    //     alert("failed to ");
-    //   }
-    // });
-  };
+  
 
   function convertDate(longValue) {
     return new Date(longValue).toLocaleString();
@@ -64,6 +54,10 @@ export default function Management() {
   useEffect(()=>{
   
   }, [members]);
+
+  useEffect(()=>{
+  
+  }, [member]);
 
 
 
@@ -150,14 +144,56 @@ export default function Management() {
     // setMtype(event.target.value);
     // console.log(a);
     // console.log(b);
-    // setMembers({...members[b], [name] : a });
+    setMember({...member, [e.target.name] :e.target.value  });
+    handleChange11();
   };
+
   const handleChange3 = (e) => {
     console.log(e.target.name);
     console.log(e.target.value);
+    setMember({...member, [e.target.name] :e.target.value  });
     // setMsta(event.target.value);
     // console.log(event.target.value);
+    
 
+  };
+  const handleChange4 = (e) => {
+    console.log(e.target.name);
+    console.log(e.target.value);
+    setMember({...member, [e.target.name] :e.target.value  });
+
+    // setMsta(event.target.value);
+    // console.log(event.target.value);
+    
+
+  };
+
+const changvaluetest = (e)=>{
+
+
+}
+
+  const handleSubmit = (e) => {
+
+    // e.preventDefault();
+    
+    console.log('handleSubmit들어옴');
+    setMember({...member, memSeq :e.target.value  });  
+    
+    console.log(e.target.value);
+    // console.log(e.target.datamid);
+    // console.log(member);
+
+
+    globalAxios('/review/memManage/', 'put', member, response => {
+      console.log("respose");
+      console.log(response);
+      if (response === '성공') {
+        //setShow(true);  //성공알림
+      } else {
+        alert("failed to ");
+      }
+    });
   };
 
 
@@ -184,14 +220,15 @@ export default function Management() {
           <TableBody>
             {members.slice(offset, offset + limit).map((data, index) => (
 
-              <StyledTableRow key={index} >
+              <StyledTableRow key={index} >               
                 {/* <form id="memberManager" onSubmit={handleSubmit}> */}
-                {/* <Box   component="form" id="memberManager" onSubmit={handleSubmit}> */}                 
+                {/* <Box   component="form" id="memberManager" onSubmit={handleSubmit}> */}    
+                {/* <Stack component="form" noValidate onSubmit={handleSubmit} spacing={2} sx={{ m: 2, width: '25ch' }}>           */}
                 <StyledTableCell component="th" scope="row" >
                   {data.memSeq}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  <TextField id="outlined-basic" name="memNick" label={data.memNick} variant="filled" defaultValue={data.memNick} />
+                  <TextField id="outlined-basic" name="memNick" label={data.memNick} variant="filled" defaultValue={data.memNick}  onChange={handleChange4}/>
                 </StyledTableCell>
                 <StyledTableCell align="center">{data.memEmail}</StyledTableCell>
                 <StyledTableCell align="center">{convertDate(data.memRegdate)}</StyledTableCell>
@@ -209,7 +246,7 @@ export default function Management() {
                       // value={mtype}
                     >
                       {/* <option aria-label="None" value={data.memType}/> */}
-                      <option aria-label="None" value=""/>
+                      {/* <option aria-label="None" value=""/> */}
                       <option value={"관리자"}>관리자</option>
                       <option value={"사업자회원"}>사업자회원</option>
                       <option value={"일반회원"}>일반회원</option>
@@ -229,7 +266,7 @@ export default function Management() {
                       defaultValue={data.memStatus}
                       input={<BootstrapInput />}
                     >
-                      <option aria-label="None" >{data.memStatus}</option>
+                      {/* <option aria-label="None" >{data.memStatus}</option> */}
                       <option value={"활성"}>활성</option>
                       <option value={"비활성"}>비활성</option>
                       <option value={"정지"}>정지</option>
@@ -238,10 +275,11 @@ export default function Management() {
                 </StyledTableCell>
                 {/* <StyledTableCell align="center">{data.memStatus}</StyledTableCell> */}
                 <StyledTableCell align="center">
-                  <Button variant="contained" type="submit">수정</Button>
+                  <Button variant="contained" type="submit" value={data.memSeq} onClick={handleSubmit}>수정</Button>
                 </StyledTableCell>                       
                 {/* </Box>          */}
                 {/* </form> */}
+                {/* </Stack>    */}
               </StyledTableRow>
             ))}
           </TableBody>
