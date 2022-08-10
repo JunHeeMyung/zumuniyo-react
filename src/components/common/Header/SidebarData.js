@@ -1,6 +1,4 @@
-import React, {useState} from "react";
-
-
+// import * as React from 'react';
 
 
 
@@ -72,7 +70,8 @@ export const SidebarDataN = [
     },
     {
         title: '주문목록',
-        path: '/LDS/normal/orderList',
+        // path: '/LDS/normal/orderList',
+        path: '/MJH/orderlist',
         icon: <ListAltIcon />,
         cName: 'nav-text'
     },
@@ -99,7 +98,8 @@ export const SidebarDataB = [
     },
     {
         title: '주문관리 &  QR코드생성',
-        path: '/LDS/business/orderManageQR',
+        // path: '/LDS/business/orderManageQR',
+        path: '/MJH/manager/qrcode/4882',
         icon: <QrCodeScannerIcon />,
         cName: 'nav-text'
     },

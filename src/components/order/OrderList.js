@@ -33,31 +33,32 @@ const OrderList = (props)=> {
       },[location.pathname]
     );
 
-    const tableHeadStyle = {
+    const tableTopStyle = {
+        textAlign:"center" ,
+        backgroundColor: "rgb(71, 30, 30,0.8)",
+        fontWeight:"bold",
+        color:"white"
+     };
+    
+     const tableHeadStyle = {
         textAlign:"center" ,
         backgroundColor: "rgb(240, 240, 240)",
         fontWeight:"bold"
- 
      };
 
-     const tableTopStyle = {
-        textAlign:"center" ,
-        backgroundColor: "rgb(225, 225, 225)",
-        fontWeight:"bold"
- 
-     };
+     
 
      const isLoaded = () => JSON.stringify(orderGroup)!=='{}';
 
 
     return (
       <>
-        {orderGroup!==''?
+        {orderGroup!==''&&isLoaded()?
         <Box    display="flex"
                 justifyContent="center"
                 alignItems="center">
 
-            <Paper sx={{ width: '100%', overflow: 'hidden', maxWidth:'50em'}}>
+            <Paper sx={{ width: '100%', overflow: 'hidden', maxWidth:'50em', borderRadius:'1em'}}>
                 <TableContainer>
                     <Table stickyHeader aria-label="sticky table">
                     <TableHead >
@@ -70,19 +71,19 @@ const OrderList = (props)=> {
                         <TableCell sx={tableHeadStyle}> 주문번호 </TableCell><TableCell> {params.orderGroupSeq} </TableCell>
                         <TableCell sx={tableHeadStyle}> 주문시간 </TableCell>
                         <TableCell> 
-                            {isLoaded()?
+                            {
                             ((String)(orderGroup.orderGroupRegdate)).split('T')[0]+" "+
-                            ((String)(orderGroup.orderGroupRegdate)).split('T')[1].split('+')[0].split('.')[0]:""}
+                            ((String)(orderGroup.orderGroupRegdate)).split('T')[1].split('+')[0].split('.')[0]}
                         </TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell sx={tableHeadStyle}> 매장이름 </TableCell>
                         <TableCell>  
-                            {isLoaded()?orderGroup.shop.shopName:""}
+                            {orderGroup.shop.shopName}
                         </TableCell>
                         <TableCell sx={tableHeadStyle}> 주문상태 </TableCell>
                         <TableCell>
-                            {isLoaded()?orderGroup.orderStatus +" ("+orderGroup.tableNum+"번 테이블)":""}
+                            {orderGroup.orderStatus +" ("+orderGroup.tableNum+"번 테이블)"}
                         </TableCell>
                     </TableRow>
                     </TableBody>
@@ -117,7 +118,7 @@ const OrderList = (props)=> {
                             );
                         })}
                     <TableRow >
-                        <TableCell colSpan='4' key='usedCoupon' sx={usedCoupon===''?tableTopStyle:tableHeadStyle}>{'합계: '+((Number)(totalPrice)).toLocaleString('ko-KR') + " 원"}</TableCell>
+                        <TableCell colSpan='4' key='usedCoupon' sx={tableHeadStyle}>{'합계: '+((Number)(totalPrice)).toLocaleString('ko-KR') + " 원"}</TableCell>
                     </TableRow>
                     {usedCoupon!==''?
                     <>
@@ -126,7 +127,7 @@ const OrderList = (props)=> {
                             <TableCell colSpan='3'>{usedCoupon.couponName+' ( '+usedCoupon.couponMinCond+"원 이상 구매시 "+usedCoupon.couponDC+"원 할인 )"}</TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell colSpan='4' key='couponTotalPrice' sx={tableTopStyle}>
+                            <TableCell colSpan='4' key='couponTotalPrice' sx={tableHeadStyle}>
                                 {(()=>{totalPrice -= ((Number)(usedCoupon.couponDC))})()}
                                 {'쿠폰적용가: '+((Number)(totalPrice)).toLocaleString('ko-KR') + " 원"}
                             </TableCell>
@@ -138,7 +139,7 @@ const OrderList = (props)=> {
                 </TableContainer>
             </Paper>
         </Box>
-        :"잘못된 접근입니다"}
+        :""}
       </>
     );
   }

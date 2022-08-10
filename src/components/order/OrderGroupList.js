@@ -26,8 +26,8 @@ const OrderGroupList = (props)=> {
         globalAxios('/order/orderlist','get',{},result=>{setOrderGroupList(result)});
     }
 
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const handleChangePage = (event, newPage) => {
       setPage(newPage);
@@ -42,12 +42,18 @@ const OrderGroupList = (props)=> {
       navigate(location.pathname+'/'+orderGroupSeq);
     }
 
-    const tableHeadStyle = {
-       textAlign:"center" ,
-       backgroundColor: "rgb(240, 240, 240)",
-       fontWeight:"bold"
-
-    };
+    const tableTopStyle = {
+      textAlign:"center" ,
+      backgroundColor: "rgb(71, 30, 30,0.8)",
+      fontWeight:"bold",
+      color:"white"
+   };
+  
+   const tableHeadStyle = {
+      textAlign:"center" ,
+      backgroundColor: "rgb(240, 240, 240)",
+      fontWeight:"bold"
+   };
 
     useEffect(
       () => { 
@@ -60,10 +66,15 @@ const OrderGroupList = (props)=> {
          <Box   display="flex"
                 justifyContent="center"
                 alignItems="center">
-            <Paper sx={{ width: '100%', overflow: 'hidden' ,maxWidth:'50em'}}>
+            <Paper sx={{ width: '100%', overflow: 'hidden' ,maxWidth:'50em',borderRadius:'1em'}}>
               <TableContainer>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead >
+                    <TableRow >
+                        <TableCell colSpan='5' key='title' sx={tableTopStyle}>내 주문 목록</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
                     <TableRow >
                         <TableCell key='orderGroupSeq' sx={tableHeadStyle}>주문번호</TableCell>
                         <TableCell key='shopName' sx={tableHeadStyle}>매장이름</TableCell>
@@ -71,8 +82,6 @@ const OrderGroupList = (props)=> {
                         <TableCell key='detailInfomation' sx={tableHeadStyle}>주문상세</TableCell>
                         <TableCell key='review' sx={tableHeadStyle}>리뷰작성</TableCell>
                     </TableRow>
-                  </TableHead>
-                  <TableBody>
                     {orderGroupList
                       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                       .map((orderGroup) => {
@@ -90,7 +99,7 @@ const OrderGroupList = (props)=> {
                                   </IconButton>
                                 </TableCell>
                                 <TableCell key='review' sx={{ textAlign:"center" ,minWidth: 70}}>
-                                  <IconButton edge ="end">
+                                  <IconButton edge ="end" onClick={()=> {navigate(`/LDS/normal/reviewInsert/${orderGroup.orderGroupSeq}`) }}>
                                     <PostAddOutlinedIcon/>
                                   </IconButton>
                                 </TableCell>
@@ -107,7 +116,7 @@ const OrderGroupList = (props)=> {
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage} 
               />
           </Paper>
         </Box>

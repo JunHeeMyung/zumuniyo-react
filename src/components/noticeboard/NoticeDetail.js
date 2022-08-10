@@ -1,26 +1,45 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
 
+import {GlobalContext} from "components/common/GlobalProvider";
+import React,{ useContext ,useEffect,useState} from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 const NoticeDetail = () => {
   const { noticeBoardSeq } = useParams();
   const [notice, setNotice] = useState({});
   const navigate2 = useNavigate();
-  useEffect(() => {
-    console.log(`empid는 ${noticeBoardSeq}`);
-    axios({
-      method: "get",
-      url: `/noticeboard/Noticedetail.do/${noticeBoardSeq}`
-    })
-      .then((res) => {
-        console.log(res);
-        setNotice(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-        throw new Error(error);
+  const {globalAxios} = useContext(GlobalContext);
+
+  useEffect(()=>{
+      
+    console.log("보드 seq: " +noticeBoardSeq);
+    globalAxios(`/noticeboard/Noticedetail.do/${noticeBoardSeq}`,"get",{},data=>{
+      console.log(data);
+      setNotice(data);
       });
-  }, [noticeBoardSeq]);
+      
+    },[])
+
+
+
+
+  // useEffect(() => {
+  //   console.log(`id는 ${noticeBoardSeq}`);
+  //   axios({
+  //     method: "get",
+  //     url: `/noticeboard/Noticedetail.do/${noticeBoardSeq}`
+  //   })
+  //     .then((res) => {
+  //       console.log(res);
+  //       setNotice(res.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       throw new Error(error);
+  //     });
+  // }, [noticeBoardSeq]);
   
   const Viewer = ({ content }) => (
     <div style={{ width: "640", height: "200" }}
@@ -35,29 +54,46 @@ const NoticeDetail = () => {
 
   return (
     <>
+            
       <h2 align="center"> 공지사항</h2>
       <div className="emp-view-wrapper">
-        <div className="emp-view-row">
-          <label>번호</label>
-          <label>{notice.noticeBoardSeq}</label>
+        <div className="emp-view-row" >
+        <label>번호</label>
+        <TextField
+          required
+          id="outlined-required"
+          value={notice.noticeBoardSeq||''}
+          style={{padding:'1em'}}
+        />
         </div>
         <div className="emp-view-row">
-          <label>제목</label>
-          <label>{notice.title}</label>
+        <label>제목</label>
+          <TextField value={notice.title||''} id="outlined-basic"  variant="outlined" style={{padding:'1em'}} />
         </div>
         <div className="emp-view-row">
           <label>내용</label>
-          <Viewer content={notice.content} />
-        
-          {/* <label>{notice.content}</label> */}
+          <Viewer content={notice.content}/>
+          
+         
         </div>
         <div className="emp-view-row">
           <label>작성자</label>
-          <div>{notice.writer}</div>
+          <TextField
+          required
+          id="outlined-required"
+          value={notice.writer||''}
+          style={{padding:'1em'}} 
+        
+        />
         </div>
         <div className="emp-view-row">
           <label>조회수</label>
-          <div>{notice.hitCount}</div>
+          <TextField
+          required
+          id="outlined-required"
+          value={notice.hitCount||''}
+          style={{padding:'1em'}} 
+        />
         </div> 
         <button onClick={() => navigate2(-1)}>리스트보기</button>
         <Link to="/SWY/NoticeBoard/NoticeUpdate" state={{ notice: notice }}>

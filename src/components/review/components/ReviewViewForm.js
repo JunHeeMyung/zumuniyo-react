@@ -6,14 +6,15 @@ import Rating from '@mui/material/Rating';
 import Pagination from "components/review/components/Pagination";
 import { GlobalContext } from "components/common/GlobalProvider";
 import { ArrowUpwardRounded, ArrowDownwardRounded } from "@mui/icons-material";
-
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
+import StarIcon from '@mui/icons-material/Star';
 
 import Alert from '@mui/material/Alert';
 import './ReviewViewForm.css';
 
 let rNumber = 0;
 
-export default function ReviewViewForm() {
+export default function ReviewViewForm(props) {
 
   const { logined, memNick, memType, globalAxios } = useContext(GlobalContext);
 
@@ -38,38 +39,29 @@ export default function ReviewViewForm() {
   }));
 
 
-  const [reviews, setReview] = useState([]);
+  const [reviews, setReviews] = useState(props.reviewss);
   const [limit, setLimit] = useState(5);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
+  
 
-
-  const selectReviewList = () => {
-    globalAxios('/review/reviewList', 'get', {}, response => {
-      if (response) {
-        console.log(response);
-        setReview(response);
-      } else {
-        alert("failed to ");
-      }
-    });
+  const selectReviewList = () => {   
+    props.reviewfunction();
   }
-  useEffect(selectReviewList, []);
-
+ 
+  useEffect(()=>{
+    setReviews(props.reviewss);   
+  }, [props.reviewss]);
 
   function convertDate(longValue) {
     return new Date(longValue).toLocaleString();
   }
 
-
-
-
-
   const sortPhandle = () => {
     console.log("과거순 누름");
     const aa = reviews;
     aa.sort((a, b) => a.reviewSeq - b.reviewSeq);
-    setReview(aa);
+    setReviews(aa);
     setStateDay(false)
     handleChange();
     // console.log(reviews);
@@ -78,7 +70,7 @@ export default function ReviewViewForm() {
     console.log("최신순 누름");
     const aa = reviews;
     aa.sort((a, b) => b.reviewSeq - a.reviewSeq);
-    setReview(aa);
+    setReviews(aa);
     setStateDay(true)
     handleChange();
     // console.log(reviews);
@@ -87,7 +79,7 @@ export default function ReviewViewForm() {
     console.log("별점 높은순 누름");
     const aa = reviews;
     aa.sort((a, b) => (b.reviewAmount + b.reviewService + b.reviewTaste) - (a.reviewAmount + a.reviewService + a.reviewTaste));
-    setReview(aa);
+    setReviews(aa);
     setStateRaty(true);
     handleChange();
     // console.log(reviews);
@@ -96,7 +88,7 @@ export default function ReviewViewForm() {
     console.log("별점 낮은순 누름");
     const aa = reviews;
     aa.sort((a, b) => (a.reviewAmount + a.reviewService + a.reviewTaste) - (b.reviewAmount + b.reviewService + b.reviewTaste));
-    setReview(aa);
+    setReviews(aa);
     setStateRaty(false);
     handleChange();
     // console.log(reviews);    
@@ -128,22 +120,32 @@ export default function ReviewViewForm() {
   const deleteClick = (params, e) => {
     console.log(params);
     setDelOpen(false);
-    globalAxios(`/review/reviewDelete/${params}`, 'delete', {memNick}, response => {
+    globalAxios(`/review/reviewDelete/${params}`, 'delete', {}, response => {
       if (response==="success") {
-        // alert("삭제에 성공했습니다.");       
-        //window.location.reload("/LDS"); //리로드
         setShow(true);
-
       } else {
         alert(response);
-        // alert("failed to ");
-      }
-      
+      }      
+    });
+  }
+
+  
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const exposureClick = (params) =>{
+    console.log("reviewseq: "+params);
+    globalAxios(`/review/reviewUpdate/${params}`, 'put', {}, response => {
+      if (response ==='성공') {
+        console.log("성공");   
+        selectReviewList();     
+      } else {
+        console.log("실패");        
+        // alert(response);
+      }      
     });
   }
 
   return (
-    <>
+    <>  
       <Dialog open={show}>
         <Alert severity="info"> 성공적으로 삭제 되었습니다. <Button variant="outlined" onClick={() => { setShow(false); selectReviewList(); }}>확인</Button></Alert>
       </Dialog>
@@ -177,7 +179,8 @@ export default function ReviewViewForm() {
             style={{ maxWidth: 700, minWidth: 500, margin: "0 auto" }}
           >
             <Item>
-              <Grid container spacing={2} style={{ height: 70 }} >
+              {/* <Grid container spacing={2} style={{ height: 60, backgroundColor:"azure" }} > */}
+              <Grid container spacing={2} style={{ height: 60}} >
                 <Grid item xs={4}>
                   {/* 닉네임 */}
                   {review.member === null ? "닉없음" : review.member.memNick}
@@ -191,17 +194,28 @@ export default function ReviewViewForm() {
                   {/* 날짜 */}
                   {convertDate(review.reviewRegdate)}
                 </Grid>
-              </Grid>
+              </Grid>              
               <Grid>
+                {/* <Item style={{ height: 400, margin: "0 auto", overflowY: "auto" }}>
+                  <img src={`${process.env.PUBLIC_URL}/${review.reviewImages[0]}`}/>
+                </Item> */}
                 <Item style={{ height: 400, margin: "0 auto", overflowY: "auto" }}>
                   <Viewer content={review.reviewContent} />
-                </Item>
+                </Item>                
               </Grid>
-              <Button onClick={() => { openDeldialog(review.reviewSeq) }}>삭제</Button>
+              {memType==='사업자회원'?
+              <Grid>
+              <Button onClick={() => { exposureClick(review.reviewSeq);  }}>{review.reviewExposure==1?<>매장추천 <StarIcon/></>:<>매장추천 <StarOutlineIcon/></>}</Button>
+              </Grid>:
+              ""}              
+              {memNick===review.member.memNick? <Button onClick={() => { openDeldialog(review.reviewSeq); }}>삭제</Button>:""}
+              {/* <Button onClick={() => { openDeldialog(review.reviewSeq) }}>삭제</Button> */}
             </Item>
+            <br />
           </Grid>
         );
       })}
+      
       <Pagination total={reviews.length} limit={limit} page={page} setPage={setPage} />
     </>
   )
