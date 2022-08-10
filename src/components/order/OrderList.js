@@ -10,8 +10,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { Box } from "@mui/system";
+import moment from "moment-timezone"
 
 const OrderList = (props)=> {
+
+    moment.DATETIME_LOCAL = "YYYY-MM-DD HH:mm:ss";
+
 
     const {globalAxios} = useContext(GlobalContext);
     const location = useLocation();
@@ -71,9 +75,7 @@ const OrderList = (props)=> {
                         <TableCell sx={tableHeadStyle}> 주문번호 </TableCell><TableCell> {params.orderGroupSeq} </TableCell>
                         <TableCell sx={tableHeadStyle}> 주문시간 </TableCell>
                         <TableCell> 
-                            {
-                            ((String)(orderGroup.orderGroupRegdate)).split('T')[0]+" "+
-                            ((String)(orderGroup.orderGroupRegdate)).split('T')[1].split('+')[0].split('.')[0]}
+                            {moment(orderGroup.orderGroupRegdate).tz("Asia/Seoul").format(moment.DATETIME_LOCAL)}
                         </TableCell>
                     </TableRow>
                     <TableRow>
