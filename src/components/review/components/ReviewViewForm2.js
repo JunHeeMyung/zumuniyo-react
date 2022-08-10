@@ -6,15 +6,14 @@ import Rating from '@mui/material/Rating';
 import Pagination from "components/review/components/Pagination";
 import { GlobalContext } from "components/common/GlobalProvider";
 import { ArrowUpwardRounded, ArrowDownwardRounded } from "@mui/icons-material";
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import StarIcon from '@mui/icons-material/Star';
+
 
 import Alert from '@mui/material/Alert';
-import './ReviewViewForm.css';
+import './ReviewViewForm2.css';
 
 let rNumber = 0;
 
-export default function ReviewViewForm(props) {
+export default function ReviewViewForm2() {
 
   const { logined, memNick, memType, globalAxios } = useContext(GlobalContext);
 
@@ -39,29 +38,42 @@ export default function ReviewViewForm(props) {
   }));
 
 
-  const [reviews, setReviews] = useState(props.reviewss);
+  const [reviews, setReview] = useState([]);
   const [limit, setLimit] = useState(5);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
-  
 
-  const selectReviewList = () => {   
-    props.reviewfunction();
+
+  const selectReviewList = () => {
+    
+    globalAxios('/review/reviewMemList', 'get', {}, response => {
+      if (response) {
+        console.log(response);
+        setReview(response);
+      } else {
+        alert("failed to ");
+      }
+    });
   }
  
-  useEffect(()=>{
-    setReviews(props.reviewss);   
-  }, [props.reviewss]);
+
+
+  useEffect(selectReviewList, []);
+
 
   function convertDate(longValue) {
     return new Date(longValue).toLocaleString();
   }
 
+
+
+
+
   const sortPhandle = () => {
     console.log("과거순 누름");
     const aa = reviews;
     aa.sort((a, b) => a.reviewSeq - b.reviewSeq);
-    setReviews(aa);
+    setReview(aa);
     setStateDay(false)
     handleChange();
     // console.log(reviews);
@@ -70,7 +82,7 @@ export default function ReviewViewForm(props) {
     console.log("최신순 누름");
     const aa = reviews;
     aa.sort((a, b) => b.reviewSeq - a.reviewSeq);
-    setReviews(aa);
+    setReview(aa);
     setStateDay(true)
     handleChange();
     // console.log(reviews);
@@ -79,7 +91,7 @@ export default function ReviewViewForm(props) {
     console.log("별점 높은순 누름");
     const aa = reviews;
     aa.sort((a, b) => (b.reviewAmount + b.reviewService + b.reviewTaste) - (a.reviewAmount + a.reviewService + a.reviewTaste));
-    setReviews(aa);
+    setReview(aa);
     setStateRaty(true);
     handleChange();
     // console.log(reviews);
@@ -88,7 +100,7 @@ export default function ReviewViewForm(props) {
     console.log("별점 낮은순 누름");
     const aa = reviews;
     aa.sort((a, b) => (a.reviewAmount + a.reviewService + a.reviewTaste) - (b.reviewAmount + b.reviewService + b.reviewTaste));
-    setReviews(aa);
+    setReview(aa);
     setStateRaty(false);
     handleChange();
     // console.log(reviews);    
@@ -122,30 +134,20 @@ export default function ReviewViewForm(props) {
     setDelOpen(false);
     globalAxios(`/review/reviewDelete/${params}`, 'delete', {}, response => {
       if (response==="success") {
+        // alert("삭제에 성공했습니다.");       
+        //window.location.reload("/LDS"); //리로드
         setShow(true);
+
       } else {
         alert(response);
-      }      
-    });
-  }
-
-  
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  const exposureClick = (params) =>{
-    console.log("reviewseq: "+params);
-    globalAxios(`/review/reviewUpdate/${params}`, 'put', {}, response => {
-      if (response ==='성공') {
-        console.log("성공");   
-        selectReviewList();     
-      } else {
-        console.log("실패");        
-        // alert(response);
-      }      
+        // alert("failed to ");
+      }
+      
     });
   }
 
   return (
-    <>  
+    <>
       <Dialog open={show}>
         <Alert severity="info"> 성공적으로 삭제 되었습니다. <Button variant="outlined" onClick={() => { setShow(false); selectReviewList(); }}>확인</Button></Alert>
       </Dialog>
@@ -201,15 +203,9 @@ export default function ReviewViewForm(props) {
                 </Item> */}
                 <Item style={{ height: 400, margin: "0 auto", overflowY: "auto" }}>
                   <Viewer content={review.reviewContent} />
-                </Item>                
+                </Item>
               </Grid>
-              {memType==='사업자회원'?
-              <Grid>
-              <Button onClick={() => { exposureClick(review.reviewSeq);  }}>{review.reviewExposure==1?<>매장추천 <StarIcon/></>:<>매장추천 <StarOutlineIcon/></>}</Button>
-              </Grid>:
-              ""}              
-              {memNick===review.member.memNick? <Button onClick={() => { openDeldialog(review.reviewSeq); }}>삭제</Button>:""}
-              {/* <Button onClick={() => { openDeldialog(review.reviewSeq) }}>삭제</Button> */}
+              <Button onClick={() => { openDeldialog(review.reviewSeq) }}>삭제</Button>
             </Item>
             <br />
           </Grid>

@@ -1,0 +1,24 @@
+
+
+#menuWrapper {
+    
+   width: 100%;
+   
+   align-content: center;
+   justify-content: center;
+   display: flex;
+}
+
+#menuChildWrapper {
+    padding: 1em;
+    max-width: 50em;
+}
+
+#menuInsertModalBtn {
+
+    float: right;
+}
+
+
+
+
