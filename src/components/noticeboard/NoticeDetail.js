@@ -72,15 +72,9 @@ const NoticeDetail = () => {
         </div>
         <div className="emp-view-row">
           <label>내용</label>
-          <TextField
-          id="outlined-multiline-static"
-          label="Multiline"
-          multiline
-          rows={4}
-          defaultValue="Default Value"
-          style={{padding:'1em'}}
-          //<Viewer content={notice.content}>
-        />
+          <Viewer content={notice.content}/>
+          
+         
         </div>
         <div className="emp-view-row">
           <label>작성자</label>

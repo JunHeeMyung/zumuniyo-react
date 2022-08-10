@@ -1,13 +1,14 @@
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import React , { useContext ,useEffect,useState} from "react";
 import {GlobalContext} from "components/common/GlobalProvider";
 import { useNavigate } from "react-router-dom";
 import $ from "jquery";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const BasicModal = () =>{
     const style = {
@@ -22,15 +23,27 @@ const BasicModal = () =>{
       boxShadow: 24,
       p: 4,
     };
+
+    
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const navigate = useNavigate();
+  const [Ad, setAd] = useState({owner:"",endTime:"",startTime:"",image:""});
+   const [startDate, setStartDate] = useState(new Date());
+   const [endDate, setEndDate] = useState(new Date());
+
     const [images, setImages] = useState({});
-    const [urlArray, setUrlArray] = useState([]);
+    // const [urlArray, setUrlArray] = useState([]);
     const {globalAxios} = useContext(GlobalContext);
 
     const uploadResult = result => {
-
         if(result){
-            setUrlArray(result);
+           
             alert("이미지 업로드됨"); 
+           
+            getAdInsert(result);
+            console.log("결과 "+result);
         }else{
             alert("업로드 실패"); 
         }
@@ -47,10 +60,12 @@ const BasicModal = () =>{
         const data = new FormData();
         for (let image of images) {
             data.append("images", image);
+            
         }
-
-        globalAxios('/image/upload','post',data,result=>{uploadResult(result);},'multipart/form-data');
-        getAdInsert();
+        
+        
+        globalAxios('/image/upload','post',data,result=>{
+            uploadResult(result);},'multipart/form-data');
 
     }
 
@@ -76,23 +91,7 @@ const BasicModal = () =>{
         $("#imageUploader").trigger("click");
     }
 
-    useEffect(
-        () => { 
-
-           
-  
-        },[urlArray]
-      );  
-
-
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const navigate = useNavigate();
-  const [Ad, setAd] = useState({owner:"",endTime:"",startTime:"",image:"image/+File"});
-   const [startDate, setStartDate] = useState(new Date());
-   const [endDate, setEndDate] = useState(new Date());
-  
+     
    useEffect(() => {
 
       console.log(Ad);
@@ -100,8 +99,10 @@ const BasicModal = () =>{
    }, [Ad]); 
  
   
-  const getAdInsert =()=> {
-      globalAxios("/advertisement/advertisementinsert","post", Ad ,data=>{
+  const getAdInsert =(result)=> {
+    console.log({...Ad, image: result[0]});
+
+      globalAxios("/advertisement/advertisementinsert","post", {...Ad, image: result[0],startTime:startDate,endTime:endDate } ,data=>{
           console.log(data);
           alert(` 성공적으로 입력 되었습니다.`);
           navigate("/SWY");
@@ -139,13 +140,31 @@ const BasicModal = () =>{
           </div>
           <div style= {{padding:'1em'}}>
           <label style={{marginRight:'1em'}}>시작날짜 :</label>
-          <input type="date" name="startTime" onChange={handlerChange} ></input>
+          {/* <input type="date" name="startTime" onChange={handlerChange} ></input> */}
+         <DatePicker
+          selected={startDate}
+          onChange= {(date) => setStartDate(date)} 
+          minDate={new Date()}
+          //maxDate={addMonths(new Date(), 5)}
+          showDisabledMonthNavigation
+         /> 
+       
           </div>
          <div style= {{padding:'1em'}}> 
          <label style={{marginRight:'1em'}}>종료날짜 :</label>
-         <input type="date" name="endTime" onChange={handlerChange}></input> 
+         <DatePicker
+          selected={endDate}
+          onChange= {(date) => setEndDate(date)} 
+          minDate={new Date()}
+          //maxDate={addMonths(new Date(), 5)}
+          showDisabledMonthNavigation
+         /> 
+         {/* <input type="date" name="endTime" onChange={handlerChange}></input>  */}
          </div>
+        <div>
         
+
+        </div>
         <div id="imagePreview"/>
         <input type="file" id="imageUploader" accept="image/*" multiple onChange={(e) => {
             setImages(e.target.files);

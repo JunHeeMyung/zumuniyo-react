@@ -12,7 +12,7 @@ import React,{ useContext,useEffect,useState} from "react";
 import {GlobalContext} from "components/common/GlobalProvider";
 import {  useNavigate,useLocation } from "react-router-dom";
 import Pagination from './Pagination';
-
+import $ from "jquery";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -44,7 +44,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 // ];
 const CustomizedTables= () => {
  
-
+  const imgURL = "/img/37967765.jpg"
   const {globalAxios} = useContext(GlobalContext);
   const [Adlist,setAdlist] = useState([]);
   const getAdList = () => {
@@ -57,6 +57,22 @@ const CustomizedTables= () => {
   const [page,setPage] = useState(1);
   const offset = (page-1 )*limit;
   let navigate = useNavigate();
+  
+  const handleDelete =(e) =>{
+    var adseq =  $(e.target).attr("dataseq");
+    
+    if (window.confirm("정말 삭제합니까?")) { 
+    globalAxios(`/advertisement/deleteAd/${adseq}`,"delete",{},data=>{
+        console.log(data);
+        alert(`성공적으로 삭제되었습니다..`);
+        navigate("/SWY");
+        },[]);
+    }else {
+         alert("취소합니다.");
+           }
+  }
+  
+  
   useEffect(() => {
 
     getAdList();
@@ -80,14 +96,14 @@ const CustomizedTables= () => {
             <StyledTableCell >기간</StyledTableCell>
             <StyledTableCell >click count</StyledTableCell>
             <StyledTableCell >view count</StyledTableCell>
-
+            <StyledTableCell >삭제</StyledTableCell>
            
           </TableRow>
         </TableHead>
         <TableBody>
           {Adlist.map((list) => (
          
-            <StyledTableRow key={list.owner}>
+            <StyledTableRow key={list.adSeq}>
               <StyledTableCell component="th" scope="row">
                <Link to ={`/SWY/advertisement/AdDetail/${list.adSeq}`} >
                 {list.owner}
@@ -96,7 +112,7 @@ const CustomizedTables= () => {
               <StyledTableCell >{ new Date(list.startTime).toJSON().split("T")[0]}~{ new Date(list.endTime).toJSON().split("T")[0]}</StyledTableCell>
               <StyledTableCell >{list.clickCount}</StyledTableCell>
               <StyledTableCell >{list.viewCount}</StyledTableCell>
-              
+              <StyledTableCell ><img src={imgURL}  width="50px" height="50px" onClick={handleDelete} dataseq={list.adSeq}/></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

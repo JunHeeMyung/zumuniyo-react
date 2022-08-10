@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import SideBar from "components/common/Header/SideBar"
-
+import React , { useState} from "react";
 import LogInOutButton from "components/member/LogInOutButton"
 
 const Search = styled('div')(({ theme }) => ({
@@ -51,8 +51,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() { 
-
-
+  const [word, setWord] = useState("");
+  const onSubmit = async () => {
+    window.location.href = "/search/" + word;
+  };
 
   return (
     <>
@@ -71,9 +73,13 @@ export default function PrimarySearchAppBar() {
               <StyledInputBase
                 placeholder="매장, 음식..."
                 inputProps={{ 'aria-label': 'search' }}
+                onChange={(e) => {
+                  setWord(e.target.value);
+                  console.log(word);
+                  }}
               />
             </Search>
-
+            <button  onClick={() => { onSubmit(); }}>검색</button>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 

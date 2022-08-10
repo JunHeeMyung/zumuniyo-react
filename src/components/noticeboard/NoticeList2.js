@@ -27,7 +27,7 @@ const NoticeList2 = () => {
 
     }, []); 
     
-    return (
+    return ( 
             
             
                 <div> 
@@ -38,6 +38,9 @@ const NoticeList2 = () => {
                 <Link to="/SWY/advertisement/AdList">
                 <button className="ad">광고</button>
                 </Link>
+                <Link to="/SWY/advertisement/ImgSlider">
+                <button className="Imgslider">슬라이더</button>
+                </Link>  
                 <div className ="row">
                     <table className="table table-striped table-bordered">
                         <thead>

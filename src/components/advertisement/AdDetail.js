@@ -63,8 +63,8 @@ const AdDetail =() =>{
           "/"+(edate.getMonth()+1)+
           "/"+edate.getFullYear()||''} color="secondary" />
     </div>      
-         <Link to="/SWY/advertisement/AdDelete" state={{ adSeq:adDetail.adSeq }}>
-         <button>삭제</button>
+         <Link to="/SWY/advertisement/AdUpdate" state={{ adSeq:adDetail.adSeq }}>
+         <button>수정</button>
         </Link> 
     </Box>
     
