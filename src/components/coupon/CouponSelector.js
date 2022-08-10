@@ -78,11 +78,6 @@ const CouponSelector = ({shopSeq,couponSelect})=> {
 
     return (
       <>
-
-        <hr/>
-        {selectedCoupon}
-        <hr/>
-
         {couponDataList?
             <Box    id="couponDataBox"
                     display="flex"
