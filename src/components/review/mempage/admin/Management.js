@@ -13,7 +13,8 @@ import Paper from '@mui/material/Paper';
 import Pagination from "components/review/components/Pagination";
 import { Divider, FormControl, InputBase, InputLabel, NativeSelect, TextField } from "@mui/material";
 
-import { Button } from "@mui/material";
+import { Button, Box } from "@mui/material";
+import { event } from "jquery";
 
 export default function Management() {
   const { globalAxios } = useContext(GlobalContext);
@@ -38,6 +39,7 @@ export default function Management() {
   }
 
   const handleSubmit = (e) => {
+    console.log('handleSubmit들어옴');
     // //e.preventDefault();
     // console.log(memUp);
 
@@ -122,34 +124,47 @@ export default function Management() {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
 
-  const handleChange = (e) => {
-    console.log(e);
-    setMemUp({ ...memUp, [e.target.name]: e.target.value });
-  };
-  const handleChangeType = (e) => {
-    console.log(e);
-    setMtype(e.target.value);
-  };
+  // const handleChange = (e) => {
+  //   console.log(e);
+  //   setMemUp({ ...memUp, [e.target.name]: e.target.value });
+  // };
+  // const handleChangeType = (e) => {
+  //   console.log(e);
+  //   setMtype(e.target.value);
+  // };
+
+  // const onChange = e => {
+  //   const { name , value } = e.target;
+  //   console.log(e.target.name);
+  //   console.log(e.target.value);    
+  //   setMembers({...members, [e.target.name] : e.target.value });
+  // }
 
   const [mtype, setMtype] = useState('');
   const [msta, setMsta] = useState('');
 
-  const handleChange2 = (event) => {
-    setMtype(event.target.value);
-    console.log(event.target.value);
-
+  const handleChange2 = (e) => {
+    console.log(e.target.name);
+    console.log(e.target.value);
+    // setMtype({...mtype, [e.target.name] : e.target.value });
+    // setMtype(event.target.value);
+    // console.log(a);
+    // console.log(b);
+    // setMembers({...members[b], [name] : a });
   };
-  const handleChange3 = (event) => {
-    setMsta(event.target.value);
-    console.log(event.target.value);
+  const handleChange3 = (e) => {
+    console.log(e.target.name);
+    console.log(e.target.value);
+    // setMsta(event.target.value);
+    // console.log(event.target.value);
 
   };
 
 
   return (
     <>
-
-      {JSON.stringify(members)}
+      {/* {JSON.stringify(members)} */}
+      {/* {members?member.as : ""} */}
 
       <Divider><h1>회원관리</h1></Divider>
       <TableContainer component={Paper}>
@@ -169,9 +184,10 @@ export default function Management() {
           <TableBody>
             {members.slice(offset, offset + limit).map((data, index) => (
 
-              <StyledTableRow key={index}>
-                {/* <form id="rewviewfrm" onSubmit={handleSubmit}> */}
-                <StyledTableCell component="th" scope="row" style={{}}>
+              <StyledTableRow key={index} >
+                {/* <form id="memberManager" onSubmit={handleSubmit}> */}
+                {/* <Box   component="form" id="memberManager" onSubmit={handleSubmit}> */}                 
+                <StyledTableCell component="th" scope="row" >
                   {data.memSeq}
                 </StyledTableCell>
                 <StyledTableCell align="center">
@@ -186,9 +202,10 @@ export default function Management() {
                       id="demo-customized-select-native"
                       name="memType"
                       // value={data.memType}
+                      // onChange={handleChange2(data.memType, index, "memType")}
                       onChange={handleChange2}
-                      input={<BootstrapInput />}
                       defaultValue={data.memType}
+                      input={<BootstrapInput />}
                       // value={mtype}
                     >
                       {/* <option aria-label="None" value={data.memType}/> */}
@@ -222,14 +239,12 @@ export default function Management() {
                 {/* <StyledTableCell align="center">{data.memStatus}</StyledTableCell> */}
                 <StyledTableCell align="center">
                   <Button variant="contained" type="submit">수정</Button>
-                </StyledTableCell>
-                {/* <StyledTableCell align="center">수정</StyledTableCell> */}
+                </StyledTableCell>                       
+                {/* </Box>          */}
                 {/* </form> */}
               </StyledTableRow>
             ))}
           </TableBody>
-
-
         </Table>
       </TableContainer>
       <Pagination total={members.length} limit={limit} page={page} setPage={setPage} />
