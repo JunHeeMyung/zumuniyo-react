@@ -189,27 +189,27 @@ const CouponManager = (props)=> {
                 <Paper sx={{ width: '100%', overflow: 'hidden', borderRadius:'1em',maxWidth:'70em'}}>
                     <TableContainer>
                         <Table stickyHeader aria-label="sticky table">
-                        <TableHead >
-                        <TableRow >
-                        <TableCell colSpan='10' key='title' sx={tableTopStyle}>쿠폰관리</TableCell>
-                        </TableRow>
-                        </TableHead>
-                        <TableBody>
-                        <TableRow>
-                            <TableCell sx={tableHeadStyle}>쿠폰이름</TableCell>
-                            <TableCell sx={tableHeadStyle}>할인액</TableCell>
-                            <TableCell sx={tableHeadStyle}>사용가능금액</TableCell>
-                            <TableCell sx={tableHeadStyle}>유효기간</TableCell>
-                            <TableCell sx={tableHeadStyle}>발행수량</TableCell>
-                            <TableCell sx={tableHeadStyle}>잔여수량</TableCell>
-                            <TableCell sx={tableHeadStyle}>배포수량</TableCell>
-                            <TableCell sx={tableHeadStyle}>사용수량</TableCell>
-                            <TableCell sx={tableHeadStyle}>잔여회수</TableCell>
-                            <TableCell sx={tableHeadStyle}>추가발급</TableCell>
-                        </TableRow>
-                            {couponDataList .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                            .map((couponDataRow) => {
-                                return (
+                            <TableHead >
+                                <TableRow >
+                                    <TableCell colSpan='10' key='title' sx={tableTopStyle}>쿠폰관리</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell sx={tableHeadStyle}>쿠폰이름</TableCell>
+                                    <TableCell sx={tableHeadStyle}>할인액</TableCell>
+                                    <TableCell sx={tableHeadStyle}>사용가능금액</TableCell>
+                                    <TableCell sx={tableHeadStyle}>유효기간</TableCell>
+                                    <TableCell sx={tableHeadStyle}>발행수량</TableCell>
+                                    <TableCell sx={tableHeadStyle}>잔여수량</TableCell>
+                                    <TableCell sx={tableHeadStyle}>배포수량</TableCell>
+                                    <TableCell sx={tableHeadStyle}>사용수량</TableCell>
+                                    <TableCell sx={tableHeadStyle}>잔여회수</TableCell>
+                                    <TableCell sx={tableHeadStyle}>추가발급</TableCell>
+                                </TableRow>
+                                {couponDataList .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                                .map((couponDataRow) => {
+                                    return (
                                 <TableRow hover key={couponDataRow.쿠폰이름+couponDataRow.할인액+couponDataRow.사용가능금액+couponDataRow.유효기간}>
                                         <TableCell sx={{ textAlign:"center" ,minWidth: 70}}> {couponDataRow.쿠폰이름}</TableCell>
                                         <TableCell sx={{ textAlign:"center" ,minWidth: 70}}> {((Number)(couponDataRow.할인액)).toLocaleString('ko-KR') +' 원'}</TableCell>
@@ -230,30 +230,30 @@ const CouponManager = (props)=> {
                                             </IconButton>
                                         </TableCell>                                    
                                 </TableRow>
-                                );
-                            })}
-                        </TableBody>
-                    </Table>
+                                    );
+                                })}
+                            </TableBody>
+                        </Table>
                     </TableContainer>
                     <Table>
-                    <TableBody>
-                    <TableRow height="1em">
-                    <TableCell>
-                        <Button variant="outlined" id="buttonIssue" onClick={openModalWithReset}>쿠폰발급</Button>
-                    </TableCell>
-                    <TableCell>
-                        <TablePagination
-                            rowsPerPageOptions={[3, 5, 10, 20,{ label: 'All', value: couponDataList.length }]}
-                            component="div"
-                            count={couponDataList.length}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage} 
-                        />
-                     </TableCell>
-                     </TableRow>
-                     </TableBody>
+                        <TableBody>
+                            <TableRow height="1em">
+                                <TableCell>
+                                    <Button variant="outlined" id="buttonIssue" onClick={openModalWithReset}>쿠폰발급</Button>
+                                </TableCell>
+                                <TableCell>
+                                    <TablePagination
+                                        rowsPerPageOptions={[3, 5, 10, 20,{ label: 'All', value: couponDataList.length }]}
+                                        component="div"
+                                        count={couponDataList.length}
+                                        rowsPerPage={rowsPerPage}
+                                        page={page}
+                                        onPageChange={handleChangePage}
+                                        onRowsPerPageChange={handleChangeRowsPerPage} 
+                                    />
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
                      </Table>
                 </Paper>
             </Box>

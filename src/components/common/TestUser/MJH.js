@@ -11,6 +11,7 @@ import ImageUploaderTest from "components/common/util/ImageUploaderTest";
 import Manager from "components/manager/Manager";
 import MyCoupon from "components/coupon/MyCoupon";
 import CouponList from "components/coupon/CouponList";
+import CouponSelectorTest from "components/coupon/CouponSelectorTest";
 
 const MJH = ()=> {
 
@@ -33,6 +34,7 @@ const MJH = ()=> {
        <Link to="manager/coupon/9999"><button>쿠폰관리</button></Link>
        <Link to="mycoupon"><button>내쿠폰</button></Link>
        <Link to="couponlist"><button>매장쿠폰목록</button></Link>
+       <Link to="couponselectortest"><button>쿠폰선택테스트</button></Link>
 
 
         <hr/>
@@ -53,6 +55,8 @@ const MJH = ()=> {
           <Route path="/manager/*" element={<AuthChecker memType="사업자회원"><Manager/></AuthChecker>} />
           <Route path="/mycoupon" element={<AuthChecker><MyCoupon/></AuthChecker>} />
           <Route path="/couponlist" element={<AuthChecker><CouponList shopSeq = "9999"/></AuthChecker>} />
+          <Route path="/couponselectortest" element={<AuthChecker><CouponSelectorTest/></AuthChecker>} />
+          <></>
           <Route path="*" element={<><h1>주소값 이상</h1></>} />
         </Routes>
 
