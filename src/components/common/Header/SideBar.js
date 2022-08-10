@@ -17,13 +17,15 @@ import { SidebarData, SidebarDataN, SidebarDataB, SidebarDataA } from 'component
 
 import { useContext } from "react";
 import {GlobalContext} from "components/common/GlobalProvider";
-
+import {useNavigate} from "react-router-dom";
 
 
 
 export default function TemporaryDrawer() {
 
   const {logined,memNick,memType,globalAxios} = useContext(GlobalContext);
+
+  const navigate = useNavigate();  
 
   const [state, setState] = React.useState({
     top: false,
@@ -84,12 +86,9 @@ export default function TemporaryDrawer() {
       </DrawerHeader>      
       {logined? <Divider> {memType}  {memNick}님  </Divider> : <Divider/> }           
       <List>
-
-
         {sidedata.map((item, index) => (
           <ListItem key={index} disablePadding>
-            {/* <ListItemButton to={item.path} > */}
-            <ListItemButton href={item.path} >
+            <ListItemButton onClick={()=>{navigate(item.path);}} >
               <ListItemIcon>
                 {item.icon}
               </ListItemIcon>

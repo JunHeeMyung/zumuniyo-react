@@ -99,7 +99,7 @@ const OrderGroupList = (props)=> {
                                   </IconButton>
                                 </TableCell>
                                 <TableCell key='review' sx={{ textAlign:"center" ,minWidth: 70}}>
-                                  <IconButton edge ="end">
+                                  <IconButton edge ="end" onClick={()=> {navigate(`/LDS/normal/reviewInsert/${orderGroup.orderGroupSeq}`) }}>
                                     <PostAddOutlinedIcon/>
                                   </IconButton>
                                 </TableCell>
