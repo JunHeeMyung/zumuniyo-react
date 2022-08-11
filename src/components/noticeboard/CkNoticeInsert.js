@@ -102,7 +102,7 @@ import Button from '@mui/material/Button';
             /></div>
         
             <div className="form-group">
-            <TextField placeholder="제목을 입력하세요" id="outlined-basic" name="title" variant="outlined" onChange={handleChange} style="float:left" />
+            <TextField placeholder="제목을 입력하세요" id="outlined-basic" name="title" variant="outlined" onChange={handleChange} />
             </div>
             <div className="form-group">
                 <CKEditor
