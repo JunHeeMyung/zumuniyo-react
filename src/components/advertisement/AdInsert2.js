@@ -171,8 +171,10 @@ const BasicModal = () =>{
             setImages(e.target.files);
             setImagePreviews(e);
             }} hidden/>
-        <button onClick={openUploader} style= {{padding:'1em',marginLeft:'1em'}}>파일선택 </button>
-        <button onClick={uploadImages} style= {{padding:'1em'}}>업로드</button> 
+        {/* <button onClick={openUploader} style= {{padding:'1em',marginLeft:'1em'}}>파일선택 </button> */}
+        <Button variant="outlined" onClick={openUploader}>파일선택</Button>
+        {/* <button onClick={uploadImages} style= {{padding:'1em'}}>업로드</button>  */}
+        <Button variant="outlined" onClick={uploadImages}>파일선택</Button>
           {/* </Typography> */}
         </Box>
       </Modal>
