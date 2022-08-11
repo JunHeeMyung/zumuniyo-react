@@ -38,7 +38,7 @@ import AdList from "components/advertisement/AdList";
 import AdDetail from "components/advertisement/AdDetail";
 import AdDelete from "components/advertisement/AdDelete";
 import ImgSlider from "components/advertisement/ImgSlider";
-
+import SearchResult from "components/search/SearchResult";
 
 const BodyHome = ()=> {
 
@@ -86,7 +86,7 @@ const BodyHome = ()=> {
         <Route path="/advertisement/AdDetail/:adSeq" element={<AdDetail/>} />
         <Route path="/advertisement/AdDelete" element={<AdDelete/>} />
         <Route path="/advertisement/ImgSlider" element={<ImgSlider/>} />
-
+        <Route path ="/search/SearchResult" element= {<SearchResult/>}/>
     </Routes>
             
     </>

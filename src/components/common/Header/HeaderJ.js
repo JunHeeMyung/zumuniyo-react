@@ -60,11 +60,12 @@ export default function PrimarySearchAppBar() {
   //   window.location.href = "/search/" + word;
   // };
   const navigate = useNavigate();
+
   const handleSubmit = ()=>{
     globalAxios("/shopsearch","get",{keyword:word},data=>{
       console.log(data);
-      setShoplist(data);
-      navigate("/zumuniyo/search/", {Shoplist:Shoplist});
+      setShoplist(data); //{} [] 
+      navigate("/zumuniyo/search/SearchResult",{state: {shoplist: data}});
     })
   };
 
