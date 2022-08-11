@@ -33,7 +33,10 @@ const GlobalProvider = (props)=> {
           url: url,
           method: method,
           data:(contentType==='multipart/form-data')?params:data,
-          params:(contentType==='multipart/form-data')?null:(method==='get'?data:null),
+          params:(contentType==='multipart/form-data')?null:(
+            method==='get'||method==='delete'||method==='put'||
+            method==='GET'||method==='DELETE'||method==='PUT'
+            ?data:null),
           headers:{
               'Content-Type': contentType // 필요시 'multipart/form-data'
           }

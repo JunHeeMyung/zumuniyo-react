@@ -154,13 +154,14 @@ const CouponManager = (props)=> {
 
     const deleteUnusedCoupon = couponDataRow => {
 
-        globalAxios('/coupon/list','delete',
+
+        globalAxios('/coupon/unused','delete',
         {
             couponName : couponDataRow.쿠폰이름,
             shopSeq : params.shopSeq,
             couponMinCond : couponDataRow.사용가능금액,
             couponDC : couponDataRow.할인액,
-            couponExpire: moment(couponDataRow.유효기간).tz("Asia/Seoul").format(moment.DATETIME_LOCAL) ,
+            couponExpire: moment(couponDataRow.유효기간).tz("Asia/Seoul").format(moment.DATETIME_LOCAL)
         },
         result=>{deleteUnusedCouponResult(result)});
 
