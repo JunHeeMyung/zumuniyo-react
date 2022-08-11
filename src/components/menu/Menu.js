@@ -6,11 +6,11 @@ import { useNavigate } from "react-router-dom";
 
 import "./Menu.css";
 import MenuListManage from 'components/menu/MenuListManage';
-import MenuListShopView from './MenuListShopView';
+
 import MenuCategory from 'components/menucategory/MenuCategory';
 import MenuInsertModal from 'components/menu/MenuInsertModal';
 import MenuCategoryModal from 'components/menucategory/MenuCategoryModal';
-import { Paper } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 
 
 
@@ -21,6 +21,8 @@ const Menu = () => {
 
     const [shopSeq,setShopSeq] = useState('');
     const [menuData,setMenuData] = useState('');
+    const [shopList, setShopList] = useState('');
+    
     const navigate = useNavigate();
     const location = useLocation();
     const {logined,globalAxios,beforeLocation,currentLocation} = useContext(GlobalContext);
@@ -41,6 +43,12 @@ const Menu = () => {
 
     }
     
+    const getShopList = shopSeq =>{
+
+        globalAxios('/shop/shopListByseq/'+shopSeq, 'get', {}, data=>{setShopList(data)});
+    }
+
+    
 
     useEffect(
         () => {
@@ -51,6 +59,7 @@ const Menu = () => {
 
             if(addrParts[3]!==''){
                     getMenuList(addrParts[3]);
+                    getShopList(addrParts[3]);
             }
 
         }, [location.pathname,reRender]
@@ -61,14 +70,28 @@ const Menu = () => {
         }, [menuData]
       );
 
+      
 
       
     return (
         <>
+
+        <Box>
+        
+
         <div id="menuWrapper">
             <Paper id="menuChildWrapper">
            { shopSeq===''||menuData===''?<></>
            :<>
+            
+
+            <div id="shopNameSpace">
+            {shopList.shopName}
+        </div>
+
+            <br />
+
+
             <div>
             <MenuCategory   shopSeq={shopSeq} 
                             menuData={menuData} getMenuList={getMenuList} 
@@ -104,6 +127,7 @@ const Menu = () => {
 
            </Paper>
            </div>
+           </Box>
 
         </>
     );

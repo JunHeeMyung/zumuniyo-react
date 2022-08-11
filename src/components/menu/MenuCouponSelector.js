@@ -14,7 +14,7 @@ import moment from "moment-timezone"
 
   const tableTopStyle = {
     textAlign:"center" ,
-    backgroundColor: "rgb(71, 30, 30,0.8)",
+    backgroundColor: "rgb(106, 98, 102)",
     fontWeight:"bold",
     color:"white"
  };
@@ -83,7 +83,7 @@ const MenuCouponSelector = ({shopSeq,couponSelect})=> {
                     display="flex"
                     justifyContent="center"
                     alignItems="center">
-                <Paper sx={{ width: '100%', overflow: 'hidden', borderRadius:'1em',maxWidth:'50em'}}>
+                <Paper sx={{ width: '100%', overflow: 'hidden', maxWidth:'50em'}}>
                     <TableContainer>
                         <Table stickyHeader aria-label="sticky table">
                         <TableHead >

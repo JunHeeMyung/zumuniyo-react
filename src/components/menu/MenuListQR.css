@@ -4,7 +4,7 @@
 
 #menuDetailWrapper {
     
-    max-height: 50vh;
+    max-height: 450px;
     overflow-y: scroll;
 }
     #menuDetailWrapper::-webkit-scrollbar {
@@ -22,11 +22,12 @@
 
 #modalBottomWrapper {
    
+    
    display: inline-block;
    background-color: white;
     width: 100%;
     text-align: center;
-    bottom: 0.5em;
+    
 }
 
 
@@ -56,9 +57,21 @@
     height: 7em;
 }
 #imageList {
+    padding-left: 20px;
     width: 6em;
     height: 4em;
 }
+
+.infoList {
+    color: gray;
+    font-size: smaller;
+}
+.priceList {
+    font-size: larger;
+    color: rgb(222, 112, 40);
+}
+
+
 
 
 #modalHead {
@@ -199,7 +212,7 @@ border-radius: 25px;
     font-weight: bolder;
     font-size: larger;
     height: 65px;
-    background-color: rgb(116, 104, 92) ;
+    background-color: rgb(71, 30, 30,0.8) ;
     color: white;
 }
 #titleText {
@@ -226,4 +239,11 @@ border-radius: 25px;
 }
 
 
+
+
+#voidSpace {
+    height: 20em;
+    background-color: rgb(220, 220, 220);
+
+}
 

@@ -10,6 +10,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import MenuCoupon from 'components/menu/MenuCoupon';
 import MenuCouponSelector from "components/menu/MenuCouponSelector";
 
+import MenuShopInfo from 'components/menu/MenuShopInfo';
 
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -51,7 +52,7 @@ const style = {
   top: '5%',
   left: '50%',
   transform: 'translate(-50%, 0)',
-  height:'40em',
+ 
   width: '24em',
   bgcolor: 'background.paper',
   border: '1px solid gray',
@@ -140,6 +141,7 @@ const MenuListQR = () => {
       setOpenList({...openList,...temp});
       
     };
+
 
     const consoleTest = param => {
       console.log(param);
@@ -241,7 +243,7 @@ const MenuListQR = () => {
         if(((String)(result)).indexOf(":")!==-1 &&
             ((String)(result)).split(":")[0]==="주문성공"){
             alert("주문성공");
-            navigate("/MJH/orderlist/"+((String)(result)).split(":")[1]);
+            navigate("/zumuniyo/orderlist/"+((String)(result)).split(":")[1]);
         }else{
             alert(result);
         }
@@ -317,6 +319,19 @@ const MenuListQR = () => {
         <hr/> */}
 
 
+
+        <Box  id="shopBox"
+              display="flex"
+              justifyContent="center"
+              alignItems="center">
+
+        <MenuShopInfo shopSeq={params.shopSeq}/>
+        
+        </Box>
+        
+        <div></div>
+        
+
         <Box    id="CouponBox"
                         display="flex"
                         justifyContent="center"
@@ -325,7 +340,7 @@ const MenuListQR = () => {
         <MenuCoupon shopSeq={params.shopSeq}/>
         
         </Box>
-        <hr/>
+        
         
         {menuList&&menuCategoryList&&menuTopList?
             <>
@@ -333,13 +348,15 @@ const MenuListQR = () => {
               <>
               {(()=>{tempMenuOpen={}})()}
               {
-                Object.values(menuCategoryList).map((menuCategory) => (
+                Object.values(menuCategoryList).map((menuCategory,idx) => (
                   <>
-                  {(()=>{tempMenuOpen={...tempMenuOpen,[menuCategory.menuCategorySeq]:false}})()}
+                  {(()=>{tempMenuOpen={...tempMenuOpen,[menuCategory.menuCategorySeq]:(idx===0?true:false)}})()}
                   </>
                 ))}
               {(()=>{setChecker(!checker)})()}
+              
               {(()=>{setOpenList(tempMenuOpen);
+              
               })()}
             </>
             :""}
@@ -414,9 +431,9 @@ const MenuListQR = () => {
                                                         setTempOrderData(OrderData);
                                                         openDetail(menu);
                                                     }}>
-                                                      <ListItemText primary={menu.menuName} />
-                                                      <ListItemText primary={menu.menuSimpleInfo} />
-                                                      <ListItemText primary={menu.menuPrice} />
+                                                      <ListItemText className="nameList" sx={{ textAlign:"left" , minWidth: 30}} primary={menu.menuName} />
+                                                      <ListItemText className="infoList" sx={{ textAlign:"right" , minWidth: 30}} primary={menu.menuSimpleInfo} />
+                                                      <ListItemText className="priceList" sx={{ textAlign:"right" , minWidth: 30}} primary={menu.menuPrice+ " 원"} />
                                                       <ImageListItem className="menuQRImage" >
                                                       <img id="imageList" src={"/image/"+menu.menuImage } />
                                                       </ImageListItem>
@@ -433,7 +450,9 @@ const MenuListQR = () => {
                                   </>
                             ))}
                         </List>
+                        <div id="voidSpace"></div>
                     </Paper>
+
                 </Box>
 
                 <ColorButton id="cartBtn" variant="contained" onClick={()=>{
@@ -450,17 +469,13 @@ const MenuListQR = () => {
         
         <Modal open={open} >
           
-          {/* <Box sx={style}
-               id="menuDetailBox"
-               component="form"
-               noValidate
-               autoComplete='off'
-               //onSubmit={}      
-          > */}
+          
             
+
             <div className="modal" id="cartInModal">
-            
+            <Box>
             <Card sx={style} id="menuDetailCard">
+              <Box>
             <CardHeader
               avatar={ 
                 selectedMenu.menuTop?  
@@ -579,22 +594,25 @@ const MenuListQR = () => {
             
 
             </div>
+            </Box>
             
-            
-           <div id="modalBottomWrapper">
+            <Box id="modalBottomWrapper">
                 <Stack spacing={2} direction="row" justifyContent="center">
                     <Button variant="outlined" id="cartInButton" onClick={cartIn}>목록에 담기</Button>
                     <Button variant="outlined" id="cartCancelButton" onClick={handleClose}>취소</Button>
                 </Stack>
-            </div>
+            </Box>
 
             </Card>
             
-            <br></br>
+           
+
             
+            <br></br>
+            </Box>
 
             </div>
-          {/* </Box> */}
+         
           
         </Modal>
       </div>

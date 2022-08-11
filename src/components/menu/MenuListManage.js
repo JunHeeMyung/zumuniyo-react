@@ -14,7 +14,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 
 import "./MenuListManage.css";
-import { Button, IconButton } from '@mui/material';
+import { Box, Button, IconButton } from '@mui/material';
 import MenuDetailModal from 'components/menu/MenuDetailModal';
 
 
@@ -73,8 +73,14 @@ const MenuListManage = (props) => {
     return (
         <>
         
+
+
+        <Box    id="MenuDetailBox"
+                >
+
+        <div id="menuTotalListBtn">
         <Button onClick={reRender}>전체메뉴보기</Button>
-        
+        </div>
         <br></br>
 
         <TableContainer component={Paper}>
@@ -138,10 +144,11 @@ const MenuListManage = (props) => {
             
             />
 
-
+            </Box>
+        
         </>
         
-    )
+    );
 
 
 }
