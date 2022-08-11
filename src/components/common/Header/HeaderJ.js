@@ -12,6 +12,7 @@ import LogInOutButton from "components/member/LogInOutButton"
 import {GlobalContext} from "components/common/GlobalProvider";
 import { useNavigate } from 'react-router';
 
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -101,10 +102,8 @@ export default function PrimarySearchAppBar() {
                 {/* LOGIN */}
                 <LogInOutButton/>
               {/* </IconButton> */}
-            </Box>
-            <div id='sidebar'>
-            <SideBar />
-            </div>
+            </Box>            
+             <SideBar />            
           </Toolbar>
         </AppBar>
       </Box>
