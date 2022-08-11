@@ -238,6 +238,7 @@ export default function SignUp() {
                   setImages(e.target.files);
                   setImagePreviews(e);
                 }} hidden />
+                <h6>매장 로고</h6>
                 <button type='button' onClick={openUploader}>파일선택</button>
                 <br /><br />
 

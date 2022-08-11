@@ -18,13 +18,13 @@ const SWY = ()=> {
           {/* <h1>서원영 테스트 페이지</h1> */}
         
         <Routes>
-          <Route path="/" element={<NoticeList/>} />
+          <Route path="/NoticeBoard/NoticeList" element={<NoticeList/>} />
           <Route path="/NoticeBoard/NoticeDetail/:noticeBoardSeq" element={<NoticeDetail/>} />
           <Route path="/NoticeBoard/NoticeUpdate" element={<NoticeUpdate/>} />
           <Route path="/NoticeBoard/CkNoticeUpdate" element={<CkNoticeUpdate/>} />
           <Route path="/NoticeBoard/NoticeDelete" element={<NoticeDelete/>} />
           <Route path="/NoticeBoard/CkNoticeInsert" element={<CkNoticeInsert/>} />
-          <Route path="/advertisement/AdList" element={<AdList/>} />
+          <Route path="/advertisement/AdList " element={<AdList />} /> 
           <Route path="/advertisement/AdInsert2" element={<AdInsert2/>} />
           <Route path="/advertisement/AdDelete" element={<AdDelete/>} />
           <Route path="/advertisement/ImgSlider" element={<ImgSlider/>} />

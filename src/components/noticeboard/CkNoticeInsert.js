@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import TextField from '@mui/material/TextField';
-
+import Button from '@mui/material/Button';
     const CkNoticeInsert = () => {
         const [board, setBoard] = useState({title:"", content:"", boardTop:0,writer:"관리자"});
         //const [content,setContent] = useState();
@@ -81,7 +81,7 @@ import TextField from '@mui/material/TextField';
             .then((res) => {
               console.log(res);
               alert(` 성공적으로 입력 되었습니다.`);
-              navigate("/SWY");
+              navigate("/zumuniyo/NoticeBoard/NoticeList");
             })
             .catch((error) => {
               console.log(error);
@@ -131,7 +131,7 @@ import TextField from '@mui/material/TextField';
             />
             </div>
         
-        <div><input className="btn btn-primary" type="submit" value="입력하기" /></div>
+        <div> <Button variant="outlined">입력하기</Button> </div>
         </div>
         
         </form>

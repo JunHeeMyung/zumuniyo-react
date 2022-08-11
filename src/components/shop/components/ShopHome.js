@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 
 import { GlobalContext } from "components/common/GlobalProvider";
 
+import './ShopHome.css';
+
 export default function ShopDetail(props) {
 
   const { logined, memNick, memType, globalAxios } = useContext(GlobalContext);
@@ -27,9 +29,13 @@ export default function ShopDetail(props) {
 
   return (
     <div>
-      <h1>매장 정보 페이지</h1>
-      {shop.shopName}
-      <h6>{shop.shopNotice}</h6>
+      {/* <h1>매장 정보 페이지</h1> */}
+      <h1>{shop.shopName}</h1>
+
+      <div>
+        <h5>-사장님 알림-</h5>
+        <h6>{shop.shopNotice}</h6>
+      </div>
     </div>
   )
 }

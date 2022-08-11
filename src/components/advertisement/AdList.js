@@ -79,7 +79,7 @@ const CustomizedTables= () => {
     globalAxios(`/advertisement/deleteAd/${adseq}`,"delete",{},data=>{
         console.log(data);
         alert(`성공적으로 삭제되었습니다..`);
-        navigate("/SWY");
+        navigate("/zumuniyo/advertisement/AdList");
         },[]);
     }else {
          alert("취소합니다.");
@@ -145,7 +145,7 @@ const CustomizedTables= () => {
 
    <TableContainer component={Paper}>
       
-        <Link to="/SWY/advertisement/AdInsert2">
+        <Link to="/zumuniyo/advertisement/AdInsert2">
         <button className="insertAdvertisement">광고등록</button>
         </Link>
       
