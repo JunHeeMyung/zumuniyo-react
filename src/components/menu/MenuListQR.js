@@ -5,10 +5,10 @@ import { Box, Collapse, List, ListItem, ListItemButton, ListItemText, Paper
     ,TableCell,TableRow,TableContainer,Table,TableHead,TableBody,Button
     ,Modal,Stack,IconButton,TextField, ImageListItem} from '@mui/material';
 import { ExpandLess } from '@mui/icons-material';
-import "./MenuListQR.css";
+
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import CouponList from 'components/coupon/CouponList';
-import CouponSelector from "components/coupon/CouponSelector";
+import MenuCoupon from 'components/menu/MenuCoupon';
+import MenuCouponSelector from "components/menu/MenuCouponSelector";
 
 
 import Card from '@mui/material/Card';
@@ -18,10 +18,10 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
-
+import CancelIcon from '@mui/icons-material/Cancel';
 import { styled } from '@mui/material/styles';
 import ClearIcon from '@mui/icons-material/Clear';
-import { red, yellow } from '@mui/material/colors';
+import { orange, red, yellow } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -62,6 +62,13 @@ const style = {
   
 };
 
+const ColorButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.getContrastText(orange[500]),
+  backgroundColor: orange[500],
+  '&:hover': {
+    backgroundColor: orange[700],
+  },
+}));
 
 
 
@@ -73,8 +80,6 @@ const MenuListQR = () => {
     const {globalAxios} = useContext(GlobalContext);
     const params = useParams();
     const navigate = useNavigate();
-
-    
 
     const [detailMenu,setDetailMenu] = useState('');
     const [menuList,setMenuList] = useState('');
@@ -300,7 +305,7 @@ const MenuListQR = () => {
         <hr/>
         {JSON.stringify(menuCategoryList)}
         <hr/>
-        {JSON.stringify(menuTopList)} */}
+        {JSON.stringify(menuTopList)}
         <hr/>
         {JSON.stringify(tempOrderData)}
         <hr/>
@@ -309,8 +314,17 @@ const MenuListQR = () => {
         {JSON.stringify(requestData)}
         <hr/>
         {JSON.stringify(openList)}
-        <hr/>
-        <CouponList shopSeq={params.shopSeq}/>
+        <hr/> */}
+
+
+        <Box    id="CouponBox"
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center">
+
+        <MenuCoupon shopSeq={params.shopSeq}/>
+        
+        </Box>
         <hr/>
         
         {menuList&&menuCategoryList&&menuTopList?
@@ -330,12 +344,7 @@ const MenuListQR = () => {
             </>
             :""}
 
-
-          <div>
-          <CouponSelector shopSeq={params.shopSeq} couponSelect={couponSelect}/>
-          </div>    
-          <hr/>
-
+                <br/>
 
                 <Box    id="MenuCollapseBox"
                         display="flex"
@@ -343,38 +352,48 @@ const MenuListQR = () => {
                         alignItems="center">
                     <Paper sx={{ width: '100%', overflow: 'hidden', maxWidth:'50em'}}>
                         <List  component="nav">
-                            <ListItemButton onClick={menuTopClick}>
+                          <ListItem className="menuTopTitleBtn" >
+                            <ListItemButton  onClick={menuTopClick}>
                                 <ListItemText primary="추천메뉴" />
                                 {topOpen ? <ExpandLess /> : <ExpandMore />}
                             </ListItemButton>
+                          </ListItem>
                             <Collapse  in={topOpen} timeout="auto" unmountOnExit>
                                 <List disablePadding >
+                                  <ListItem id="menuTopListSpace">
                                     {Object.values(menuTopList).map((menu) => (
-                                        <ListItem className='' key={menu.menuSeq}>
-                                        <ListItemButton  sx={{ pl: 4 }} onClick={() => {
+                                        <Paper className="menuTopListBtn" key={menu.menuSeq}>
+                                        <ListItemButton id="menuTopListOutside"
+                                                        onClick={() => {
                                                         consoleTest(menu.menuSeq); 
                                                         const OrderData = {};
                                                         OrderData[menu.menuSeq]=1;
                                                         setTempOrderData(OrderData);
                                                         openDetail(menu);
                                                     }}>
-
-                                            <ListItemText primary={menu.menuName} /> 
-                                            <ListItemText primary={menu.menuSimpleInfo} /> 
-                                            <ListItemText primary={menu.menuPrice+" 원"} /> 
-                                            <ImageListItem className="menuQRImage" >
-                                              <img src={"/image/"+menu.menuImage } />
+                                                      <div >
+                                                      <ListItem id="menuTopListInside" >
+                                            <ImageListItem className="menuQRImage"  >
+                                              <img id="imageTop" src={"/image/"+menu.menuImage } />
                                             </ImageListItem>
-
+                                            <ListItemText id="menuTopName" primary={menu.menuName} /> 
+                                            {/* <ListItemText primary={menu.menuSimpleInfo} />  */}
+                                            <div id="menuTopPriceBottom">
+                                            <ListItemText id="menuTopPrice" primary={menu.menuPrice+" 원"} /> 
+                                            </div>
+                                            </ListItem>
+                                            </div>
                                         </ListItemButton>
-                                        </ListItem>    
+                                        </Paper>    
                                     ))}
+                                    </ListItem>
                                 </List>
                             </Collapse>
                             {Object.values(menuCategoryList).map((menuCategory) => (
                               <>
-                            <ListItem key={menuCategory.menuCategorySeq} disablePadding >
-                                 <ListItemButton onClick={() => {categoryClick(menuCategory.menuCategorySeq);}}>
+                            <ListItem className="categoryTitleBtn"
+                                  key={menuCategory.menuCategorySeq} disablePadding >
+                                 <ListItemButton  onClick={() => {categoryClick(menuCategory.menuCategorySeq);}}>
                                         <ListItemText primary={menuCategory.menuCategoryName} />
                                                 { menuOpen ? <ExpandLess/> : <ExpandMore/> }
                                  </ListItemButton>
@@ -386,7 +405,7 @@ const MenuListQR = () => {
                                   {menuCategory.menuCategorySeq===menu.menuCategory.menuCategorySeq?
                                       <>
                                       <List component="div"  disablePadding >
-                                          <ListItem  disablePadding >
+                                          <ListItem className="categoryListBtn" disablePadding >
                                               
                                                   <ListItemButton sx={{ pl: 4 }} 
                                                     onClick={()=>{
@@ -399,7 +418,7 @@ const MenuListQR = () => {
                                                       <ListItemText primary={menu.menuSimpleInfo} />
                                                       <ListItemText primary={menu.menuPrice} />
                                                       <ImageListItem className="menuQRImage" >
-                                                      <img src={"/image/"+menu.menuImage } />
+                                                      <img id="imageList" src={"/image/"+menu.menuImage } />
                                                       </ImageListItem>
                                                   </ListItemButton>
                                               
@@ -417,14 +436,15 @@ const MenuListQR = () => {
                     </Paper>
                 </Box>
 
-                <Button edge ="end" onClick={()=>{
+                <ColorButton id="cartBtn" variant="contained" onClick={()=>{
                         handleCartOpen();
                     }}>
-                    카트보기
-                </Button>
+                    주문목록
+                </ColorButton>
+                
 
                 {selectedMenu!==''?<>
-      
+                 
       
       <div id="menuDetailContainer">
         
@@ -584,33 +604,48 @@ const MenuListQR = () => {
         <Modal open={cartOpen} onChange={getDetailMenu}>
             <Box sx={modalStyle} id="cartModal">
 
-                <div id="modalHead"> 담은 메뉴</div>
+                <div id="cartTitle"><p id="titleText">메뉴목록</p> </div>
+                <div id="cartContent">
+                  <Box sx={{ minHeight: '200px' }}>
 
+                  {(()=>{return(<p id="emptyAlert">{JSON.stringify(orderMenuList)==="{}"?"메뉴 목록이 비어있습니다.":""}</p>)})()}
+               
                 {Object.keys(orderMenuList).map((menuSeq)=>{
                     return (
                         <>
+                        
                         <div key={menuSeq}>
                           {(()=>{ tempMenu= findDataByMenuSeq(menuSeq);})()}
                           
                           {/* {"메뉴번호: "+ menuSeq + ", 갯수: " + orderMenuList[menuSeq]} */}
                         
-                          <ListItem >
-                            <ListItemButton >
-                              <ListItemText primary={tempMenu.menuName} />
-                              <ListItemText primary={tempMenu.menuPrice + "원"} />
-                              <ListItemText primary={orderMenuList[menuSeq] + "개"} />
+                          <ListItem className='cartInMenuList'>
+                            <ListItemButton className="listButton">
+                              <ListItemText sx={{ textAlign:"left" , minWidth: 30}} primary={tempMenu.menuName} />
+                              <ListItemText sx={{ textAlign:"right" , minWidth: 30}} primary={tempMenu.menuPrice + "원"} />
+                              <ListItemText sx={{ textAlign:"right" , minWidth: 30}} primary={orderMenuList[menuSeq] + "개"} />
+                              <IconButton variant="outlined" onClick={()=>{removeCartItem(menuSeq)}}>
+                                <CancelIcon />
+                              </IconButton>
                             </ListItemButton>
                           </ListItem> 
                        
-                        <Button variant="outlined" onClick={()=>{removeCartItem(menuSeq)}}>x</Button>
+                        
                         
                         <br/>
                         </div>
+                        
                         </>
                     );
                 })}
-                <Stack spacing={2} direction="row" justifyContent="center">
-                    <Button variant="outlined" id="cartInButton" onClick={requestOrder}>주문</Button>
+                </Box>
+          </div>
+          <div>
+            <MenuCouponSelector shopSeq={params.shopSeq} couponSelect={couponSelect}/>
+          </div>    
+
+                <Stack id="cartBottom" spacing={2} direction="row" justifyContent="center">
+                    <Button variant="outlined" id="cartInButton" onClick={requestOrder}>주문하기</Button>
                     <Button variant="outlined" id="cartCancelButton" onClick={handleCartClose}>취소</Button>
                 </Stack>
                 
