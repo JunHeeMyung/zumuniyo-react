@@ -10,7 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import '@ckeditor/ckeditor5-build-classic/build/translations/ko.js'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { Button, Dialog } from '@mui/material';
+import { Button, Dialog, Divider } from '@mui/material';
 import { GlobalContext } from "components/common/GlobalProvider";
 import './ReviewInsert.css';
 import MyReview from "../mempage/normal/MyReview";
@@ -170,7 +170,10 @@ export default function ReviewInsert(props) {
 
   return (
     <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-      <h1>입력 테스트</h1>      
+      <Divider>
+      <h1>리뷰작성</h1>      
+      </Divider>
+      
       <Box style={{ margin: "0 auto" }}
         sx={{
           width: "80%",
@@ -179,7 +182,7 @@ export default function ReviewInsert(props) {
         }}>
 
         <Dialog open={show}>
-          <Alert severity="info">성공적으로 입력 되었습니다.<Button variant="outlined" onClick={() => { setShow(false); navigate('/LDS/normal/reviewMemList'); }} >확인</Button></Alert>
+          <Alert severity="info">성공적으로 입력 되었습니다.<Button variant="outlined" onClick={() => { setShow(false); navigate('/zumuniyo/normal/reviewMemList'); }} >확인</Button></Alert>
           {/* <Alert severity="info">성공적으로 입력 되었습니다.<Button variant="outlined" onClick={() => { setShow(false); navigate('/LDS/normal/orderList'); }} >확인</Button></Alert> */}
         </Dialog>
 

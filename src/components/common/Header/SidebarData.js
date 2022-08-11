@@ -97,7 +97,7 @@ export const SidebarDataB = [
         cName: 'nav-text'
     },
     {
-        title: '주문관리 &  QR코드생성',
+        title: '통합관리',
         // path: '/LDS/business/orderManageQR',
         path: '/zumuniyo/manager',
         icon: <QrCodeScannerIcon />,

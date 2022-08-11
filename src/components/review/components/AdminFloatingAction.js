@@ -180,9 +180,9 @@ export default function AdminFloatingAction() {
       >
 
         <TabPanel value={value} index={0} dir={theme.direction}>
-        <Box sx={{ width: "50%" }} style={{ margin: "0 auto" }}>
+        <Box sx={{ width: "100%" }} style={{ margin: "0 auto" }}>
         <Grid>
-            <BarChart width={800} height={400} data={dataAll}>
+            <BarChart width={750} height={400} data={dataAll}>
               <XAxis dataKey="name" stroke="#8884d8" />
               <YAxis />
               <Tooltip />
@@ -195,9 +195,9 @@ export default function AdminFloatingAction() {
 
         <TabPanel value={value} index={1} dir={theme.direction}>
           
-          <Box sx={{ width: "50%" }} style={{ margin: "0 auto" }}>
+          <Box sx={{ width: "100%" }} style={{ margin: "0 auto" }}>
           <Grid>
-            <BarChart width={800} height={400} data={dataMember}>
+            <BarChart width={750} height={400} data={dataMember}>
               <XAxis dataKey="name" stroke="#8884d8" />
               <YAxis />
               <Tooltip />
@@ -209,9 +209,9 @@ export default function AdminFloatingAction() {
         </TabPanel>
 
         <TabPanel value={value} index={2} dir={theme.direction}>
-        <Box sx={{ width: "50%" }} style={{ margin: "0 auto" }}>
+        <Box sx={{ width: "100%" }} style={{ margin: "0 auto" }}>
           <Grid>
-            <BarChart width={800} height={400} data={dataShop}>
+            <BarChart width={750} height={400} data={dataShop}>
               <XAxis dataKey="name" stroke="#8884d8" />
               <YAxis />
               <Tooltip />
@@ -223,9 +223,9 @@ export default function AdminFloatingAction() {
         </TabPanel>
 
         <TabPanel value={value} index={3} dir={theme.direction}>
-        <Box sx={{ width: "50%" }} style={{ margin: "0 auto" }}>
+        <Box sx={{ width: "100%" }} style={{ margin: "0 auto" }}>
           <Grid>
-            <BarChart width={800} height={400} data={reviewc}>
+            <BarChart width={750} height={400} data={reviewc}>
               <XAxis dataKey="REVIEW_REGDATE" stroke="#8884d8" />
               <YAxis />
               <Tooltip />
