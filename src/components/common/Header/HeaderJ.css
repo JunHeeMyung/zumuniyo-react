@@ -23,3 +23,7 @@
   background-color:#c09a1b;
   color:#fff;
 }
+
+#sidebar{
+  z-index: 3000;
+}
