@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import Button from '@mui/material/Button';
 import "./CKcss.css";
 
 const CkNoticeUpdate = () => {
@@ -15,7 +16,7 @@ const CkNoticeUpdate = () => {
     const[show,setShow ] = useState(false);
     const[image,setImage] = useState();
     const[flag,setFlag] = useState(false);
-
+    const navigate2 = useNavigate();
     const imgLink = `${process.env.PUBLIC_URL}/images`
 
     const customUploadAdapter = (loader)=>{
@@ -134,15 +135,14 @@ const CkNoticeUpdate = () => {
             } }
             />
         </div> 
-       
-        <input className="btn btn-primary" type="submit" value="수정하기" />
-        <input className="btn btn-secondary" type="reset" value="취소하기" />
-        <input
-          className="btn btn-secondary"
-          type="button"
-          value="목록보기"
-          id="empList"
-        />
+        <Button variant="outlined" type="submit">
+        수정하기
+        {/* <input className="btn btn-primary"  value="수정하기" /> */}
+        </Button> 
+        <Button variant="outlined" type="reset" onClick={() => navigate2(-1)}>
+        {/* <input className="btn btn-secondary" type="reset" value="취소하기" /> */}
+        취소하기
+        </Button> 
       </form>
     </>
   );

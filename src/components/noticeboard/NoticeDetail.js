@@ -71,7 +71,6 @@ const NoticeDetail = () => {
           <TextField value={notice.title||''} id="outlined-basic"  variant="outlined" style={{padding:'1em'}} />
         </div>
         <div className="emp-view-row">
-          <label>내용</label>
           <Viewer content={notice.content}/>
           
          
@@ -95,18 +94,14 @@ const NoticeDetail = () => {
           style={{padding:'1em'}} 
         />
         </div> 
-        <button onClick={() => navigate2(-1)}>리스트보기</button>
-        <Link to="0/zumuniyo/NoticeBoard/NoticeUpdate" state={{ notice: notice }}>
-          수정
-        </Link>
-      <div>
+        <Button variant="outlined" onClick={() => navigate2(-1)}>리스트보기</Button> 
         <Link to="/zumuniyo/NoticeBoard/CkNoticeUpdate" state={{ notice: notice }}>
-          CK수정
+        <Button variant="outlined">CK수정</Button>
         </Link>
-        </div>
         <Link to="0/zumuniyo/noticeboard/NoticeDelete" state={{ noticeBoardSeq: notice.noticeBoardSeq }}>
-          삭제
+        <Button variant="outlined">삭제</Button> 
         </Link>  
+        
       </div>
     </>
   );

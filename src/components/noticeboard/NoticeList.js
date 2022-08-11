@@ -74,13 +74,13 @@ const CustomizedTables= () => {
 
      <TableContainer component={Paper}>
      <h2 align="center" className="text-center">공지사항</h2>
-                <Link to="/SWY/NoticeBoard/CkNoticeInsert">
+                <Link to="/zumuniyo/NoticeBoard/CkNoticeInsert">
                 <button className="insertNotice2">CK글쓰기</button>
                 </Link>
-                <Link to="/SWY/advertisement/AdList">
+                <Link to="/zumuniyo/advertisement/AdList">
                 <button className="ad">광고</button>
                 </Link>
-                <Link to="/SWY/advertisement/ImgSlider">
+                <Link to="/zumuniyo/advertisement/ImgSlider">
                 <button className="Imgslider">슬라이더</button>
                 </Link>  
     <Table sx={{ minWidth: 700 }} aria-label="customized table">
