@@ -2,6 +2,10 @@ import React,{ useContext ,useEffect} from "react";
 import {GlobalContext} from "components/common/GlobalProvider";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
+import {IconButton} from "@mui/material";
+import "./LogInOutButton.css";
 
 const LogInOutButton = () => {
 
@@ -29,8 +33,12 @@ const LogInOutButton = () => {
     return (
       <>
          { logined ?
-          <button onClick={logout}>로그아웃</button>: 
-          <Link to="/zumuniyo/sociallogin"><Button variant="outlined" id="loginbutton">로그인</Button></Link> }
+         <IconButton onClick={logout}>
+          <LogoutIcon id="logoutbutton" />
+          </IconButton>
+          : 
+          <Link to="/zumuniyo/sociallogin"><IconButton><LoginIcon id="loginbutton"/></IconButton></Link> 
+          }
       </>
     );
   }

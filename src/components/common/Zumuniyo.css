@@ -26,3 +26,7 @@ body::-webkit-scrollbar-thumb{
 body::-webkit-scrollbar-track {
     background: rgb(223, 218, 215);
 }
+
+#headerWrapper{
+    z-index: 2000;
+}

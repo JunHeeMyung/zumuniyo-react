@@ -5,11 +5,11 @@ const Footer = ()=> {
 
   return (
     <>
-        <table id="footer">
-            <tr>
-                <td colSpan="3">Copyright ⓒ 2022 ZUMUNIYO all rights reserved</td>
-            </tr>
-        </table>
+        <div id="footer">
+            
+                Copyright ⓒ 2022 ZUMUNIYO all rights reserved
+            
+        </div>
     </>
   );
 }
