@@ -20,11 +20,11 @@ const TestPage = ()=> {
   return (
     <>
     <HeaderJ/>
-    <Link to="/MJH">명준희 </Link> 
-    <Link to="/JYH">정영훈 </Link> 
-    <Link to="/LDS">이덕수 </Link> 
-    <Link to="/LJW">이정우 </Link> 
-    <Link to="/SWY">서원영 </Link> 
+    <Link to="MJH">명준희 </Link> 
+    <Link to="JYH">정영훈 </Link> 
+    <Link to="LDS">이덕수 </Link> 
+    <Link to="LJW">이정우 </Link> 
+    <Link to="SWY">서원영 </Link> 
     ...............
     {memNick} {logined?'님 안녕하세요':''}
     <LogInOutButton/>

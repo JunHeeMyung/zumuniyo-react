@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useReducer } from "react";
 import { GlobalContext } from "components/common/GlobalProvider";
 
 
@@ -11,20 +11,34 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Pagination from "components/review/components/Pagination";
-import { Divider, FormControl, InputBase, InputLabel, NativeSelect, TextField } from "@mui/material";
-
+import { Alert, Dialog, Divider, FormControl, InputBase, InputLabel, NativeSelect, TextField } from "@mui/material";
+import {Stack} from "@mui/material";
 import { Button, Box } from "@mui/material";
 import { event } from "jquery";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Management() {
   const { globalAxios } = useContext(GlobalContext);
+  const [any, forceUpdate] = useReducer(num => num + 1, 0);
+  function handleChange11() {
+    forceUpdate();
+  }
+  const navigate = useNavigate();
 
-
-  const [members, setMembers] = useState([]);
+  const [members, setMembers] = useState('');
   const [memUp, setMemUp] = useState();
+  // const [member, setMember] = useState({});
 
+  const [temp,setTemp] = useState(0);
 
+  const [show, setShow] = useState(false);
 
+  const selectReviewList = () => {  
+   
+  }
+ 
   const memList = () => {
     globalAxios('/review/memList', 'post', {}, res => {
       if (res) {
@@ -38,28 +52,19 @@ export default function Management() {
     });
   }
 
-  const handleSubmit = (e) => {
-    console.log('handleSubmit들어옴');
-    // //e.preventDefault();
-    // console.log(memUp);
-
-    // globalAxios('/review/memManage/', 'put', memUp, response => {
-    //   console.log("respose");
-    //   console.log(response);
-    //   if (response === '성공') {
-    //     //setShow(true);  //성공알림
-    //   } else {
-    //     alert("failed to ");
-    //   }
-    // });
-  };
+  
 
   function convertDate(longValue) {
     return new Date(longValue).toLocaleString();
   }
   useEffect(()=>{
+    // selectReviewList();
     memList();
   }, []);
+
+  useEffect(()=>{
+    
+  }, [temp]);
 
   useEffect(()=>{
   
@@ -143,29 +148,111 @@ export default function Management() {
   const [mtype, setMtype] = useState('');
   const [msta, setMsta] = useState('');
 
-  const handleChange2 = (e) => {
+ 
+
+  const handleChange2 = (e,index,changeName) => {
+
+    members[index][changeName]=e.target.value;
+    setTemp(e=>e+1);
+    e.target.focus();
+   
     console.log(e.target.name);
     console.log(e.target.value);
     // setMtype({...mtype, [e.target.name] : e.target.value });
     // setMtype(event.target.value);
     // console.log(a);
     // console.log(b);
-    // setMembers({...members[b], [name] : a });
-  };
-  const handleChange3 = (e) => {
-    console.log(e.target.name);
-    console.log(e.target.value);
-    // setMsta(event.target.value);
-    // console.log(event.target.value);
 
+    //const { name , value } = e.target;
+    //    setMembers({...members, [name] : value });
+    // setMember({...member, [e.target.name] :e.target.value  });
+    //handleChange11();
+  };
+
+
+  // const handleChange3 = (e) => {
+  //   console.log(e.target.name);
+  //   console.log(e.target.value);
+  //   // setMember({...member, [e.target.name] :e.target.value  });
+
+   
+  //   const { name , value } = e.target;
+  //       setMember({...member, [name] : value });
+
+  //   // setMsta(event.target.value);
+  //   // console.log(event.target.value);    
+  // };
+  // const handleChange4 = (e) => {
+  //   console.log(e.target.name);
+  //   console.log(e.target.value);
+
+  //   const { name , value } = e.target;
+  //       setMember({...member, [name] : value });
+  //   // setMember({...member, [e.target.name] :e.target.value  });
+
+  //   // setMsta(event.target.value);
+  //   // console.log(event.target.value);
+    
+
+  // };
+
+
+  const handleSubmit = (e,index) => {
+
+    // e.preventDefault();
+    // console.log(e.target.datamid);
+
+    
+    console.log(members[index]);
+
+    // console.log(members[index]["memSeq"]);
+    // globalAxios(`/review/memmanage/${members[index]["memSeq"]}`, 'put', members[index], response => {
+    //   console.log("respose");
+    //   console.log(response);
+    //   if (response === '성공') {
+    //     //setShow(true);  //성공알림
+    //   } else {
+    //     alert("failed to ");
+    //   }
+    // });
+
+    axios.put(`/review/memmanage/${members[index]["memSeq"]}`, members[index])            
+    .then((res) => {
+      console.log("res"+res.data);
+      if (res.data === '성공') {
+        //setShow(true);  //성공알림
+      } else {
+        alert("failed to ");
+      }
+    })
+   
+    
+
+
+    
   };
 
 
   return (
     <>
+      <Dialog open={show}>
+        {/* selectMemList */}
+          <Alert severity="info">성공적으로 입력 되었습니다.<Button variant="outlined" onClick={() => { setShow(false); 
+            navigate('/LDS/admin/management');   
+            memList();            
+            }}
+            // href='/LDS/admin/management'
+             >확인</Button></Alert>
+          {/* <Alert severity="info">성공적으로 입력 되었습니다.<Button variant="outlined" onClick={() => { setShow(false); navigate('/LDS/normal/orderList'); }} >확인</Button></Alert> */}
+        </Dialog>
+
       {/* {JSON.stringify(members)} */}
+      {/* <hr/> */}
+      {JSON.stringify(temp)}
       {/* {members?member.as : ""} */}
 
+      {!members?"":
+      <>
       <Divider><h1>회원관리</h1></Divider>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 500 }} aria-label="customized table">
@@ -184,14 +271,20 @@ export default function Management() {
           <TableBody>
             {members.slice(offset, offset + limit).map((data, index) => (
 
-              <StyledTableRow key={index} >
+              <StyledTableRow key={offset+index} >    
+         
                 {/* <form id="memberManager" onSubmit={handleSubmit}> */}
-                {/* <Box   component="form" id="memberManager" onSubmit={handleSubmit}> */}                 
+                {/* <Box   component="form" id="memberManager" onSubmit={handleSubmit}>     */}
+                {/* <Stack component="form" noValidate onSubmit={handleSubmit} spacing={2} sx={{ m: 2, width: '25ch' }}>           */}
                 <StyledTableCell component="th" scope="row" >
                   {data.memSeq}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  <TextField id="outlined-basic" name="memNick" label={data.memNick} variant="filled" defaultValue={data.memNick} />
+                  <TextField id="outlined-basic" name={"memNick"+data.memSeq}  label="닉네임" variant="filled" 
+                  defaultValue={members[offset+index].memNick}  
+                  // onChange={e=>{handleChange2(e,offset+index,"memNick")}}  
+                  onBlur= {e=>{handleChange2(e,offset+index,"memNick")}}                 
+                  />
                 </StyledTableCell>
                 <StyledTableCell align="center">{data.memEmail}</StyledTableCell>
                 <StyledTableCell align="center">{convertDate(data.memRegdate)}</StyledTableCell>
@@ -200,16 +293,15 @@ export default function Management() {
                     {/* <InputLabel htmlFor="demo-customized-select-native">회원분류</InputLabel> */}
                     <NativeSelect
                       id="demo-customized-select-native"
-                      name="memType"
+                    name={"memType"+data.memSeq}
                       // value={data.memType}
                       // onChange={handleChange2(data.memType, index, "memType")}
-                      onChange={handleChange2}
-                      defaultValue={data.memType}
-                      input={<BootstrapInput />}
-                      // value={mtype}
+                      onChange={e=>{handleChange2(e,offset+index,"memType")}}
+                      defaultValue={data.memType}                                           
+                      input={<BootstrapInput />}                      
                     >
                       {/* <option aria-label="None" value={data.memType}/> */}
-                      <option aria-label="None" value=""/>
+                      {/* <option aria-label="None" value=""/> */}
                       <option value={"관리자"}>관리자</option>
                       <option value={"사업자회원"}>사업자회원</option>
                       <option value={"일반회원"}>일반회원</option>
@@ -223,13 +315,13 @@ export default function Management() {
                     {/* <InputLabel htmlFor="demo-customized-select-native">회원분류</InputLabel> */}
                     <NativeSelect
                       id="demo-customized-select-native"
-                      name="memStatus"
+                      name={"memStatus"+data.memSeq}
                       // value={data.memStatus}
-                      onChange={handleChange3}
-                      defaultValue={data.memStatus}
+                      onChange={e=>{handleChange2(e,offset+index,"memStatus")}}
+                      defaultValue={members[offset+index].memStatus}
                       input={<BootstrapInput />}
                     >
-                      <option aria-label="None" >{data.memStatus}</option>
+                      {/* <option aria-label="None" >{data.memStatus}</option> */}
                       <option value={"활성"}>활성</option>
                       <option value={"비활성"}>비활성</option>
                       <option value={"정지"}>정지</option>
@@ -238,17 +330,19 @@ export default function Management() {
                 </StyledTableCell>
                 {/* <StyledTableCell align="center">{data.memStatus}</StyledTableCell> */}
                 <StyledTableCell align="center">
-                  <Button variant="contained" type="submit">수정</Button>
+                  <Button variant="contained" type="submit" onClick={e=> {handleSubmit(e,offset+index);  setShow(true);}}>수정</Button>
                 </StyledTableCell>                       
                 {/* </Box>          */}
                 {/* </form> */}
+                {/* </Stack>    */}
               </StyledTableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
       <Pagination total={members.length} limit={limit} page={page} setPage={setPage} />
-
+      </>
+    }
     </>
   )
 }

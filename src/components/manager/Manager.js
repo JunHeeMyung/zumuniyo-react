@@ -5,6 +5,32 @@ import CouponManager from "components/manager/CouponManager";
 
 const Manager = ()=> {
 
+
+
+
+
+  const getManagerListResult = () => {
+
+  }
+
+  const getManagerList = () => {
+    //globalAxios('/main/','get',{},result=>{getManagerListResult(result)});
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     return (
       <>
         <Routes>

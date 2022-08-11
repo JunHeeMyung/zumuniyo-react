@@ -13,7 +13,7 @@ const AuthChecker = (props) => {
             if(!logined) {
                 globalAxios('/member/login','get',{},result=>{
                 if(!result) {
-                  navigate('/MJH/sociallogin');
+                  navigate('/zumuniyo/sociallogin');
                 return;
               }});
             }

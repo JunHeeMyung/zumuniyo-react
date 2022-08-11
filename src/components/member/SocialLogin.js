@@ -28,7 +28,7 @@ const SocialLogin = (props)=> {
 
     const naverLogin = new naver.LoginWithNaverId({
       clientId: 'BR7MTDuiJVo2gsGBsL57',
-      callbackUrl: 'http://localhost:3000/MJH/sociallogin/naver',
+      callbackUrl: 'http://localhost:3000/zumuniyo/sociallogin/naver',
       isPopup: true,
       loginButton: { color: 'white', type: 1, height: '1' },
     });

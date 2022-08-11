@@ -14,8 +14,11 @@ import PostAddOutlinedIcon from '@mui/icons-material/PostAddOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import {IconButton} from "@mui/material";
 import { Box } from "@mui/system";
+import moment from "moment-timezone"
 
 const OrderGroupList = (props)=> {
+
+    moment.DATETIME_LOCAL = "YYYY-MM-DD HH:mm:ss";
 
     const {globalAxios} = useContext(GlobalContext);
     const [orderGroupList,setOrderGroupList] = useState([]);
@@ -90,8 +93,7 @@ const OrderGroupList = (props)=> {
                                 <TableCell key='orderGroupSeq' sx={{ textAlign:"center" ,minWidth: 70}}>{orderGroup.orderGroupSeq}</TableCell>
                                 <TableCell key='shopName' sx={{ textAlign:"center" ,minWidth: 150}}>{orderGroup.shop.shopName}</TableCell>
                                 <TableCell key='orderGroupRegdate' sx={{ textAlign:"center" ,minWidth: 150}}>
-                                  {((String)(orderGroup.orderGroupRegdate)).split('T')[0]+" "+
-                                    ((String)(orderGroup.orderGroupRegdate)).split('T')[1].split('+')[0].split('.')[0]}
+                                  {moment(orderGroup.orderGroupRegdate).tz("Asia/Seoul").format(moment.DATETIME_LOCAL)}
                                 </TableCell>
                                 <TableCell key='detailInfomation' sx={{ textAlign:"center" ,minWidth: 70}}>
                                   <IconButton edge ="end" onClick={()=>goDetailPage(orderGroup.orderGroupSeq)}>
