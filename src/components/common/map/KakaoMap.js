@@ -174,7 +174,7 @@ const KakaoMap = () => {
                                         
                                         
                                     const content = '<div class="markerbox">' +
-                                    '  <a href="'+shopseqval+'">' +
+                                    '  <a href="/zumuniyo/shop/'+shopseqval+'">' +
                                     '    '+nameval +
                                     '  </a>' +
                                     '</div>';

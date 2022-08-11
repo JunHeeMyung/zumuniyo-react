@@ -28,5 +28,5 @@ body::-webkit-scrollbar-track {
 }
 
 #headerWrapper{
-    z-index: 2000;
+    z-index: 100;
 }
