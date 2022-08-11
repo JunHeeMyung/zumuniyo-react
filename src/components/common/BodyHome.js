@@ -1,6 +1,6 @@
 import React from "react";
 import "./BodyHome.css";
-import {Routes,Route} from 'react-router';
+import { Routes, Route } from 'react-router';
 
 import SocialLogin from "components/member/SocialLogin";
 import KakaoMap from "components/common/map/KakaoMap";
@@ -33,7 +33,7 @@ import NoticeDetail from "components/noticeboard/NoticeDetail";
 import NoticeUpdate from "components/noticeboard/NoticeUpdate";
 import CkNoticeUpdate from "components/noticeboard/CkNoticeUpdate";
 
-import AdInsert2  from "components/advertisement/AdInsert2";
+import AdInsert2 from "components/advertisement/AdInsert2";
 import AdList from "components/advertisement/AdList";
 import AdDetail from "components/advertisement/AdDetail";
 import AdDelete from "components/advertisement/AdDelete";
@@ -42,24 +42,30 @@ import SearchResult from "components/search/SearchResult";
 
 import MainCarousel from "components/common/carousel/MainCarousel"
 
-const BodyHome = ()=> {
+import Shop from 'components/shop/pages/Home.js'
+import ShopInsert from 'components/shop/pages/ShopInsert'
+import ShopUpdate from 'components/shop/pages/ShopUpdate'
+import ShopList from 'components/shop/pages/ShopList'
+
+
+const BodyHome = () => {
 
   const defaultPage = <>
-                        <MainCarousel/>
-                        <KakaoMap/>
-                      </>;
+    <MainCarousel />
+    <KakaoMap />
+  </>;
 
-  return ( 
+  return (
     <>
-    <Routes>
+      <Routes>
         <Route path="/" element={defaultPage} />
 
-        <Route path="/sociallogin/*" element={<SocialLogin/>} />
-        <Route path="/orderlist/*" element={<AuthChecker><MyOrderList/></AuthChecker>} />
-        <Route path="/manager/*" element={<AuthChecker memType="사업자회원"><Manager/></AuthChecker>} />
-        <Route path="/mycoupon" element={<AuthChecker><MyCoupon/></AuthChecker>} />
+        <Route path="/sociallogin/*" element={<SocialLogin />} />
+        <Route path="/orderlist/*" element={<AuthChecker><MyOrderList /></AuthChecker>} />
+        <Route path="/manager/*" element={<AuthChecker memType="사업자회원"><Manager /></AuthChecker>} />
+        <Route path="/mycoupon" element={<AuthChecker><MyCoupon /></AuthChecker>} />
 
-        <Route path="/menu/*" element={<Menu/>} />
+        <Route path="/menu/*" element={<Menu />} />
         <Route path="/menuQR/:shopSeq/:tableNum" element={<AuthChecker><MenuQR /></AuthChecker>} />
         <Route path="/menuQRnew/:shopSeq/:tableNum" element={<AuthChecker><MenuListQR /></AuthChecker>} />
 
@@ -72,26 +78,33 @@ const BodyHome = ()=> {
         <Route path="/business/nickModify" element={<AuthChecker memType="사업자회원"><NickModify /></AuthChecker>} />
         <Route path="/business/storeReviewManage" element={<AuthChecker memType="사업자회원"><StoreReviewManage /></AuthChecker>} />
         <Route path="/business/orderManageQR" element={<AuthChecker memType="사업자회원"><OrderManageQR /></AuthChecker>} />
-        
-        <Route path="/normal" element={<AuthChecker memType="일반회원"><Normal /></AuthChecker>} />        
+
+        <Route path="/normal" element={<AuthChecker memType="일반회원"><Normal /></AuthChecker>} />
         <Route path="/normal/nickmodify" element={<AuthChecker memType="일반회원"><NickModify /></AuthChecker>} />
         <Route path="/normal/reviewMemList" element={<AuthChecker memType="일반회원"><MyReview /></AuthChecker>} />
         <Route path="/normal/reviewInsert/:orderGroupSeq" element={<AuthChecker memType="일반회원"><ReviewInsert /></AuthChecker>} />
-        <Route path="/normal/orderList" element={<AuthChecker memType="일반회원"><OrderList /></AuthChecker>} />  
+        <Route path="/normal/orderList" element={<AuthChecker memType="일반회원"><OrderList /></AuthChecker>} />
 
-        <Route path="/NoticeBoard/NoticeDetail/:noticeBoardSeq" element={<NoticeDetail/>} />
-        <Route path="/NoticeBoard/NoticeUpdate" element={<NoticeUpdate/>} />
-        <Route path="/NoticeBoard/CkNoticeUpdate" element={<CkNoticeUpdate/>} />
-        <Route path="/NoticeBoard/NoticeDelete" element={<NoticeDelete/>} />
-        <Route path="/NoticeBoard/CkNoticeInsert" element={<CkNoticeInsert/>} />
-        <Route path="/advertisement/AdList" element={<AdList/>} />
-        <Route path="/advertisement/AdInsert2" element={<AdInsert2/>} />
-        <Route path="/advertisement/AdDetail/:adSeq" element={<AdDetail/>} />
-        <Route path="/advertisement/AdDelete" element={<AdDelete/>} />
-        <Route path="/advertisement/ImgSlider" element={<ImgSlider/>} />
-        <Route path ="/search/SearchResult" element= {<SearchResult/>}/>
-    </Routes>
-            
+        <Route path="/NoticeBoard/NoticeDetail/:noticeBoardSeq" element={<NoticeDetail />} />
+        <Route path="/NoticeBoard/NoticeUpdate" element={<NoticeUpdate />} />
+        <Route path="/NoticeBoard/CkNoticeUpdate" element={<CkNoticeUpdate />} />
+        <Route path="/NoticeBoard/NoticeDelete" element={<NoticeDelete />} />
+        <Route path="/NoticeBoard/CkNoticeInsert" element={<CkNoticeInsert />} />
+        <Route path="/advertisement/AdList" element={<AdList />} />
+        <Route path="/advertisement/AdInsert2" element={<AdInsert2 />} />
+        <Route path="/advertisement/AdDetail/:adSeq" element={<AdDetail />} />
+        <Route path="/advertisement/AdDelete" element={<AdDelete />} />
+        <Route path="/advertisement/ImgSlider" element={<ImgSlider />} />
+        <Route path="/search/SearchResult" element={<SearchResult />} />
+
+        <Route path="/shop/:shopSeq" element={<Shop />} />
+        <Route path='/shopinsert' element={<ShopInsert />} />
+        <Route path='/shopupdate/:shopSeq' element={<ShopUpdate />} />
+        <Route path='/shoplist' element={<ShopList />} />
+
+
+      </Routes>
+
     </>
   );
 }

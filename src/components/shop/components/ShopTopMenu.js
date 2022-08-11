@@ -49,7 +49,8 @@ export default function ShopMenu({ shopseq }) {
             <TableRow key={index}>
               <TableCell>{menu.menuName}</TableCell>
               <TableCell>{menu.menuPrice}</TableCell>
-              <TableCell>{menu.menuImage}</TableCell>
+              {/* <TableCell>{menu.menuImage}</TableCell> */}
+              <TableCell><img src={`/image/${menu.menuImage}`}></img></TableCell>
               <TableCell>{menu.menuSimpleInfo}</TableCell>
 
             </TableRow>

@@ -62,7 +62,7 @@ export default function SignUp() {
       console.log(res);
       if (res) {
         console.log("입력성공");
-        navigator("/LJW/shoplist");
+        navigator("/zumuniyo/shoplist");
       } else {
         console.log("입력실패");
       }

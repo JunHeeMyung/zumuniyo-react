@@ -12,10 +12,11 @@ import UpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { green } from '@mui/material/colors';
 import Box from '@mui/material/Box';
 
-import ShopDetail from './ShopDetail.js';
-import ShopMenu from './ShopMenu.js'
-import ShopReview from './ShopReview.js';
-import ShopTopMenu from './ShopTopMenu.js';
+import ShopDetail from 'components/shop/components/ShopDetail';
+import ShopMenu from 'components/shop/components/ShopMenu'
+import ShopReview from 'components/shop/components/ShopReview';
+import ShopTopMenu from 'components/shop/components/ShopTopMenu';
+import { useParams } from 'react-router-dom';
 
 
 function TabPanel(props) {
@@ -62,9 +63,10 @@ const fabGreenStyle = {
   },
 };
 
-export default function FloatingActionButtonZoom() {
+export default function FloatingActionButtonZoom(props) {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  const params = useParams();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -124,19 +126,19 @@ export default function FloatingActionButtonZoom() {
         index={value}
         onChangeIndex={handleChangeIndex}>
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <ShopTopMenu shopseq={4882} />
+          <ShopTopMenu shopseq={props.shopSeq} />
         </TabPanel>
 
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <ShopMenu shopseq={4882} />
+          <ShopMenu shopseq={props.shopSeq} />
 
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          <ShopReview shopSeq={4882} />
+          <ShopReview shopSeq={props.shopSeq} />
 
         </TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
-          <ShopDetail shopseq={4882} />
+          <ShopDetail shopseq={props.shopSeq} />
         </TabPanel>
 
       </SwipeableViews>
