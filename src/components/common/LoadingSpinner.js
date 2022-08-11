@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import CircularProgress from '@mui/material/CircularProgress';
 import { GlobalContext } from "components/common/GlobalProvider";
+import "./LoadingSpinner.css"
 
 const LoadingSpinner = (props)=> {
 
@@ -15,7 +16,7 @@ const LoadingSpinner = (props)=> {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        "&:focus":{ outline: 'none' }
+        "&:focus":{ outline: 'none' },
     };
 
     const counterStyle = {
@@ -38,7 +39,7 @@ const LoadingSpinner = (props)=> {
 
     return (
       <>
-            <Modal open={open}>
+            <Modal open={open} id = "spinnerModal">
                 <Box sx={boxStyle}>
                 <CircularProgress sx={{circle:{color:'orange'}}}/>
                 <p style={counterStyle}>{axiosCounter}</p>
