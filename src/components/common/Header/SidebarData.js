@@ -91,8 +91,8 @@ export const SidebarDataB = [
         cName: 'nav-text'
     },
     {
-        title: '매장등록',
-        path: '/zumuniyo/shopinsert',
+        title: '매장관리',
+        path: '/zumuniyo/shoplist',
         icon: <StoreIcon />,
         cName: 'nav-text'
     },
