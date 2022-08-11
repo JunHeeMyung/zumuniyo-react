@@ -20,11 +20,10 @@ const CkNoticeInsert = () => {
         globalAxios("/noticeboard/NoticeInsert.go","post",board ,data=>{
             console.log(data);
             alert(` 성공적으로 입력 되었습니다.`);
-            navigate("/SWY");
+            navigate("/zumuniyo/NoticeList");
         },'multipart/form-data')
     };
 
-   
     const customUploadAdapter = (loader)=>{
     return {
         upload(){

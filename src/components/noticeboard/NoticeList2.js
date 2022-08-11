@@ -59,7 +59,7 @@ const NoticeList2 = () => {
                                     {/* <tr key = {list.noticeBoardSeq}> */}
                                         <td>{list.noticeBoardSeq}</td> 
                                         <td> 
-                                        <Link to={`/SWY/NoticeBoard/NoticeDetail/${list.noticeBoardSeq}`}>{list.title} </Link>  
+                                        <Link to={`/zumuniyo/Noticeboard/NoticeDetail/${list.noticeBoardSeq}`}>{list.title} </Link>  
                                         {list.boardTop==1?<img src={imgURL} alt={list.noticeBoardSeq} width="20px" height="20px"/>:<div/>}
                                         </td>
                                        
