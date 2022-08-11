@@ -6,12 +6,12 @@ export default function ShopDetail(props) {
 
   const { logined, memNick, memType, globalAxios } = useContext(GlobalContext);
 
-  const [shopseq, setShopseq] = useState(props.shopseq);
+  const [shopSeq, setShopSeq] = useState(props.shopSeq);
   const [shoplist, setShoplist] = useState([]);
   const [shop, setShop] = useState({});
 
   const shopSelect = () => {
-    globalAxios(`/shop/shopListByseq/${shopseq}`, 'get', {}, res => {
+    globalAxios(`/shop/shopListByseq/${shopSeq}`, 'get', {}, res => {
       if (res) {
         console.log(res);
         setShop(res);

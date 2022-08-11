@@ -83,7 +83,7 @@ export default function ShopUpdate(props) {
       console.log(res);
       if (res) {
         console.log("shopDTO성공");
-        navigator("/LJW/shoplist");
+        navigator("/zumuniyo/shoplist");
       } else {
         console.log("shopDTO실패");
       }

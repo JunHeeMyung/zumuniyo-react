@@ -44,6 +44,8 @@ export default function Orders() {
     globalAxios(`/shop/shopdelete/${e.target.value}`, 'put', {}, res => {
       if (res === '성공') {
         console.log(res);
+        alert("삭제에 성공했습니다.");
+        shopSelect();
 
       } else {
         alert("failed to");
@@ -56,6 +58,9 @@ export default function Orders() {
 
 
   useEffect(shopSelect, []);
+
+  useEffect(() => { }, [shopSelect]);
+
 
   return (
     <React.Fragment>
@@ -86,7 +91,7 @@ export default function Orders() {
               {/* <TableCell>{row.shipTo}</TableCell> */}
               {/* <TableCell>{row.paymentMethod}</TableCell> */}
               <TableCell align="right">
-                <Button color="primary" onClick={() => { navigate(`/LJW/shopupdate/${shop.shopSeq}`) }} >
+                <Button color="primary" onClick={() => { navigate(`/zumuniyo/shopupdate/${shop.shopSeq}`) }} >
                   매장 수정
                 </Button>
                 {/* <Link to={`/LJW/shopupdate/${shop.shopSeq}`} state={{ shop: shop }} >수정</Link> */}
@@ -100,11 +105,11 @@ export default function Orders() {
           ))}
         </TableBody>
       </Table>
-      <Link color="primary" onClick={() => { navigate("/LJW/shopinsert") }} sx={{ mt: 3 }}>
+      <Button color="primary" onClick={() => { navigate("/zumuniyo/shopinsert") }} sx={{ mt: 3 }}>
         {/* <Link to={`/LJW/shopinsert`} sx={{ mt: 3 }}> */}
 
         매장 추가
-      </Link>
+      </Button>
     </React.Fragment >
   );
 }
