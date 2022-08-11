@@ -7,6 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useNavigate } from 'react-router-dom';
 
+import './ShopMenu.css';
 
 export default function ShopMenu({ shopseq }) {
 

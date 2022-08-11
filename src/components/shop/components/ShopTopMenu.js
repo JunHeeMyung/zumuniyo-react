@@ -10,6 +10,8 @@ import TableRow from '@mui/material/TableRow';
 // import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 
+import './ShopTopMenu.css';
+
 export default function ShopMenu({ shopseq }) {
 
 

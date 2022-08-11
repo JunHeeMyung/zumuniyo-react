@@ -102,7 +102,7 @@ export default function ShopUpdate(props) {
 
       {JSON.stringify(shopDTO) !== '{}' ?
         <>
-          <h1>샵업데이트페이지</h1>
+
           <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
               <CssBaseline />
@@ -215,12 +215,12 @@ export default function ShopUpdate(props) {
                       />
                     </Grid>
 
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                       <FormControlLabel
                         control={<Checkbox value="allowExtraEmails" color="primary" />}
                         label="매장수정을 하시겠습니까?"
                       />
-                    </Grid>
+                    </Grid> */}
                   </Grid>
                   <Button
                     type="submit"
