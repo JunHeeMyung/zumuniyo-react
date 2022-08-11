@@ -92,7 +92,7 @@ export const SidebarDataB = [
     },
     {
         title: '매장등록',
-        path: '/zumuniyo/business/storeReviewManage',
+        path: '/zumuniyo/shopinsert',
         icon: <StoreIcon />,
         cName: 'nav-text'
     },

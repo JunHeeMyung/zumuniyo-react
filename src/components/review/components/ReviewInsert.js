@@ -13,37 +13,20 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Button, Dialog, Divider } from '@mui/material';
 import { GlobalContext } from "components/common/GlobalProvider";
 import './ReviewInsert.css';
-import MyReview from "../mempage/normal/MyReview";
 
 
-// export default function ReviewInsert(props) {
 export default function ReviewInsert(props) {
   const navigate = useNavigate();
-  // const {orderseq2} = useLocation();
-
   const params = useParams();
-  const orderSeq = params.orderGroupSeq;
-  // const orderSeq = location.state.orderseq;
-  // const orderSeq = orderseq2
-
-  
+  const orderSeq = params.orderGroupSeq;  
   const { logined, memNick, memType, globalAxios } = useContext(GlobalContext);
-
   const [reviewInsert, setReviewInsert] = useState({});
-
   const handleCkeditorState = (event, editor) => {
     const data = editor.getData();
     setReviewInsert({ ...reviewInsert, reviewContent: data });
     console.log(data);
   }
  
-
-  
-  // const cancleW = ()=>{
-  //   props.cancle;
-  //   console.log("cancleW실행됨")
-  // }
-
   const handleChange = (e) => {
     console.log(e);
     setReviewInsert({ ...reviewInsert, [e.target.name]: e.target.value });
@@ -64,20 +47,6 @@ export default function ReviewInsert(props) {
         alert("failed to ");
       }
     });
-
-    // globalAxios('/review/reviewInsert/', 'post', reviewInsert, response => {
-    //   console.log("respose");
-    //   console.log(response);
-    //   if (response == 1) {
-    //     console.log(reviewInsert);
-    //     setShow(true);  //성공알림
-    //   } else {
-    //     alert("failed to ");
-    //   }
-    // });
-
-
-
 
     // axios({
     //   method: "post",
@@ -133,32 +102,6 @@ export default function ReviewInsert(props) {
   }
 
 
-  // const customUploadAdapter1 = (loader) => {
-  //   return {
-  //     upload() {
-  //       return new Promise((resolve, reject) => {
-  //         const data = new FormData();
-  //         loader.file.then((file) => {
-  //           data.append("name", file.name);
-  //           data.append("file", file);
-  //           console.log(data);
-
-  //           globalAxios('/review/upload', 'post', data, res => {
-  //             console.log(res);
-  //             if (!flag) {
-  //               setFlag(true);
-  //               setImage(`${imgLink}/${file.name}`);
-  //             }
-  //             resolve({
-  //               default: `${imgLink}/${file.name}`
-  //             });
-  //           })
-  //         })
-  //       })
-  //     }
-  //   }
-  // }
-
   function uploadPlugin(editor) { 
     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
       return customUploadAdapter(loader);
@@ -182,8 +125,7 @@ export default function ReviewInsert(props) {
         }}>
 
         <Dialog open={show}>
-          <Alert severity="info">성공적으로 입력 되었습니다.<Button variant="outlined" onClick={() => { setShow(false); navigate('/zumuniyo/normal/reviewMemList'); }} >확인</Button></Alert>
-          {/* <Alert severity="info">성공적으로 입력 되었습니다.<Button variant="outlined" onClick={() => { setShow(false); navigate('/LDS/normal/orderList'); }} >확인</Button></Alert> */}
+          <Alert severity="info">성공적으로 입력 되었습니다.<Button variant="outlined" onClick={() => { setShow(false); navigate('/zumuniyo/normal/reviewMemList'); }} >확인</Button></Alert>          
         </Dialog>
 
         <Box
@@ -239,8 +181,7 @@ export default function ReviewInsert(props) {
             </div>
             <br />
             <div style={{ margin: "0 auto", textAlign: "center" }}>
-              <Button type="submit" variant="contained" color="primary" >입력하기</Button>
-              {/* <Button variant="contained" color="primary" onClick={props.cancle} >취소하기</Button> */}
+              <Button type="submit" variant="contained" color="primary" >입력하기</Button>             
             </div>
           </form>
         </Box>
