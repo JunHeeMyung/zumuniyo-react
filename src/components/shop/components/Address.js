@@ -41,7 +41,7 @@ export default function Address({ handleChange3, locAddr, shopAddrDetailParam })
   return (
     <Box>
       <div>
-        <Input id="addr" name="location" type="text" value={locAddr || " "} readOnly />
+        <Input id="addr" name="location" type="text" value={location.locAddr || " "} readOnly />
         <Button variant="outlined" id="findaddr" onClick={findAddr || " "} >주소검색</Button>
         <Input id="latitude" name="loc_lat" value={location.locLat || 0} type="hidden" readOnly />
         <Input id="longitude" name="loc_lon" value={location.locLon || 0} type="hidden" readOnly />

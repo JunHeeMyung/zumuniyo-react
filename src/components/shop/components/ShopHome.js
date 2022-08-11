@@ -27,22 +27,9 @@ export default function ShopDetail(props) {
 
   return (
     <div>
-      <h1>shopInfo- 짧은 소개</h1>
-      {shop.shopInfo}
-
-      <h1>ShopDetail-매장상세 정보</h1>
-      {shop.shopDetail}
-
-      <h1>사장님 한마디</h1>
-      {shop.shopNotice}
-
-      <h1>매장 주소</h1>
-      {/* {shop.location} */}
-      {/* {shop.location.locAddr} */}
-      {shop.shopAddrDetail}
-
-      <h1>매장 로고</h1>
-      {shop.shopLogo}
+      <h1>매장 정보 페이지</h1>
+      {shop.shopName}
+      <h6>{shop.shopNotice}</h6>
     </div>
   )
 }

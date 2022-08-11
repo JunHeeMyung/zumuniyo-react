@@ -23,22 +23,9 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Address from 'components/shop/components/Address';
 import Category from 'components/shop/components/Category';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { param } from 'jquery';
-import { FormControl, InputLabel, OutlinedInput } from '@mui/material';
+// import { param } from 'jquery';
+// import { FormControl, InputLabel, OutlinedInput } from '@mui/material';
 
-
-// function Copyright(props) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
 
 const theme = createTheme();
 
@@ -46,8 +33,6 @@ export default function ShopUpdate(props) {
   const navigator = useNavigate();
   const params = useParams();
   const shopSeq = params.shopSeq;
-
-
 
   // const location = useLocation();
   // console.log(location.state);
@@ -182,6 +167,19 @@ export default function ShopUpdate(props) {
                     </Grid>
 
                     <br />
+
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        fullWidth
+                        id="shopNotice"
+                        label="사장님 알림"
+                        name="shopNotice"
+                        autoComplete="family-name"
+                        value={shopDTO.shopNotice}
+                        onChange={handleChage}
+                      />
+                    </Grid>
 
                     <Grid item xs={12}>
                       <TextField

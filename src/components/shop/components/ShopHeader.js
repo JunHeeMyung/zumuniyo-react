@@ -6,17 +6,17 @@ import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-// import Zoom from '@mui/material/Zoom';
-// import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import UpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { green } from '@mui/material/colors';
 import Box from '@mui/material/Box';
 
-import ShopTalbe from './ShopTable.js';
-import Test123 from '../pages/Test123.js';
 import ShopDetail from './ShopDetail.js';
+import ShopMenu from './ShopMenu.js'
+import ShopReview from './ShopReview.js';
+import ShopTopMenu from './ShopTopMenu.js';
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -74,11 +74,6 @@ export default function FloatingActionButtonZoom() {
     setValue(index);
   };
 
-  // const transitionDuration = {
-  //   enter: theme.transitions.duration.enteringScreen,
-  //   exit: theme.transitions.duration.leavingScreen,
-  // };
-
   const fabs = [
     {
       color: 'primary',
@@ -129,35 +124,23 @@ export default function FloatingActionButtonZoom() {
         index={value}
         onChangeIndex={handleChangeIndex}>
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <ShopTalbe />
+          <ShopTopMenu shopseq={4882} />
         </TabPanel>
+
         <TabPanel value={value} index={1} dir={theme.direction}>
-          전체메뉴
+          <ShopMenu shopseq={4882} />
+
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          <Test123 />
-          리뷰
+          <ShopReview shopSeq={4882} />
+
         </TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
           <ShopDetail shopseq={4882} />
         </TabPanel>
 
       </SwipeableViews>
-      {/* {fabs.map((fab, index) => (
-        <Zoom
-          key={fab.color}
-          in={value === index}
-          timeout={transitionDuration}
-          style={{
-            transitionDelay: `${value === index ? transitionDuration.exit : 0}ms`,
-          }}
-          unmountOnExit
-        >
-          <Fab sx={fab.sx} aria-label={fab.label} color={fab.color}>
-            {fab.icon}
-          </Fab>
-        </Zoom>
-      ))} */}
+
     </Box>
   );
 }
