@@ -7,8 +7,10 @@ import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import SideBar from "components/common/Header/SideBar"
-import React , { useState} from "react";
+import React , { useState,useContext} from "react";
 import LogInOutButton from "components/member/LogInOutButton"
+import {GlobalContext} from "components/common/GlobalProvider";
+import { useNavigate } from 'react-router';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -52,17 +54,29 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function PrimarySearchAppBar() { 
   const [word, setWord] = useState("");
-  const onSubmit = async () => {
-    window.location.href = "/search/" + word;
+  const [Shoplist,setShoplist] =useState([]);
+  const {globalAxios} = useContext(GlobalContext);
+  // const onSubmit = async () => {
+  //   window.location.href = "/search/" + word;
+  // };
+  const navigate = useNavigate();
+
+  const handleSubmit = ()=>{
+    globalAxios("/shopsearch","get",{keyword:word},data=>{
+      console.log(data);
+      setShoplist(data); //{} [] 
+      navigate("/zumuniyo/search/SearchResult",{state: {shoplist: data}});
+    })
   };
+
 
   return (
     <>
 
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar position="static" sx={{ bgcolor: "#471e1e" }}>
           <Toolbar>
-            <IconButton style={{ color: "white" }} href="/">
+            <IconButton style={{ color: "white" }} onClick={()=>{navigate('/zumuniyo')}}>
               ZUMUNIYO
             </IconButton>
 
@@ -79,7 +93,7 @@ export default function PrimarySearchAppBar() {
                   }}
               />
             </Search>
-            <button  onClick={() => { onSubmit(); }}>검색</button>
+            <button  onClick={handleSubmit}>검색</button>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 
@@ -88,7 +102,9 @@ export default function PrimarySearchAppBar() {
                 <LogInOutButton/>
               {/* </IconButton> */}
             </Box>
+            <div id='sidebar'>
             <SideBar />
+            </div>
           </Toolbar>
         </AppBar>
       </Box>
