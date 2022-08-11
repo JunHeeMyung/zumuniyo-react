@@ -13,6 +13,10 @@ import {GlobalContext} from "components/common/GlobalProvider";
 import {  useNavigate,useLocation } from "react-router-dom";
 import Pagination from './Pagination';
 import $ from "jquery";
+import { Box, Button, Modal, Typography } from '@mui/material';
+import TextField from '@mui/material/TextField';
+
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -43,16 +47,26 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
  
 // ];
 const CustomizedTables= () => {
- 
+  
+  
+  const [adDetail, setAdDetail] = useState({});
   const imgURL = "/img/37967765.jpg"
   const {globalAxios} = useContext(GlobalContext);
   const [Adlist,setAdlist] = useState([]);
+  
   const getAdList = () => {
     globalAxios("/advertisement/adlist","get",{},data=>{
       console.log(data);
       setAdlist(data);
     })
   }
+
+  // const timestamp = adDetail.startTime
+  // const etimestamp = adDetail.endTime
+  // const edate = new Date(etimestamp);
+  // const date = new Date(timestamp);
+
+
   const [limit,setLimit] = useState(5);
   const [page,setPage] = useState(1);
   const offset = (page-1 )*limit;
@@ -78,11 +92,57 @@ const CustomizedTables= () => {
     getAdList();
 
   }, []); 
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+  
+  const[open, setOpen] = useState(false);
+  const handleOpen = (e) => {
+   var adSeq =  e.target.getAttribute("adseq");
+   var adOwner =  e.target.getAttribute("adowner");
+   var startTime =  e.target.getAttribute("starttime");
+   var endTime =  e.target.getAttribute("endtime");
+   console.log(adSeq, adOwner)
+    setAdDetail({adSeq:adSeq, owner:adOwner, endTime:endTime,startTime:startTime });
+    setOpen(true)
+  }
 
+  const handleClose = () => setOpen(false);
 
   return (
 
     <div>
+           <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+              >
+           <Box sx={style}>
+            <h1>광고정보</h1>
+            <div>
+            <TextField label="번호"  value={adDetail.adSeq||''} color="secondary" onChange={onchange} />
+            </div>
+            <div>
+            <TextField label="광고주" value={adDetail.owner||''} color="secondary" />
+            </div>
+           
+             <TextField label="시작일" value={adDetail.startTime} color="secondary" />
+                ~
+            <TextField label="종료일" value={adDetail.endTime} color="secondary" />
+            
+            </Box>
+        </Modal>
+
+
    <TableContainer component={Paper}>
       
         <Link to="/SWY/advertisement/AdInsert2">
@@ -105,9 +165,10 @@ const CustomizedTables= () => {
          
             <StyledTableRow key={list.adSeq}>
               <StyledTableCell component="th" scope="row">
-               <Link to ={`/SWY/advertisement/AdDetail/${list.adSeq}`} >
-                {list.owner}
-                </Link>
+                <Button onClick={handleOpen} adseq={list.adSeq} adowner={list.owner} 
+                starttime={ new Date(list.startTime).toJSON().split("T")[0]}
+                endtime={ new Date(list.endTime).toJSON().split("T")[0]}
+                >{list.owner}</Button>
               </StyledTableCell>
               <StyledTableCell >{ new Date(list.startTime).toJSON().split("T")[0]}~{ new Date(list.endTime).toJSON().split("T")[0]}</StyledTableCell>
               <StyledTableCell >{list.clickCount}</StyledTableCell>
