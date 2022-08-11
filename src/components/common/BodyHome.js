@@ -40,9 +40,12 @@ import AdDelete from "components/advertisement/AdDelete";
 import ImgSlider from "components/advertisement/ImgSlider";
 import SearchResult from "components/search/SearchResult";
 
+import MainCarousel from "components/common/carousel/MainCarousel"
+
 const BodyHome = ()=> {
 
   const defaultPage = <>
+                        <MainCarousel/>
                         <KakaoMap/>
                       </>;
 
