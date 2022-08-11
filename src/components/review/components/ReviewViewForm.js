@@ -146,6 +146,7 @@ export default function ReviewViewForm(props) {
 
   return (
     <>  
+    {/* {JSON.stringify(reviews)} */}
       <Dialog open={show}>
         <Alert severity="info"> 성공적으로 삭제 되었습니다. <Button variant="outlined" onClick={() => { setShow(false); selectReviewList(); }}>확인</Button></Alert>
       </Dialog>
@@ -184,6 +185,8 @@ export default function ReviewViewForm(props) {
                 <Grid item xs={4}>
                   {/* 닉네임 */}
                   {review.member === null ? "닉없음" : review.member.memNick}
+                  <br />
+                  {review.orderGroup?<>매장명 :{review.orderGroup.shop.shopName}</>:""}
                 </Grid>
                 <Grid item xs={4}>
                   {/* 별점 */}
@@ -192,6 +195,7 @@ export default function ReviewViewForm(props) {
                 </Grid>
                 <Grid item xs={4}>
                   {/* 날짜 */}
+                  <br />
                   {convertDate(review.reviewRegdate)}
                 </Grid>
               </Grid>              
@@ -206,10 +210,11 @@ export default function ReviewViewForm(props) {
               {memType==='사업자회원'?
               <Grid>
               <Button onClick={() => { exposureClick(review.reviewSeq);  }}>{review.reviewExposure==1?<>매장추천 <StarIcon/></>:<>매장추천 <StarOutlineIcon/></>}</Button>
-              </Grid>:
-              ""}              
-              {memNick===review.member.memNick? <Button onClick={() => { openDeldialog(review.reviewSeq); }}>삭제</Button>:""}
+              </Grid>:""} 
+               <Grid sx={{mt:1}}>
+              {memNick===review.member.memNick? <Button variant="contained" onClick={() => { openDeldialog(review.reviewSeq); }}>삭제</Button>:""}
               {/* <Button onClick={() => { openDeldialog(review.reviewSeq) }}>삭제</Button> */}
+              </Grid>          
             </Item>
             <br />
           </Grid>
