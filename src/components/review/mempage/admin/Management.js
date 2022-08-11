@@ -248,7 +248,7 @@ export default function Management() {
 
       {/* {JSON.stringify(members)} */}
       {/* <hr/> */}
-      {JSON.stringify(temp)}
+      {/* {JSON.stringify(temp)} */}
       {/* {members?member.as : ""} */}
 
       {!members?"":
