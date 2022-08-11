@@ -74,9 +74,9 @@ export default function PrimarySearchAppBar() {
     <>
 
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar position="static" sx={{ bgcolor: "#471e1e" }}>
           <Toolbar>
-            <IconButton style={{ color: "white" }} href="/">
+            <IconButton style={{ color: "white" }} onClick={()=>{navigate('/zumuniyo')}}>
               ZUMUNIYO
             </IconButton>
 
@@ -102,7 +102,9 @@ export default function PrimarySearchAppBar() {
                 <LogInOutButton/>
               {/* </IconButton> */}
             </Box>
+            <div id='sidebar'>
             <SideBar />
+            </div>
           </Toolbar>
         </AppBar>
       </Box>

@@ -46,7 +46,7 @@ const BodyHome = ()=> {
                         <KakaoMap/>
                       </>;
 
-  return (
+  return ( 
     <>
     <Routes>
         <Route path="/" element={defaultPage} />

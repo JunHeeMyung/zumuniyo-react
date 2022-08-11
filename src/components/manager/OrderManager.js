@@ -22,7 +22,7 @@ const OrderManager = (props)=> {
 
     return (
       <>
-            주문관리자
+            
 
       </>
     );

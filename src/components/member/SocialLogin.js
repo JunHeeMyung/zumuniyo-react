@@ -1,5 +1,5 @@
 import React,{ useEffect,useContext } from "react";
-import NaverLoginButton from 'images/naverlogin/naverlogin.png';
+import NaverLoginButton from 'images/naverlogin/btnW_완성형.png';
 import KaKaoLoginButton from 'images/kakaologin/kakaologin.png';
 import { Route, Routes,useNavigate} from "react-router-dom";
 import NotFound from "components/common/NotFound";
@@ -7,6 +7,7 @@ import NaverLogin from "components/member/NaverLogin";
 import KakaoLogin from "components/member/KakaoLogin";
 import {GlobalContext} from "components/common/GlobalProvider";
 import "./SocialLogin.css";
+import mark from 'images/mark/mark.png'
 
 const SocialLogin = (props)=> {
 
@@ -26,6 +27,7 @@ const SocialLogin = (props)=> {
                                   src={KaKaoLoginButton} 
                                   alt='카카오로그인버튼' />;
 
+
     const naverLogin = new naver.LoginWithNaverId({
       clientId: 'BR7MTDuiJVo2gsGBsL57',
       callbackUrl: 'http://localhost:3000/zumuniyo/sociallogin/naver',
@@ -35,7 +37,17 @@ const SocialLogin = (props)=> {
 
     const initNaverLogin = () => naverLogin.init();       
 
-    const loginButton = <> {naverLoginButton} {kakaoLoginButton} </>;
+    const loginButton = <> 
+      <div id="socialLoginWrapper">
+        <hr className="hiddenhr"/>
+          <div id="markwrapper">
+            <img src={mark} id="mark"/>
+          </div>
+        <hr className="hiddenhr"/>
+        {naverLoginButton}
+        <hr className="hiddenhr"/>
+      </div>
+    </>;
 
     const getLoginResultMessage = () => {
 
