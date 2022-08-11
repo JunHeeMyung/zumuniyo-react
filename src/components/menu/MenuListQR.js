@@ -4,11 +4,69 @@ import { useParams,useNavigate } from "react-router-dom";
 import { Box, Collapse, List, ListItem, ListItemButton, ListItemText, Paper 
     ,TableCell,TableRow,TableContainer,Table,TableHead,TableBody,Button
     ,Modal,Stack,IconButton,TextField, ImageListItem} from '@mui/material';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import { ExpandLess } from '@mui/icons-material';
 import "./MenuListQR.css";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import CouponList from 'components/coupon/CouponList';
 import CouponSelector from "components/coupon/CouponSelector";
+
+
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
+
+import { styled } from '@mui/material/styles';
+import ClearIcon from '@mui/icons-material/Clear';
+import { red, yellow } from '@mui/material/colors';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import StarIcon from '@mui/icons-material/Star';
+import "./MenuListQR.css"; 
+
+
+
+
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
+
+
+
+const style = {
+  position: 'absolute',
+  top: '5%',
+  left: '50%',
+  transform: 'translate(-50%, 0)',
+  height:'40em',
+  width: '24em',
+  bgcolor: 'background.paper',
+  border: '1px solid gray',
+  boxShadow: 18,
+  p: 1,
+
+  borderRadius: 2,
+  
+};
+
+
+
+
+
+
 
 const MenuListQR = () => {
 
@@ -16,11 +74,15 @@ const MenuListQR = () => {
     const params = useParams();
     const navigate = useNavigate();
 
+    
+
+    const [detailMenu,setDetailMenu] = useState('');
     const [menuList,setMenuList] = useState('');
     const [menuCategoryList,setMenuCategoryList] = useState('');
     const [menuTopList,setMenuTopList] = useState('');
     const [selectedMenu,setSelectedMenu] = useState('');
     const [tempOrderData,setTempOrderData] = useState({});
+    
     const [orderMenuList,setOrderMenuList] = useState({});
     const [menuCategorySeq,setMenuCategorySeq] = useState(-1);
     const [openList,setOpenList] = useState({});
@@ -32,12 +94,26 @@ const MenuListQR = () => {
             orderList : JSON.stringify(orderMenuList),
             couponSeq: selectedCoupon
     });
+    
+    const [value, setValue] = useState('Controlled');
+
+
 
     const couponSelect = couponSeq => {
         setSelectedCoupon(couponSeq);
     }
 
 
+    const [expanded, setExpanded] = useState(false);
+
+    const handleExpandClick = () => {
+      setExpanded(!expanded);
+    };
+
+    
+    const onChange = (event) => {
+      setValue(event.target.value);
+    };
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -59,9 +135,10 @@ const MenuListQR = () => {
       setOpenList({...openList,...temp});
       
     };
+
     const consoleTest = param => {
       console.log(param);
-    }
+    };
 
     const [cartOpen, setCartOpen] = useState(false);
     const handleCartOpen = () => setCartOpen(true);
@@ -74,6 +151,7 @@ const MenuListQR = () => {
         setTempOrderData(OrderData);
         
     }
+    
 
     const cartIn = () => {
         const key = Object.keys(tempOrderData)[0];
@@ -130,7 +208,8 @@ const MenuListQR = () => {
               borderColor: '#AAAAAA',
             },
           },
-        width: "85%",
+        width: "30%",
+        pl: 1
       };
 
     const getMenuList = shopSeq => {
@@ -146,6 +225,13 @@ const MenuListQR = () => {
     const requestOrder = () => {
         globalAxios('/order/orderlist','post',requestData,result=>{requestOrderResult(result)});
     }
+
+    const getDetailMenu = menuSeq => {
+      globalAxios('/menu/menudetail/'+menuSeq, 'get', {}, data=>{setDetailMenu(data)} );
+    }
+
+
+
     const requestOrderResult = result => {
         if(((String)(result)).indexOf(":")!==-1 &&
             ((String)(result)).split(":")[0]==="주문성공"){
@@ -167,8 +253,18 @@ const MenuListQR = () => {
         setRequestData({...requestData, "orderList" : JSON.stringify(orderMenuList)})
     }
 
-    var tempMenuOpen={}
-    
+    var tempMenuOpen={};
+    var tempMenu = "";
+
+    const findDataByMenuSeq = menuSeq => {
+      for( let menu of menuList){
+        if((Number)(menu.menuSeq) === (Number)(menuSeq)){
+          return menu;
+        }
+      }
+      return null;
+    }
+
     
 
 
@@ -183,6 +279,7 @@ const MenuListQR = () => {
             getMenuList(params.shopSeq);
             getMenuCategoryList(params.shopSeq)
             getMenuTopList(params.shopSeq)
+            
         }, []
       );
 
@@ -191,7 +288,7 @@ const MenuListQR = () => {
             setRequestData({...requestData, "orderList" : JSON.stringify(orderMenuList)})
         }, [orderMenuList]
       );
-
+    
      
       
 
@@ -326,54 +423,189 @@ const MenuListQR = () => {
                     카트보기
                 </Button>
 
-        {selectedMenu!==''?
-        <Modal open={open}>
-            <Box sx={modalStyle} id="cartInModal">
+                {selectedMenu!==''?<>
+      
+      
+      <div id="menuDetailContainer">
+        
+        <Modal open={open} >
+          
+          {/* <Box sx={style}
+               id="menuDetailBox"
+               component="form"
+               noValidate
+               autoComplete='off'
+               //onSubmit={}      
+          > */}
+            
+            <div className="modal" id="cartInModal">
+            
+            <Card sx={style} id="menuDetailCard">
+            <CardHeader
+              avatar={ 
+                selectedMenu.menuTop?  
+                <div><StarIcon sx={{ color: yellow[500] }} aria-label="recommended" /></div> : <div></div>
+              }
+              className="modal-title" align='center' 
+              action={
+                <div>
+              <IconButton edge="end" aria-label="modal-close" onClick={handleClose} >
+                <ClearIcon />
+              </IconButton>
+              </div>
+              }
+              title={
+                <Typography gutterBottom variant="h5" component="div" >
+                  {selectedMenu.menuName}
+                </Typography>
+                }
+              subheader={
+                <Typography variant="body2" color="text.secondary" >
+                  {selectedMenu.menuCategory.menuCategoryName}
+                </Typography>
+                }
+            />
+            <div id="menuDetailWrapper">
+            <CardMedia
+              component="img"
+              height="194"
+              image={"/image/"+selectedMenu.menuImage}
+              alt="detail-image"
+            />
+            <CardContent>
+              
+              <Typography className="subtitle2" variant="subtitle2" color="text.secondary">메뉴소개</Typography>
+                <div>
+                {/* <TextField
+                  id="menuDetailInfo-textField"  
+                  multiline
+                  fullWidth 
+                  maxRows={1}
+                  value={menuData.menuSimpleInfo}
+                  onChange={onChange}
+                /> */}
 
-                <div id="modalHead"> 상세보기</div>
+                <Typography variant="body1" color="text.primary" >
+                  <span id="menuSimpleInfoSpace" >{selectedMenu.menuSimpleInfo}</span>
+                </Typography>
 
-                <hr/>
-                카테고리이름: {selectedMenu.menuCategory.menuCategoryName}
-                <hr/>
-                메뉴이름: {selectedMenu.menuName}
-                <hr/>
-                메뉴정보: {selectedMenu.menuSimpleInfo}
-                <hr/>
-                상세정보: {selectedMenu.menuDetailInfo}
-                <hr/>
-                갯수 : <TextField sx={textFieldStyle} name="selectedMenuCount" 
+
+                </div>
+                
+                <div>
+              <Typography className="subtitle2" variant="subtitle2" color="text.secondary">주문수량</Typography>
+                <TextField sx={textFieldStyle} name="selectedMenuCount" 
                                     defaultValue="1"
                                     onChange={e=>{setCount(e,selectedMenu.menuSeq)}}
-                                    label="수량" 
+                                    // label="수량" 
                                     type="number" 
                                     size="small" 
                                     InputProps={{ inputProps: { min: 1} }}
                                     focused/>
-                <hr/>
-                가격 : {((Number)(selectedMenu.menuPrice)).toLocaleString('ko-KR') +' 원'}
-                <hr/>
+                </div>
+                
+              <Typography variant="h6" color="text.primary">
+                <Typography id="menuPriceGagyuk" className="subtitle2" variant="subtitle2" color="text.secondary">가격</Typography>
+                <div id="menuPriceSpace" align='right'>
+                  {((Number)(selectedMenu.menuPrice)).toLocaleString('ko-KR') +' 원'} 
+                </div>
+              </Typography>  
+
+
+            </CardContent>
+
+
+
+            <CardActions disableSpacing>
+              {/* <IconButton aria-label="add to favorites">
+                <FavoriteIcon />
+              </IconButton>
+              <IconButton aria-label="share">
+                <ShareIcon />
+              </IconButton> */}
+
+                  <Typography sx={{ pl:1 , pt:1 }}variant="body1" color="text.secondary">상세보기</Typography>  
+                  <ExpandMore
+                    expand={expanded}
+                    onClick={handleExpandClick}
+                    aria-expanded={expanded}
+                    aria-label="show more"
+                  >
+                    
+                    <ExpandMoreIcon />
+                  </ExpandMore>
+                  
+            </CardActions>
+
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+              <CardContent>
+                
+                <Typography variant="body2" color="text.secondary">메뉴상세</Typography>
+                <div>
+                <TextField
+                  id="menuDetailInfo-textField"
+                  
+                  multiline
+                  fullWidth 
+                  rows={4}
+                  value={selectedMenu.menuDetailInfo}
+                  onChange={onChange}
+                  
+                />
+                </div>
+
+              </CardContent>
+            </Collapse>
             
+
+            </div>
+            
+            
+           <div id="modalBottomWrapper">
                 <Stack spacing={2} direction="row" justifyContent="center">
-                    <Button variant="outlined" id="cartInButton" onClick={cartIn}>카트담기</Button>
+                    <Button variant="outlined" id="cartInButton" onClick={cartIn}>목록에 담기</Button>
                     <Button variant="outlined" id="cartCancelButton" onClick={handleClose}>취소</Button>
                 </Stack>
-                
-            </Box>
-      </Modal>
-        :""}
+            </div>
 
-        <Modal open={cartOpen}>
+            </Card>
+            
+            <br></br>
+            
+
+            </div>
+          {/* </Box> */}
+          
+        </Modal>
+      </div>
+
+      </>:""}
+
+        <Modal open={cartOpen} onChange={getDetailMenu}>
             <Box sx={modalStyle} id="cartModal">
 
-                <div id="modalHead"> 카트정보</div>
+                <div id="modalHead"> 담은 메뉴</div>
 
                 {Object.keys(orderMenuList).map((menuSeq)=>{
                     return (
                         <>
-                        <div key={menuSeq}>{"메뉴번호: "+menuSeq+" : 갯수: "+orderMenuList[menuSeq]}
-                        <hr/>
+                        <div key={menuSeq}>
+                          {(()=>{ tempMenu= findDataByMenuSeq(menuSeq);})()}
+                          
+                          {/* {"메뉴번호: "+ menuSeq + ", 갯수: " + orderMenuList[menuSeq]} */}
+                        
+                          <ListItem >
+                            <ListItemButton >
+                              <ListItemText primary={tempMenu.menuName} />
+                              <ListItemText primary={tempMenu.menuPrice + "원"} />
+                              <ListItemText primary={orderMenuList[menuSeq] + "개"} />
+                            </ListItemButton>
+                          </ListItem> 
+                       
                         <Button variant="outlined" onClick={()=>{removeCartItem(menuSeq)}}>x</Button>
-                        <br/></div>
+                        
+                        <br/>
+                        </div>
                         </>
                     );
                 })}
