@@ -36,8 +36,9 @@ const SimpleSlider = ()=> {
         <h2> Single Item</h2>
         <Slider {...settings}>
           
-          {Adlist.map((ad,index)=>(
           
+          {Adlist.map((ad,index)=>(
+            
             <img key={index} src={`/image/${ad.image}`}/>
           
           ))}

@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import $ from "jquery";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import moment from "moment-timezone"
 const BasicModal = () =>{
     const style = {
       position: 'absolute',
@@ -102,8 +102,8 @@ const BasicModal = () =>{
   const getAdInsert =(result)=> {
     console.log({...Ad, image: result[0]});
                                                       //스트링으로넣어서 백엔드에서 timestamp스트링으로 받아서 고쳐야됌
-                                                      // 9시간 차이남.
-      globalAxios("/advertisement/advertisementinsert","post", {...Ad, image: result[0],startTime:startDate,endTime:endDate } ,data=>{
+                                                      // 9시간 차이남. 
+      globalAxios("/advertisement/advertisementinsert","post", {...Ad, image: result[0],startTime: moment(startDate).tz("Asia/Seoul").format("YYYY-MM-DD HH:mm:ss").replace("T"," "),endTime: moment(endDate).tz("Asia/Seoul").format("YYYY-MM-DD HH:mm:ss").replace("T"," ") } ,data=>{
           console.log(data);
           alert(` 성공적으로 입력 되었습니다.`);
           navigate("/SWY");
@@ -172,7 +172,7 @@ const BasicModal = () =>{
             setImagePreviews(e);
             }} hidden/>
         <button onClick={openUploader} style= {{padding:'1em',marginLeft:'1em'}}>파일선택 </button>
-        <button onClick={uploadImages} style= {{padding:'1em'}}>업로드</button>
+        <button onClick={uploadImages} style= {{padding:'1em'}}>업로드</button> 
           {/* </Typography> */}
         </Box>
       </Modal>
