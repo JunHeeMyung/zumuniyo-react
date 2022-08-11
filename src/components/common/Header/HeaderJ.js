@@ -11,6 +11,8 @@ import React , { useState,useContext} from "react";
 import LogInOutButton from "components/member/LogInOutButton"
 import {GlobalContext} from "components/common/GlobalProvider";
 import { useNavigate } from 'react-router';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import "./HeaderJ.css";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -82,8 +84,9 @@ export default function PrimarySearchAppBar() {
 
             <Search>
               <SearchIconWrapper>
-                <SearchIcon />
+                <SearchIcon/>
               </SearchIconWrapper>
+             
               <StyledInputBase
                 placeholder="매장, 음식..."
                 inputProps={{ 'aria-label': 'search' }}
@@ -92,13 +95,20 @@ export default function PrimarySearchAppBar() {
                   console.log(word);
                   }}
               />
+            
+
+              <IconButton id="searchButton" onClick={handleSubmit}>
+                <ManageSearchIcon id="searchIcon"/>
+              </IconButton>
+
             </Search>
-            <button  onClick={handleSubmit}>검색</button>
+            
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 
               {/* <IconButton> */}
                 {/* LOGIN */}
+                
                 <LogInOutButton/>
               {/* </IconButton> */}
             </Box>

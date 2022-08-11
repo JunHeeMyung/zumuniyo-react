@@ -85,7 +85,7 @@ const CkNoticeUpdate = () => {
     }).then((res) => {
         console.log(res);
         alert(`변경사항이 성공적으로 저장되었습니다.`);
-        navigate("/SWY");
+        navigate("/zumuniyo/Noticeboard/NoticeList");
       }).catch((error) => {
         console.log(error);
         throw new Error(error);

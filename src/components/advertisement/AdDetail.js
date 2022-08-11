@@ -63,7 +63,7 @@ const AdDetail =() =>{
           "/"+(edate.getMonth()+1)+
           "/"+edate.getFullYear()||''} color="secondary" />
     </div>      
-         <Link to="/SWY/advertisement/AdUpdate" state={{ adSeq:adDetail.adSeq }}>
+         <Link to="/zumuniyo/advertisement/AdUpdate" state={{ adSeq:adDetail.adSeq }}>
          <button>뒤로가기</button>
         </Link> 
     </Box>
