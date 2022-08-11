@@ -23,7 +23,7 @@ const AdDelete = () => {
     globalAxios(`/advertisement/deleteAd/${adSeq}`,"delete",{},data=>{
         console.log(data);
         alert(`성공적으로 삭제되었습니다..`);
-        navigate("/SWY");
+        navigate("/zumuniyo/advertisement/AdList");
         },[]);
     }else {
          alert("취소합니다.");

@@ -96,15 +96,15 @@ const NoticeDetail = () => {
         />
         </div> 
         <button onClick={() => navigate2(-1)}>리스트보기</button>
-        <Link to="/SWY/NoticeBoard/NoticeUpdate" state={{ notice: notice }}>
+        <Link to="0/zumuniyo/NoticeBoard/NoticeUpdate" state={{ notice: notice }}>
           수정
         </Link>
       <div>
-        <Link to="/SWY/NoticeBoard/CkNoticeUpdate" state={{ notice: notice }}>
+        <Link to="/zumuniyo/NoticeBoard/CkNoticeUpdate" state={{ notice: notice }}>
           CK수정
         </Link>
         </div>
-        <Link to="/SWY/noticeboard/NoticeDelete" state={{ noticeBoardSeq: notice.noticeBoardSeq }}>
+        <Link to="0/zumuniyo/noticeboard/NoticeDelete" state={{ noticeBoardSeq: notice.noticeBoardSeq }}>
           삭제
         </Link>  
       </div>

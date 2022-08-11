@@ -106,7 +106,7 @@ const BasicModal = () =>{
       globalAxios("/advertisement/advertisementinsert","post", {...Ad, image: result[0],startTime: moment(startDate).tz("Asia/Seoul").format("YYYY-MM-DD HH:mm:ss").replace("T"," "),endTime: moment(endDate).tz("Asia/Seoul").format("YYYY-MM-DD HH:mm:ss").replace("T"," ") } ,data=>{
           console.log(data);
           alert(` 성공적으로 입력 되었습니다.`);
-          navigate("/zumuniyo/advertisement/AdList");
+          navigate("/SWY");
       })
   };
   const handlerChange = (e)=>{

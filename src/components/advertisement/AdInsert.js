@@ -24,7 +24,7 @@ const AdInsert2 = () =>{
         globalAxios("/advertisement/advertisementinsert","post", Ad ,data=>{
             console.log(data);
             alert(` 성공적으로 입력 되었습니다.`);
-            navigate("/SWY");
+            navigate("/zumuniyo/advertisement/AdList");
         })
     
     };
