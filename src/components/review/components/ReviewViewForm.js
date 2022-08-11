@@ -179,8 +179,7 @@ export default function ReviewViewForm(props) {
           <Grid key={index}
             style={{ maxWidth: 700, minWidth: 500, margin: "0 auto" }}
           >
-            <Item>
-              {/* <Grid container spacing={2} style={{ height: 60, backgroundColor:"azure" }} > */}
+            <Item sx={{ bgcolor: "#FFFFD5" }}>             
               <Grid container spacing={2} style={{ height: 60}} >
                 <Grid item xs={4}>
                   {/* 닉네임 */}
@@ -189,8 +188,7 @@ export default function ReviewViewForm(props) {
                   {review.orderGroup?<>매장명 :{review.orderGroup.shop.shopName}</>:""}
                 </Grid>
                 <Grid item xs={4}>
-                  {/* 별점 */}
-                  {/* <Rating size='large' readOnly precision={0.5} value={((review.reviewService + review.reviewTaste + review.reviewAmount) / 3).toFixed(1)} /> */}
+                  {/* 별점 */}                  
                   <Rating size='large' readOnly precision={0.5} value={((review.reviewService + review.reviewTaste + review.reviewAmount) / 3)} />
                 </Grid>
                 <Grid item xs={4}>
@@ -203,7 +201,7 @@ export default function ReviewViewForm(props) {
                 {/* <Item style={{ height: 400, margin: "0 auto", overflowY: "auto" }}>
                   <img src={`${process.env.PUBLIC_URL}/${review.reviewImages[0]}`}/>
                 </Item> */}
-                <Item style={{ height: 400, margin: "0 auto", overflowY: "auto" }}>
+                <Item style={{ height: 410, margin: "0 auto", overflowY: "auto" }}>
                   <Viewer content={review.reviewContent} />
                 </Item>                
               </Grid>
@@ -212,8 +210,7 @@ export default function ReviewViewForm(props) {
               <Button onClick={() => { exposureClick(review.reviewSeq);  }}>{review.reviewExposure==1?<>매장추천 <StarIcon/></>:<>매장추천 <StarOutlineIcon/></>}</Button>
               </Grid>:""} 
                <Grid sx={{mt:1}}>
-              {memNick===review.member.memNick? <Button variant="contained" onClick={() => { openDeldialog(review.reviewSeq); }}>삭제</Button>:""}
-              {/* <Button onClick={() => { openDeldialog(review.reviewSeq) }}>삭제</Button> */}
+              {memNick===review.member.memNick||memType==='관리자'? <Button variant="outlined" color="error" onClick={() => { openDeldialog(review.reviewSeq); }}>삭제</Button>:""}              
               </Grid>          
             </Item>
             <br />

@@ -59,7 +59,7 @@ const QRManager = (props)=> {
 			str+="<table style='display: inline-block;width:19%'><tr><td>"
                     +i+"번 테이블</td></tr><tr><td><img src='/image/qrcode/"
                     +
-                    (window.location.protocol+getContextPath()+"/qrmenu/"+params.shopSeq+"/"+i)
+                    (window.location.protocol+getContextPath()+"/zumuniyo/menuQRnew/"+params.shopSeq+"/"+i)
                     +"'></td><tr></table>";
 		}
 		
@@ -96,7 +96,7 @@ const QRManager = (props)=> {
                 justifyContent="center"
                 alignItems="center">
 
-        <Paper sx={{ width: '100%', overflow: 'hidden', maxWidth:'50em', borderRadius:'1em'}}>
+        <Paper sx={{ width: '100%', overflow: 'hidden', borderRadius:'1em'}}>
                 <TableContainer>
                     <Table stickyHeader aria-label="sticky table">
                     <TableHead >

@@ -3,6 +3,7 @@ import $ from 'jquery';
 import { GlobalContext } from "components/common/GlobalProvider";
 import icon from "components/../images/kakaomap/icon.png"
 import "./KakaoMap.css";
+import { Button } from "@mui/material";
 
 const KakaoMap = () => {
 
@@ -173,7 +174,7 @@ const KakaoMap = () => {
                                         
                                         
                                     const content = '<div class="markerbox">' +
-                                    '  <a href="'+shopseqval+'">' +
+                                    '  <a href="/zumuniyo/shop/'+shopseqval+'">' +
                                     '    '+nameval +
                                     '  </a>' +
                                     '</div>';
@@ -237,7 +238,7 @@ const KakaoMap = () => {
         </>
         :
         <div id= "mapWrapper">
-            <button onClick={openMap}>지도보기</button>
+            <Button id="mapbutton" variant="outlined" onClick={openMap}>주변 매장 지도 검색</Button>
         </div>
         }
     </>

@@ -51,53 +51,56 @@ const Register = (props)=> {
       );
 
 return (
-    <div id="register">
 
-        <Box
-            id="registerbox"
-            component="form"
-            noValidate
-            autoComplete="off"
-            onSubmit={onSubmit}
-        >
+    <div id="registerWrapper">
+        <div id="register">
 
-        <h2 id="registertitle">{member.socialType==='naver'?'네이버':'카카오'} 계정으로 가입</h2>
-        
-        <hr className="registerhr"/>
+            <Box
+                id="registerbox"
+                component="form"
+                noValidate
+                autoComplete="off"
+                onSubmit={onSubmit}
+            >
 
-            <TextField  name="memNick" 
-                        label="닉네임" 
-                        variant="standard" 
-                        helperText="한글 2~8 자" 
-                        fullWidth 
-                        onChange={onChange} 
-                        sx={{input:{color: 'rgb(71, 30, 30)'},
-                            '& label.Mui-focused': {color: 'rgb(71, 30, 30)',fontWeight: 'bold'},
-                            '& .MuiInput-underline:after': {borderBottomColor: 'rgb(71, 30, 30)'},
-                            }}
-                        />
-                        
-        <hr className="registerhr"/>
-            <FormControl>
-                <FormLabel sx={{color: 'rgb(71, 30, 30)','&.Mui-focused': {color: 'rgb(71, 30, 30)',fontWeight: 'bold'}}}>회원분류</FormLabel>
-                    <RadioGroup
-                        row
-                        defaultValue="일반회원"
-                        name="memType" 
-                        onChange={onChange}
-                        sx={{color: 'rgb(71, 30, 30)'}}
-                    >
-                    <FormControlLabel value="일반회원" control={<Radio sx={{color: 'rgb(71, 30, 30)','&.Mui-checked': {color: 'rgb(71, 30, 30)',}}}/>} label="일반회원"  />
-                    <FormControlLabel value="사업자회원" control={<Radio sx={{color: 'rgb(71, 30, 30)','&.Mui-checked': {color: 'rgb(71, 30, 30)',}}}/>} label="사업자회원" />
-                </RadioGroup>
-            </FormControl>
-        <hr className="registerhr"/>
-            <Button id="registerbtn" type="submit" variant="outlined" size="medium">
-                가입하기
-            </Button>
+            <h2 id="registertitle">{member.socialType==='naver'?'네이버':'카카오'} 계정으로 가입</h2>
+            
+            <hr className="registerhr"/>
 
-        </Box>
+                <TextField  name="memNick" 
+                            label="닉네임" 
+                            variant="standard" 
+                            helperText="한글 2~8 자" 
+                            fullWidth 
+                            onChange={onChange} 
+                            sx={{input:{color: 'rgb(71, 30, 30)'},
+                                '& label.Mui-focused': {color: 'rgb(71, 30, 30)',fontWeight: 'bold'},
+                                '& .MuiInput-underline:after': {borderBottomColor: 'rgb(71, 30, 30)'},
+                                }}
+                            />
+                            
+            <hr className="registerhr"/>
+                <FormControl>
+                    <FormLabel sx={{color: 'rgb(71, 30, 30)','&.Mui-focused': {color: 'rgb(71, 30, 30)',fontWeight: 'bold'}}}>회원분류</FormLabel>
+                        <RadioGroup
+                            row
+                            defaultValue="일반회원"
+                            name="memType" 
+                            onChange={onChange}
+                            sx={{color: 'rgb(71, 30, 30)'}}
+                        >
+                        <FormControlLabel value="일반회원" control={<Radio sx={{color: 'rgb(71, 30, 30)','&.Mui-checked': {color: 'rgb(71, 30, 30)',}}}/>} label="일반회원"  />
+                        <FormControlLabel value="사업자회원" control={<Radio sx={{color: 'rgb(71, 30, 30)','&.Mui-checked': {color: 'rgb(71, 30, 30)',}}}/>} label="사업자회원" />
+                    </RadioGroup>
+                </FormControl>
+            <hr className="registerhr"/>
+                <Button id="registerbtn" type="submit" variant="outlined" size="medium">
+                    가입하기
+                </Button>
 
+            </Box>
+
+        </div>
     </div>
 );
 }

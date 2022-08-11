@@ -8,7 +8,7 @@ import React from "react";
 import {Routes,Route} from 'react-router';
 import AdInsert2  from "components/advertisement/AdInsert2";
 import AdList from "components/advertisement/AdList";
-import AdDetail from "components/advertisement/AdDetail";
+
 import AdDelete from "components/advertisement/AdDelete";
 import ImgSlider from "components/advertisement/ImgSlider";
 
@@ -26,7 +26,6 @@ const SWY = ()=> {
           <Route path="/NoticeBoard/CkNoticeInsert" element={<CkNoticeInsert/>} />
           <Route path="/advertisement/AdList" element={<AdList/>} />
           <Route path="/advertisement/AdInsert2" element={<AdInsert2/>} />
-          <Route path="/advertisement/AdDetail/:adSeq" element={<AdDetail/>} />
           <Route path="/advertisement/AdDelete" element={<AdDelete/>} />
           <Route path="/advertisement/ImgSlider" element={<ImgSlider/>} />
         </Routes>

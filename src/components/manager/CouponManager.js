@@ -187,7 +187,7 @@ const CouponManager = (props)=> {
                     display="flex"
                     justifyContent="center"
                     alignItems="center">
-                <Paper sx={{ width: '100%', overflow: 'hidden', borderRadius:'1em',maxWidth:'70em'}}>
+                <Paper sx={{ width: '100%', overflow: 'hidden', borderRadius:'1em'}}>
                     <TableContainer>
                         <Table stickyHeader aria-label="sticky table">
                             <TableHead >

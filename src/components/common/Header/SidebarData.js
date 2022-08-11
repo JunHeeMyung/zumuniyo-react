@@ -56,14 +56,14 @@ import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 export const SidebarDataN = [
     {
         title: '회원정보',
-        path: '/LDS/normal/nickmodify',
+        path: '/zumuniyo/normal/nickmodify',
         // icon: <AiIcons.AiFillHome />,
         icon: <PersonIcon />,
         cName: 'nav-text',
     },
     {
         title: '리뷰',
-        path: '/LDS/normal/reviewMemList',
+        path: '/zumuniyo/normal/reviewMemList',
         // icon: <FarIcons.FaEnvelopeOpenText />,
         icon: <ReviewsIcon />,
         cName: 'nav-text'
@@ -71,7 +71,7 @@ export const SidebarDataN = [
     {
         title: '주문목록',
         // path: '/LDS/normal/orderList',
-        path: '/MJH/orderlist',
+        path: '/zumuniyo/orderlist',
         icon: <ListAltIcon />,
         cName: 'nav-text'
     },
@@ -80,26 +80,26 @@ export const SidebarDataN = [
 export const SidebarDataB = [
     {
         title: '회원정보',
-        path: '/LDS/business/nickModify',
+        path: '/zumuniyo/business/nickModify',
         icon: <PersonIcon />,
         cName: 'nav-text',
     },
     {
         title: '매장리뷰관리',
-        path: '/LDS/business/storeReviewManage',
+        path: '/zumuniyo/business/storeReviewManage',
         icon: <RateReviewIcon />,
         cName: 'nav-text'
     },
     {
-        title: '매장등록',
-        path: '/LDS/business/storeReviewManage',
+        title: '매장관리',
+        path: '/zumuniyo/shoplist',
         icon: <StoreIcon />,
         cName: 'nav-text'
     },
     {
-        title: '주문관리 &  QR코드생성',
+        title: '통합관리',
         // path: '/LDS/business/orderManageQR',
-        path: '/MJH/manager/qrcode/4882',
+        path: '/zumuniyo/manager',
         icon: <QrCodeScannerIcon />,
         cName: 'nav-text'
     },
@@ -109,13 +109,13 @@ export const SidebarDataB = [
 export const SidebarDataA = [
     {
         title: '회원관리',
-        path: '/LDS/admin/management',
+        path: '/zumuniyo/admin/management',
         icon: <ManageAccountsIcon />,
         cName: 'nav-text',
     },
     {
         title: '통계',
-        path: '/LDS/admin/statistics',        
+        path: '/zumuniyo/admin/statistics',        
         icon: <LeaderboardIcon />,
         cName: 'nav-text'
     },
@@ -125,7 +125,7 @@ export const SidebarDataA = [
 export const SidebarData = [
     {
         title:'로그인',
-        path:'/MJH/sociallogin',
+        path:'/zumuniyo/sociallogin',
         icon: <ContactPageIcon />,
         cName: 'nav-text'
     }
