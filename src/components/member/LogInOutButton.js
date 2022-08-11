@@ -1,6 +1,7 @@
 import React,{ useContext ,useEffect} from "react";
 import {GlobalContext} from "components/common/GlobalProvider";
 import { Link } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const LogInOutButton = () => {
 
@@ -28,8 +29,8 @@ const LogInOutButton = () => {
     return (
       <>
          { logined ?
-          <button onClick={logout}>로그아웃</button>:
-          <Link to="/MJH/sociallogin"><button>로그인</button></Link> }
+          <button onClick={logout}>로그아웃</button>: 
+          <Link to="/zumuniyo/sociallogin"><Button variant="outlined" id="loginbutton">로그인</Button></Link> }
       </>
     );
   }
