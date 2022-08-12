@@ -95,46 +95,36 @@ const MenuCoupon = (props)=> {
       <>
         {couponDataList?
         <div>
-        
-
             <Box id="couponWrapper"
              sx={{
                display: 'flex',
                flexWrap: 'nowrap',
-               '& > :not(style)': {
-                 m: 1,
-                 
-               },
+               '& > :not(style)': { m: 1 },
              }}
-            >
-                
+            >   
                 {couponDataList .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((couponDataRow) => {
-                                return (
-                                <div key={couponDataRow.쿠폰이름+couponDataRow.할인액+couponDataRow.사용가능금액+couponDataRow.유효기간} >
-                                    <Paper className="listitembtn"  onClick={()=>{getCoupon(couponDataRow);}} >
+                  return (
+                    <div key={couponDataRow.쿠폰이름+couponDataRow.할인액+couponDataRow.사용가능금액+couponDataRow.유효기간} >
+                      <Paper className="listitembtn"  onClick={()=>{getCoupon(couponDataRow);}} >
                                         
-                                        {/* <ListItemText sx={{ textAlign:"center" ,minWidth: 70}}> {couponDataRow.쿠폰이름}</ListItemText> */}
+                          {/* <ListItemText sx={{ textAlign:"center" ,minWidth: 70}}> {couponDataRow.쿠폰이름}</ListItemText> */}
+                        <span  className="minPrice"   sx={commonStyleCenter}> 
+                          {((Number)(couponDataRow.사용가능금액)).toLocaleString('ko-KR') +' 원 이상 구매 시'}</span>
+                        <span  className="dcPrice"   sx={commonStyleCenter}>
+                          {((Number)(couponDataRow.할인액)).toLocaleString('ko-KR') +' 원 할인 '}</span>
+                          <br/>
+                        <span  className="dueDate"   sx={commonStyleCenter}> 
+                          {moment(couponDataRow.유효기간).tz("Asia/Seoul").format("YY/MM/DD").replace("T"," ") + ' 까지'}</span>
+                          {/* <ListItemText sx={{ textAlign:"center" ,minWidth: 60}}> {couponDataRow.잔여수량}</ListItemText> */}
                                         
-                                        <span  className="minPrice"   sx={commonStyleCenter}> {((Number)(couponDataRow.사용가능금액)).toLocaleString('ko-KR') +' 원 이상 구매 시'}</span>
-                                        <span  className="dcPrice"   sx={commonStyleCenter}> {((Number)(couponDataRow.할인액)).toLocaleString('ko-KR') +' 원 할인 '}</span>
-                                        <br/>
-                                        <span  className="dueDate"   sx={commonStyleCenter}> {moment(couponDataRow.유효기간).tz("Asia/Seoul").format("YY/MM/DD").replace("T"," ") + ' 까지'}</span>
-                                               
-                                        {/* <ListItemText sx={{ textAlign:"center" ,minWidth: 60}}> {couponDataRow.잔여수량}</ListItemText> */}
-                                        
-                                    </Paper>
-                                </div>
-                                );
-                            })}
-                            
-                
+                      </Paper>
+                    </div>
+                    );
+                  })}
+
             </Box>
-           
- 
             </div>
 
-
-            
         :""}
 
       </>

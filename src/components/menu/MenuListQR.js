@@ -633,8 +633,6 @@ const MenuListQR = () => {
                         <div key={menuSeq}>
                           {(()=>{ tempMenu= findDataByMenuSeq(menuSeq);})()}
                           
-                          {/* {"메뉴번호: "+ menuSeq + ", 갯수: " + orderMenuList[menuSeq]} */}
-                        
                           <ListItem className='cartInMenuList'>
                             <ListItemButton className="listButton">
                               <ListItemText sx={{ textAlign:"left" , minWidth: 30}} primary={tempMenu.menuName} />
@@ -646,11 +644,8 @@ const MenuListQR = () => {
                             </ListItemButton>
                           </ListItem> 
                        
-                        
-                        
                         <br/>
                         </div>
-                        
                         </>
                     );
                 })}
