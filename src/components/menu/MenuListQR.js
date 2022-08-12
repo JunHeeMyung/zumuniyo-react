@@ -4,11 +4,77 @@ import { useParams,useNavigate } from "react-router-dom";
 import { Box, Collapse, List, ListItem, ListItemButton, ListItemText, Paper 
     ,TableCell,TableRow,TableContainer,Table,TableHead,TableBody,Button
     ,Modal,Stack,IconButton,TextField, ImageListItem} from '@mui/material';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import "./MenuListQR.css";
+import { ExpandLess } from '@mui/icons-material';
+
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import CouponList from 'components/coupon/CouponList';
-import CouponSelector from "components/coupon/CouponSelector";
+import MenuCoupon from 'components/menu/MenuCoupon';
+import MenuCouponSelector from "components/menu/MenuCouponSelector";
+
+import MenuShopInfo from 'components/menu/MenuShopInfo';
+
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { styled } from '@mui/material/styles';
+import ClearIcon from '@mui/icons-material/Clear';
+import { orange, red, yellow } from '@mui/material/colors';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import StarIcon from '@mui/icons-material/Star';
+import "./MenuListQR.css"; 
+
+
+
+
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
+
+
+
+const style = {
+  position: 'absolute',
+  top: '5%',
+  left: '50%',
+  transform: 'translate(-50%, 0)',
+ 
+  width: '24em',
+  bgcolor: 'background.paper',
+  border: '1px solid gray',
+  boxShadow: 18,
+  p: 1,
+
+  borderRadius: 2,
+  
+};
+
+const ColorButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.getContrastText(orange[500]),
+  backgroundColor: orange[500],
+  '&:hover': {
+    backgroundColor: orange[700],
+  },
+}));
+
+
+
+
+
 
 const MenuListQR = () => {
 
@@ -16,11 +82,13 @@ const MenuListQR = () => {
     const params = useParams();
     const navigate = useNavigate();
 
+    const [detailMenu,setDetailMenu] = useState('');
     const [menuList,setMenuList] = useState('');
     const [menuCategoryList,setMenuCategoryList] = useState('');
     const [menuTopList,setMenuTopList] = useState('');
     const [selectedMenu,setSelectedMenu] = useState('');
     const [tempOrderData,setTempOrderData] = useState({});
+    
     const [orderMenuList,setOrderMenuList] = useState({});
     const [menuCategorySeq,setMenuCategorySeq] = useState(-1);
     const [openList,setOpenList] = useState({});
@@ -32,12 +100,26 @@ const MenuListQR = () => {
             orderList : JSON.stringify(orderMenuList),
             couponSeq: selectedCoupon
     });
+    
+    const [value, setValue] = useState('Controlled');
+
+
 
     const couponSelect = couponSeq => {
         setSelectedCoupon(couponSeq);
     }
 
 
+    const [expanded, setExpanded] = useState(false);
+
+    const handleExpandClick = () => {
+      setExpanded(!expanded);
+    };
+
+    
+    const onChange = (event) => {
+      setValue(event.target.value);
+    };
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -59,9 +141,11 @@ const MenuListQR = () => {
       setOpenList({...openList,...temp});
       
     };
+
+
     const consoleTest = param => {
       console.log(param);
-    }
+    };
 
     const [cartOpen, setCartOpen] = useState(false);
     const handleCartOpen = () => setCartOpen(true);
@@ -74,6 +158,7 @@ const MenuListQR = () => {
         setTempOrderData(OrderData);
         
     }
+    
 
     const cartIn = () => {
         const key = Object.keys(tempOrderData)[0];
@@ -130,7 +215,8 @@ const MenuListQR = () => {
               borderColor: '#AAAAAA',
             },
           },
-        width: "85%",
+        width: "30%",
+        pl: 1
       };
 
     const getMenuList = shopSeq => {
@@ -146,11 +232,18 @@ const MenuListQR = () => {
     const requestOrder = () => {
         globalAxios('/order/orderlist','post',requestData,result=>{requestOrderResult(result)});
     }
+
+    const getDetailMenu = menuSeq => {
+      globalAxios('/menu/menudetail/'+menuSeq, 'get', {}, data=>{setDetailMenu(data)} );
+    }
+
+
+
     const requestOrderResult = result => {
         if(((String)(result)).indexOf(":")!==-1 &&
             ((String)(result)).split(":")[0]==="주문성공"){
             alert("주문성공");
-            navigate("/MJH/orderlist/"+((String)(result)).split(":")[1]);
+            navigate("/zumuniyo/orderlist/"+((String)(result)).split(":")[1]);
         }else{
             alert(result);
         }
@@ -167,8 +260,18 @@ const MenuListQR = () => {
         setRequestData({...requestData, "orderList" : JSON.stringify(orderMenuList)})
     }
 
-    var tempMenuOpen={}
-    
+    var tempMenuOpen={};
+    var tempMenu = "";
+
+    const findDataByMenuSeq = menuSeq => {
+      for( let menu of menuList){
+        if((Number)(menu.menuSeq) === (Number)(menuSeq)){
+          return menu;
+        }
+      }
+      return null;
+    }
+
     
 
 
@@ -183,6 +286,7 @@ const MenuListQR = () => {
             getMenuList(params.shopSeq);
             getMenuCategoryList(params.shopSeq)
             getMenuTopList(params.shopSeq)
+            
         }, []
       );
 
@@ -191,7 +295,7 @@ const MenuListQR = () => {
             setRequestData({...requestData, "orderList" : JSON.stringify(orderMenuList)})
         }, [orderMenuList]
       );
-
+    
      
       
 
@@ -203,7 +307,7 @@ const MenuListQR = () => {
         <hr/>
         {JSON.stringify(menuCategoryList)}
         <hr/>
-        {JSON.stringify(menuTopList)} */}
+        {JSON.stringify(menuTopList)}
         <hr/>
         {JSON.stringify(tempOrderData)}
         <hr/>
@@ -212,9 +316,31 @@ const MenuListQR = () => {
         {JSON.stringify(requestData)}
         <hr/>
         {JSON.stringify(openList)}
-        <hr/>
-        <CouponList shopSeq={params.shopSeq}/>
-        <hr/>
+        <hr/> */}
+
+
+
+        <Box  id="shopBox"
+              display="flex"
+              justifyContent="center"
+              alignItems="center">
+
+        <MenuShopInfo shopSeq={params.shopSeq}/>
+        
+        </Box>
+        
+        <div></div>
+        
+
+        <Box    id="CouponBox"
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center">
+
+        <MenuCoupon shopSeq={params.shopSeq}/>
+        
+        </Box>
+        
         
         {menuList&&menuCategoryList&&menuTopList?
             <>
@@ -222,23 +348,20 @@ const MenuListQR = () => {
               <>
               {(()=>{tempMenuOpen={}})()}
               {
-                Object.values(menuCategoryList).map((menuCategory) => (
+                Object.values(menuCategoryList).map((menuCategory,idx) => (
                   <>
-                  {(()=>{tempMenuOpen={...tempMenuOpen,[menuCategory.menuCategorySeq]:false}})()}
+                  {(()=>{tempMenuOpen={...tempMenuOpen,[menuCategory.menuCategorySeq]:(idx===0?true:false)}})()}
                   </>
                 ))}
               {(()=>{setChecker(!checker)})()}
+              
               {(()=>{setOpenList(tempMenuOpen);
+              
               })()}
             </>
             :""}
 
-
-          <div>
-          <CouponSelector shopSeq={params.shopSeq} couponSelect={couponSelect}/>
-          </div>    
-          <hr/>
-
+                <br/>
 
                 <Box    id="MenuCollapseBox"
                         display="flex"
@@ -246,38 +369,48 @@ const MenuListQR = () => {
                         alignItems="center">
                     <Paper sx={{ width: '100%', overflow: 'hidden', maxWidth:'50em'}}>
                         <List  component="nav">
-                            <ListItemButton onClick={menuTopClick}>
+                          <ListItem className="menuTopTitleBtn" >
+                            <ListItemButton  onClick={menuTopClick}>
                                 <ListItemText primary="추천메뉴" />
                                 {topOpen ? <ExpandLess /> : <ExpandMore />}
                             </ListItemButton>
+                          </ListItem>
                             <Collapse  in={topOpen} timeout="auto" unmountOnExit>
                                 <List disablePadding >
+                                  <ListItem id="menuTopListSpace">
                                     {Object.values(menuTopList).map((menu) => (
-                                        <ListItem className='' key={menu.menuSeq}>
-                                        <ListItemButton  sx={{ pl: 4 }} onClick={() => {
+                                        <Paper className="menuTopListBtn" key={menu.menuSeq}>
+                                        <ListItemButton id="menuTopListOutside"
+                                                        onClick={() => {
                                                         consoleTest(menu.menuSeq); 
                                                         const OrderData = {};
                                                         OrderData[menu.menuSeq]=1;
                                                         setTempOrderData(OrderData);
                                                         openDetail(menu);
                                                     }}>
-
-                                            <ListItemText primary={menu.menuName} /> 
-                                            <ListItemText primary={menu.menuSimpleInfo} /> 
-                                            <ListItemText primary={menu.menuPrice+" 원"} /> 
-                                            <ImageListItem className="menuQRImage" >
-                                              <img src={"/image/"+menu.menuImage } />
+                                                      <div >
+                                                      <ListItem id="menuTopListInside" >
+                                            <ImageListItem className="menuQRImage"  >
+                                              <img id="imageTop" src={"/image/"+menu.menuImage } />
                                             </ImageListItem>
-
+                                            <ListItemText id="menuTopName" primary={menu.menuName} /> 
+                                            {/* <ListItemText primary={menu.menuSimpleInfo} />  */}
+                                            <div id="menuTopPriceBottom">
+                                            <ListItemText id="menuTopPrice" primary={menu.menuPrice+" 원"} /> 
+                                            </div>
+                                            </ListItem>
+                                            </div>
                                         </ListItemButton>
-                                        </ListItem>    
+                                        </Paper>    
                                     ))}
+                                    </ListItem>
                                 </List>
                             </Collapse>
                             {Object.values(menuCategoryList).map((menuCategory) => (
                               <>
-                            <ListItem key={menuCategory.menuCategorySeq} disablePadding >
-                                 <ListItemButton onClick={() => {categoryClick(menuCategory.menuCategorySeq);}}>
+                            <ListItem className="categoryTitleBtn"
+                                  key={menuCategory.menuCategorySeq} disablePadding >
+                                 <ListItemButton  onClick={() => {categoryClick(menuCategory.menuCategorySeq);}}>
                                         <ListItemText primary={menuCategory.menuCategoryName} />
                                                 { menuOpen ? <ExpandLess/> : <ExpandMore/> }
                                  </ListItemButton>
@@ -289,7 +422,7 @@ const MenuListQR = () => {
                                   {menuCategory.menuCategorySeq===menu.menuCategory.menuCategorySeq?
                                       <>
                                       <List component="div"  disablePadding >
-                                          <ListItem  disablePadding >
+                                          <ListItem className="categoryListBtn" disablePadding >
                                               
                                                   <ListItemButton sx={{ pl: 4 }} 
                                                     onClick={()=>{
@@ -298,11 +431,11 @@ const MenuListQR = () => {
                                                         setTempOrderData(OrderData);
                                                         openDetail(menu);
                                                     }}>
-                                                      <ListItemText primary={menu.menuName} />
-                                                      <ListItemText primary={menu.menuSimpleInfo} />
-                                                      <ListItemText primary={menu.menuPrice} />
+                                                      <ListItemText className="nameList" sx={{ textAlign:"left" , minWidth: 30}} primary={menu.menuName} />
+                                                      <ListItemText className="infoList" sx={{ textAlign:"right" , minWidth: 30}} primary={menu.menuSimpleInfo} />
+                                                      <ListItemText className="priceList" sx={{ textAlign:"right" , minWidth: 30}} primary={menu.menuPrice+ " 원"} />
                                                       <ImageListItem className="menuQRImage" >
-                                                      <img src={"/image/"+menu.menuImage } />
+                                                      <img id="imageList" src={"/image/"+menu.menuImage } />
                                                       </ImageListItem>
                                                   </ListItemButton>
                                               
@@ -317,68 +450,220 @@ const MenuListQR = () => {
                                   </>
                             ))}
                         </List>
+                        <div id="voidSpace"></div>
                     </Paper>
+
                 </Box>
 
-                <Button edge ="end" onClick={()=>{
+                <ColorButton id="cartBtn" variant="contained" onClick={()=>{
                         handleCartOpen();
                     }}>
-                    카트보기
-                </Button>
+                    주문목록
+                </ColorButton>
+                
 
-        {selectedMenu!==''?
-        <Modal open={open}>
-            <Box sx={modalStyle} id="cartInModal">
+                {selectedMenu!==''?<>
+                 
+      
+      <div id="menuDetailContainer">
+        
+        <Modal open={open} >
+          
+          
+            
 
-                <div id="modalHead"> 상세보기</div>
+            <div className="modal" id="cartInModal">
+            <Box>
+            <Card sx={style} id="menuDetailCard">
+              <Box>
+            <CardHeader
+              avatar={ 
+                selectedMenu.menuTop?  
+                <div><StarIcon sx={{ color: yellow[500] }} aria-label="recommended" /></div> : <div></div>
+              }
+              className="modal-title" align='center' 
+              action={
+                <div>
+              <IconButton edge="end" aria-label="modal-close" onClick={handleClose} >
+                <ClearIcon />
+              </IconButton>
+              </div>
+              }
+              title={
+                <Typography gutterBottom variant="h5" component="div" >
+                  {selectedMenu.menuName}
+                </Typography>
+                }
+              subheader={
+                <Typography variant="body2" color="text.secondary" >
+                  {selectedMenu.menuCategory.menuCategoryName}
+                </Typography>
+                }
+            />
+            <div id="menuDetailWrapper">
+            <CardMedia
+              component="img"
+              height="194"
+              image={"/image/"+selectedMenu.menuImage}
+              alt="detail-image"
+            />
+            <CardContent>
+              
+              <Typography className="subtitle2" variant="subtitle2" color="text.secondary">메뉴소개</Typography>
+                <div>
+                {/* <TextField
+                  id="menuDetailInfo-textField"  
+                  multiline
+                  fullWidth 
+                  maxRows={1}
+                  value={menuData.menuSimpleInfo}
+                  onChange={onChange}
+                /> */}
 
-                <hr/>
-                카테고리이름: {selectedMenu.menuCategory.menuCategoryName}
-                <hr/>
-                메뉴이름: {selectedMenu.menuName}
-                <hr/>
-                메뉴정보: {selectedMenu.menuSimpleInfo}
-                <hr/>
-                상세정보: {selectedMenu.menuDetailInfo}
-                <hr/>
-                갯수 : <TextField sx={textFieldStyle} name="selectedMenuCount" 
+                <Typography variant="body1" color="text.primary" >
+                  <span id="menuSimpleInfoSpace" >{selectedMenu.menuSimpleInfo}</span>
+                </Typography>
+
+
+                </div>
+                
+                <div>
+              <Typography className="subtitle2" variant="subtitle2" color="text.secondary">주문수량</Typography>
+                <TextField sx={textFieldStyle} name="selectedMenuCount" 
                                     defaultValue="1"
                                     onChange={e=>{setCount(e,selectedMenu.menuSeq)}}
-                                    label="수량" 
+                                    // label="수량" 
                                     type="number" 
                                     size="small" 
                                     InputProps={{ inputProps: { min: 1} }}
                                     focused/>
-                <hr/>
-                가격 : {((Number)(selectedMenu.menuPrice)).toLocaleString('ko-KR') +' 원'}
-                <hr/>
+                </div>
+                
+              <Typography variant="h6" color="text.primary">
+                <Typography id="menuPriceGagyuk" className="subtitle2" variant="subtitle2" color="text.secondary">가격</Typography>
+                <div id="menuPriceSpace" align='right'>
+                  {((Number)(selectedMenu.menuPrice)).toLocaleString('ko-KR') +' 원'} 
+                </div>
+              </Typography>  
+
+
+            </CardContent>
+
+
+
+            <CardActions disableSpacing>
+              {/* <IconButton aria-label="add to favorites">
+                <FavoriteIcon />
+              </IconButton>
+              <IconButton aria-label="share">
+                <ShareIcon />
+              </IconButton> */}
+
+                  <Typography sx={{ pl:1 , pt:1 }}variant="body1" color="text.secondary">상세보기</Typography>  
+                  <ExpandMore
+                    expand={expanded}
+                    onClick={handleExpandClick}
+                    aria-expanded={expanded}
+                    aria-label="show more"
+                  >
+                    
+                    <ExpandMoreIcon />
+                  </ExpandMore>
+                  
+            </CardActions>
+
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+              <CardContent>
+                
+                <Typography variant="body2" color="text.secondary">메뉴상세</Typography>
+                <div>
+                <TextField
+                  id="menuDetailInfo-textField"
+                  
+                  multiline
+                  fullWidth 
+                  rows={4}
+                  value={selectedMenu.menuDetailInfo}
+                  onChange={onChange}
+                  
+                />
+                </div>
+
+              </CardContent>
+            </Collapse>
             
+
+            </div>
+            </Box>
+            
+            <Box id="modalBottomWrapper">
                 <Stack spacing={2} direction="row" justifyContent="center">
-                    <Button variant="outlined" id="cartInButton" onClick={cartIn}>카트담기</Button>
+                    <Button variant="outlined" id="cartInButton" onClick={cartIn}>목록에 담기</Button>
                     <Button variant="outlined" id="cartCancelButton" onClick={handleClose}>취소</Button>
                 </Stack>
-                
             </Box>
-      </Modal>
-        :""}
 
-        <Modal open={cartOpen}>
+            </Card>
+            
+           
+
+            
+            <br></br>
+            </Box>
+
+            </div>
+         
+          
+        </Modal>
+      </div>
+
+      </>:""}
+
+        <Modal open={cartOpen} onChange={getDetailMenu}>
             <Box sx={modalStyle} id="cartModal">
 
-                <div id="modalHead"> 카트정보</div>
+                <div id="cartTitle"><p id="titleText">메뉴목록</p> </div>
+                <div id="cartContent">
+                  <Box sx={{ minHeight: '200px' }}>
 
+                  {(()=>{return(<p id="emptyAlert">{JSON.stringify(orderMenuList)==="{}"?"메뉴 목록이 비어있습니다.":""}</p>)})()}
+               
                 {Object.keys(orderMenuList).map((menuSeq)=>{
                     return (
                         <>
-                        <div key={menuSeq}>{"메뉴번호: "+menuSeq+" : 갯수: "+orderMenuList[menuSeq]}
-                        <hr/>
-                        <Button variant="outlined" onClick={()=>{removeCartItem(menuSeq)}}>x</Button>
-                        <br/></div>
+                        
+                        <div key={menuSeq}>
+                          {(()=>{ tempMenu= findDataByMenuSeq(menuSeq);})()}
+                          
+                          {/* {"메뉴번호: "+ menuSeq + ", 갯수: " + orderMenuList[menuSeq]} */}
+                        
+                          <ListItem className='cartInMenuList'>
+                            <ListItemButton className="listButton">
+                              <ListItemText sx={{ textAlign:"left" , minWidth: 30}} primary={tempMenu.menuName} />
+                              <ListItemText sx={{ textAlign:"right" , minWidth: 30}} primary={tempMenu.menuPrice + "원"} />
+                              <ListItemText sx={{ textAlign:"right" , minWidth: 30}} primary={orderMenuList[menuSeq] + "개"} />
+                              <IconButton variant="outlined" onClick={()=>{removeCartItem(menuSeq)}}>
+                                <CancelIcon />
+                              </IconButton>
+                            </ListItemButton>
+                          </ListItem> 
+                       
+                        
+                        
+                        <br/>
+                        </div>
+                        
                         </>
                     );
                 })}
-                <Stack spacing={2} direction="row" justifyContent="center">
-                    <Button variant="outlined" id="cartInButton" onClick={requestOrder}>주문</Button>
+                </Box>
+          </div>
+          <div>
+            <MenuCouponSelector shopSeq={params.shopSeq} couponSelect={couponSelect}/>
+          </div>    
+
+                <Stack id="cartBottom" spacing={2} direction="row" justifyContent="center">
+                    <Button variant="outlined" id="cartInButton" onClick={requestOrder}>주문하기</Button>
                     <Button variant="outlined" id="cartCancelButton" onClick={handleCartClose}>취소</Button>
                 </Stack>
                 

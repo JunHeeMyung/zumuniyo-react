@@ -77,7 +77,7 @@ const Manager = ()=> {
                                               <TableCell sx={tableHeadStyle}>매장이름</TableCell>
                                               <TableCell sx={tableHeadStyle}>QR관리</TableCell>
                                               <TableCell sx={tableHeadStyle}>쿠폰관리</TableCell>
-                                              <TableCell sx={tableHeadStyle}>주문관리</TableCell>
+                                              <TableCell sx={tableHeadStyle}>메뉴관리</TableCell>
                                           </TableRow>
                                           {shopList .map((shop) => {
                                               return (
@@ -94,7 +94,7 @@ const Manager = ()=> {
                                                             </IconButton>
                                                         </TableCell>  
                                                         <TableCell sx={{ textAlign:"center" ,minWidth: 60}}> 
-                                                            <IconButton edge ="end" onClick={()=>{navigate("order/"+shop.shopSeq)}}>
+                                                            <IconButton edge ="end" onClick={()=>{navigate("/zumuniyo/menu/"+shop.shopSeq)}}>
                                                                 <PlaylistAddCheckIcon/>
                                                             </IconButton>
                                                         </TableCell>                                    

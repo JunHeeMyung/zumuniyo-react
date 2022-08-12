@@ -2,7 +2,7 @@
 
 #menuDetailWrapper {
     
-    max-height: 60vh;
+    max-height: 450px;
     overflow-y: scroll;
 }
     #menuDetailWrapper::-webkit-scrollbar {
@@ -17,12 +17,11 @@
     }
 
 #modalBottomWrapper {
-   position: absolute;
+    
    display: inline-block;
    background-color: white;
     width: 100%;
     text-align: center;
-    bottom: 0.5em;
 }
 
 
@@ -31,5 +30,12 @@
 
     padding-left: 0.2em;
 }
+
+
+
+
+
+
+
 
 

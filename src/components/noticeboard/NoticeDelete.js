@@ -22,7 +22,7 @@ const NoticeDelete = () => {
       globalAxios(`/noticeboard/NoticeDelete.do/${noticeBoardSeq}`,"delete",{},data=>{
         console.log(data);
         alert(`성공적으로 삭제되었습니다..`);
-        navigate("/SWY");
+        navigate("/zumuniyo/noticeboard/NoticeList");
         })
       },[])
     

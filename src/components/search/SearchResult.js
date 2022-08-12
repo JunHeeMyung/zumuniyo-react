@@ -1,71 +1,101 @@
 import { useLocation, useParams } from "react-router";
 import axios from "axios";
 import React , { useContext ,useEffect,useState} from "react";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Collapse from '@mui/material/Collapse';
+import {Box,Grid, Paper  } from '@mui/material'
+import { bgcolor } from "@mui/system";
+import { auto } from "@popperjs/core";
+// import "./SearchResult.css";
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+  margin:auto
+}));
+
 const SearchResult = ()=> {
+
+  
  
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
-
  const location = useLocation();
  const shoplist = location.state.shoplist; 
  console.log("샵: "+shoplist);
+  
+  
  return(
+ <>
+  <h1>검색결과</h1>
+  {/* <Box sx={{flexGrow:1}}> */}
+  <Grid
+ container
+ direction="row-reverse"
+ justifyContent="space-around"
+ alignItems="stretch"
+ spacing={{ xs: 2, md: 3 }}
+ columns={{ xs: 4, sm: 8, md: 12 }}
 
-  <TableContainer component={Paper}>
+>
+  {shoplist.map((shop,index)=>{
+    return(
+      index<6?(
+      <>
+
+      <Grid item key ={index} xs={4}  pr={1} >  
       
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>가게이름</StyledTableCell>
-            <StyledTableCell >샵정보</StyledTableCell>
-            <StyledTableCell >카테고리</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {shoplist.map((list) => (
-         
-            <StyledTableRow  key={list.adSeq}>
-              <StyledTableCell component="th" scope="row">
-                {list.shopSeq}
-              </StyledTableCell>
-              <StyledTableCell >{list.shopInfo}</StyledTableCell>
-              <StyledTableCell >{list.shopCategory}</StyledTableCell>
+      <Card elevation={5} sx={{width:"100%", height:"100%" , border:"auto" }} >
+      <CardHeader title={shop.shopName} ></CardHeader>
+      <hr/>
+      <CardContent>{shop.shopInfo}</CardContent>
+      <CardContent>{shop.shopCategory}</CardContent>
+      <CardMedia height="194">
+      <img src={`/image/${shop.shopLogo}`}/>
+      </CardMedia>  
+    </Card>
+   
+    </Grid >
 
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    </>)
+    :""
 
-  
-  
-  
+    )
+  })}  
+  </Grid >
+  {/* </Box> */}
+  </>
+   )
+  }
 
- )
-};
 export default SearchResult;
+
+
+
+
+
+
+{/* <Grid container spacing={{md:3}} columns={{xs:4, sm:8, md:12}} >
+  {shoplist.map((shop,index)=>{
+    return(
+      <Grid item key ={index} xs={4}  pr={1}>  
+      <Item>
+      <Card elevation={5} sx={{ maxWidth: 200 , height:"100%"}}  >
+      <CardHeader title={shop.shopName} ></CardHeader>
+      <CardContent>{shop.shopInfo}</CardContent>
+      <CardContent>{shop.shopCategory}</CardContent>
+      <CardMedia height="194">
+      <img src={`/image/${shop.shopLogo}`}/>
+      </CardMedia>  
+    </Card>
+    </Item>
+    </Grid>
+    )
+  })}  
+  </Grid> */}
