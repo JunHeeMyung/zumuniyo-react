@@ -52,7 +52,7 @@ const SearchResult = ()=> {
       index<6?(
         <>
     
-      
+      {/*링크수정 */}
       <Grid item key ={index} xs={4}  pr={1} >  
       <Card elevation={5} sx={{width:"100%", height:"100%" , border:"auto" }} >
       <CardActionArea component={RouterLink} to={`/zumuniyo/shop/${shop.shopSeq}`}>
