@@ -80,9 +80,9 @@ const CustomizedTables= () => {
                 <Link to="/zumuniyo/advertisement/AdList">
                 <button className="ad">광고</button>
                 </Link>
-                <Link to="/zumuniyo/advertisement/ImgSlider">
+                {/* <Link to="/zumuniyo/advertisement/ImgSlider">
                 <button className="Imgslider">슬라이더</button>
-                </Link>  
+                </Link>   */}
     <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
