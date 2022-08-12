@@ -102,7 +102,7 @@ const CustomizedTables= () => {
                    {list.boardTop==1?<img src={imgURL} width="25px" height="25px"/>:list.noticeBoardSeq}
               </StyledTableCell>
               <StyledTableCell>  
-                 <Link to={`/SWY/NoticeBoard/NoticeDetail/${list.noticeBoardSeq}`}>{list.title} </Link>
+                 <Link to={`/zumuniyo/NoticeBoard/NoticeDetail/${list.noticeBoardSeq}`}>{list.title} </Link>
               </StyledTableCell>
               <StyledTableCell >{ new Date(list.regdate).toJSON().split("T")[0]}</StyledTableCell>
               <StyledTableCell >{list.hitCount}</StyledTableCell>
