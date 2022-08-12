@@ -42,7 +42,6 @@ export default function Category({ handleChange2, categoryOriginal }) {
               <MenuItem name='shopCategory' value='일식'>일식</MenuItem>
               <MenuItem name='shopCategory' value='돈까쓰'>돈까쓰</MenuItem>
               <MenuItem name='shopCategory' value='족발'>족발</MenuItem>
-              <MenuItem name='shopCategory' value='돈까쓰'>돈까쓰</MenuItem>
               <MenuItem name='shopCategory' value='보쌈'>보쌈</MenuItem>
               <MenuItem name='shopCategory' value='분식'>분식</MenuItem>
               <MenuItem name='shopCategory' value='카페디저트'>카페디저트</MenuItem>

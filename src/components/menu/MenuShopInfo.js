@@ -1,8 +1,25 @@
 import React, { useState, useEffect, useContext } from "react";
 
 import { GlobalContext } from "components/common/GlobalProvider";
-import { Box, ImageList, Paper, TextField, Typography } from "@mui/material";
+import { Box, Button, ImageList, Paper, TextField, Typography } from "@mui/material";
 import { Image } from "@mui/icons-material";
+import "./MenuShopInfo.css"; 
+import { useNavigate } from "react-router-dom";
+import { styled } from '@mui/material/styles';
+import { orange, red, yellow } from '@mui/material/colors';
+
+const ColorButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.getContrastText(orange[500]),
+  backgroundColor: orange[500],
+  '&:hover': {
+    backgroundColor: orange[700],
+  },
+}));
+
+
+
+
+
 
 const MenuShopInfo = (props) => {
 
@@ -11,6 +28,10 @@ const MenuShopInfo = (props) => {
   const [shopSeq, setShopseq] = useState(props.shopSeq);
   const [shopList, setShopList] = useState([]);
   const [shop, setShop] = useState({});
+
+
+  const navigate = useNavigate();
+
 
   const shopSelect = () => {
     globalAxios(`/shop/shopListByseq/${shopSeq}`, 'get', {}, res => {
@@ -32,24 +53,29 @@ const MenuShopInfo = (props) => {
     
     <Box    id="shopViewBox"
             width="800px"
+            
             >
-    <Paper>
+    <Paper sx={{ height:"200px", padding:"10px" }} >
     <div>
 
     <Box sx={{ float:"left" }}>
-      <Image id="shopLogoImg">{shop.shopLogo}</Image>
+      <img id="shopLogoImg" src={`/image/${shop.shopLogo}`}></img>
       </Box>
       
       <div>
       <Typography id="shopName" variant="h4" >{shop.shopName}</Typography>
       <br/>
 
-      <Typography>{shop.shopInfo}</Typography>
+      <Typography id="shopInfo" sx={{ pl: 2 }}>{shop.shopInfo}</Typography>
 
-      <Typography>{shop.shopNotice}</Typography>
+      <Typography id="shopNotice" variant="subtitle2"  >{shop.shopNotice}</Typography>
       <br/>
       </div>
-      
+
+      <div>
+      <ColorButton id="gotoShop" onClick={()=>{navigate("/zumuniyo/shop/"+props.shopSeq)}} > 매장정보 보기 </ColorButton>
+      </div>
+
     </div>
     </Paper>
     </Box>

@@ -131,7 +131,7 @@ import Button from '@mui/material/Button';
             />
             </div>
         
-        <div> <Button variant="outlined">입력하기</Button> </div>
+        <div> <Button  type="submit" variant="outlined">입력하기</Button> </div>
         </div>
         
         </form>

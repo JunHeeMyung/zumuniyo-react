@@ -3,7 +3,7 @@ import { GlobalContext } from "components/common/GlobalProvider";
 import { useParams,useNavigate } from "react-router-dom";
 import { Box, Collapse, List, ListItem, ListItemButton, ListItemText, Paper 
     ,TableCell,TableRow,TableContainer,Table,TableHead,TableBody,Button
-    ,Modal,Stack,IconButton,TextField, ImageListItem} from '@mui/material';
+    ,Modal,Stack,IconButton,TextField, ImageListItem, Grid} from '@mui/material';
 import { ExpandLess } from '@mui/icons-material';
 
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
@@ -469,9 +469,6 @@ const MenuListQR = () => {
         
         <Modal open={open} >
           
-          
-            
-
             <div className="modal" id="cartInModal">
             <Box>
             <Card sx={style} id="menuDetailCard">
@@ -501,25 +498,26 @@ const MenuListQR = () => {
                 }
             />
             <div id="menuDetailWrapper">
+              <Grid 
+                container
+                spacing={0} 
+                direction="column"
+                alignItems="center"
+                justify="center"
+                >
             <CardMedia
               component="img"
               height="194"
               image={"/image/"+selectedMenu.menuImage}
               alt="detail-image"
+              
             />
+            </Grid>
             <CardContent>
               
               <Typography className="subtitle2" variant="subtitle2" color="text.secondary">메뉴소개</Typography>
                 <div>
-                {/* <TextField
-                  id="menuDetailInfo-textField"  
-                  multiline
-                  fullWidth 
-                  maxRows={1}
-                  value={menuData.menuSimpleInfo}
-                  onChange={onChange}
-                /> */}
-
+                
                 <Typography variant="body1" color="text.primary" >
                   <span id="menuSimpleInfoSpace" >{selectedMenu.menuSimpleInfo}</span>
                 </Typography>
