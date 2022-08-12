@@ -17,7 +17,6 @@ export default function ShopDetail(props) {
       if (res) {
         console.log(res);
         setShop(res);
-        // setShoplist(res);
       } else {
         alert("failed to");
       }
