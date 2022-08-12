@@ -11,6 +11,9 @@ import Collapse from '@mui/material/Collapse';
 import {Box,Grid, Paper  } from '@mui/material'
 import { bgcolor } from "@mui/system";
 import { auto } from "@popperjs/core";
+import {Link} from  "react-router-dom";
+import CardActionArea from '@mui/material/CardActionArea';
+import { Link as RouterLink } from 'react-router-dom';
 // import "./SearchResult.css";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -32,7 +35,7 @@ const SearchResult = ()=> {
   
   
  return(
- <>
+   <>
   <h1>검색결과</h1>
   {/* <Box sx={{flexGrow:1}}> */}
   <Grid
@@ -47,33 +50,33 @@ const SearchResult = ()=> {
   {shoplist.map((shop,index)=>{
     return(
       index<6?(
-      <>
-
-      <Grid item key ={index} xs={4}  pr={1} >  
+        <>
+    
       
+      <Grid item key ={index} xs={4}  pr={1} >  
       <Card elevation={5} sx={{width:"100%", height:"100%" , border:"auto" }} >
+      <CardActionArea component={RouterLink} to={`/zumuniyo/shop/${shop.shopSeq}`}>
       <CardHeader title={shop.shopName} ></CardHeader>
       <hr/>
       <CardContent>{shop.shopInfo}</CardContent>
       <CardContent>{shop.shopCategory}</CardContent>
       <CardMedia height="194">
       <img src={`/image/${shop.shopLogo}`}/>
-      </CardMedia>  
-    </Card>
-   
-    </Grid >
-
+      </CardMedia> 
+      </CardActionArea>
+       </Card>
+      </Grid> 
     </>)
     :""
-
+    
     )
-  })}  
+  })}   
   </Grid >
   {/* </Box> */}
   </>
    )
   }
-
+  
 export default SearchResult;
 
 
