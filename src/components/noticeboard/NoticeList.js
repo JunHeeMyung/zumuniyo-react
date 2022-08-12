@@ -80,9 +80,9 @@ const CustomizedTables= () => {
                 <Link to="/zumuniyo/advertisement/AdList">
                 <button className="ad">광고</button>
                 </Link>
-                <Link to="/zumuniyo/advertisement/ImgSlider">
+                {/* <Link to="/zumuniyo/advertisement/ImgSlider">
                 <button className="Imgslider">슬라이더</button>
-                </Link>  
+                </Link>   */}
     <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
@@ -102,7 +102,7 @@ const CustomizedTables= () => {
                    {list.boardTop==1?<img src={imgURL} width="25px" height="25px"/>:list.noticeBoardSeq}
               </StyledTableCell>
               <StyledTableCell>  
-                 <Link to={`/SWY/NoticeBoard/NoticeDetail/${list.noticeBoardSeq}`}>{list.title} </Link>
+                 <Link to={`/zumuniyo/NoticeBoard/NoticeDetail/${list.noticeBoardSeq}`}>{list.title} </Link>
               </StyledTableCell>
               <StyledTableCell >{ new Date(list.regdate).toJSON().split("T")[0]}</StyledTableCell>
               <StyledTableCell >{list.hitCount}</StyledTableCell>

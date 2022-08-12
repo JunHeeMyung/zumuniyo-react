@@ -51,7 +51,8 @@ import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 
 // ******************아이콘들
 
-
+// 
+import CampaignIcon from '@mui/icons-material/Campaign';
 
 export const SidebarDataN = [
     {
@@ -73,6 +74,12 @@ export const SidebarDataN = [
         // path: '/LDS/normal/orderList',
         path: '/zumuniyo/orderlist',
         icon: <ListAltIcon />,
+        cName: 'nav-text'
+    },
+    {
+        title: '공지사항',        
+        path: '/zumuniyo/NoticeBoard/NoticeList',
+        icon: <CampaignIcon />,
         cName: 'nav-text'
     },
 ]
@@ -103,6 +110,12 @@ export const SidebarDataB = [
         icon: <QrCodeScannerIcon />,
         cName: 'nav-text'
     },
+    {
+        title: '공지사항',        
+        path: '/zumuniyo/NoticeBoard/NoticeList',
+        icon: <CampaignIcon />,
+        cName: 'nav-text'
+    },
 
 ]
 
@@ -117,6 +130,12 @@ export const SidebarDataA = [
         title: '통계',
         path: '/zumuniyo/admin/statistics',        
         icon: <LeaderboardIcon />,
+        cName: 'nav-text'
+    },
+    {
+        title: '공지사항',        
+        path: '/zumuniyo/NoticeBoard/NoticeList',
+        icon: <CampaignIcon />,
         cName: 'nav-text'
     },
     
