@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { CardActionArea, List, ListItem, ListItemText, TableBody, TableCell, TableRow, TextField } from '@mui/material';
+import { CardActionArea, List, ListItem, ListItemText, Stack, TableBody, TableCell, TableRow, TextField } from '@mui/material';
 
 import { styled } from '@mui/material/styles';
 
@@ -104,17 +104,12 @@ const MenuDetailModal = (props) => {
         
         <Modal open={props.detailModalOpen} >
           
-          {/* <Box sx={style}
-               id="menuDetailBox"
-               component="form"
-               noValidate
-               autoComplete='off'
-               //onSubmit={}      
-          > */}
+          
             
             <div className="modal" id="detailModal">
-            
+            <Box>
             <Card sx={style} id="menuDetailCard">
+              <Box>
             <CardHeader
               avatar={ 
                 menuData.menuTop?  
@@ -214,23 +209,22 @@ const MenuDetailModal = (props) => {
             
 
             </div>
-            
-            
-           <div id="modalBottomWrapper">
+            </Box>
+            <Box id="modalBottomWrapper">
           
-              
+              <Stack>
               <Button variant="contained" onClick={props.handleModalClose}>닫기</Button>
-             
-            </div>
+              </Stack>
+            </Box>
+           
 
             </Card>
             
             <br></br>
             
-
-            </div>
-          {/* </Box> */}
-          
+            
+          </Box> 
+          </div>
         </Modal>
       </div>
 

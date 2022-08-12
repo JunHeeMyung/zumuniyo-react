@@ -8,7 +8,7 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { IconButton, ListItem } from '@mui/material';
+import { Box, IconButton, ListItem } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 
@@ -20,7 +20,7 @@ const MenuCategory = (props) => {
     const {logined,globalAxios,beforeLocation,currentLocation} = useContext(GlobalContext);
 
     const [categoryData, setCategoryData] = useState('');
-    
+
     const [shopSeq, setShopSeq] = useState(props.shopSeq);
 
     const [open, setOpen] = useState(true);
@@ -122,8 +122,8 @@ const MenuCategory = (props) => {
         
 
     <div>
-        
-    
+      
+
       <List
         sx={{ width: '100%', maxWidth: 500, bgcolor: 'background.paper' }}
         component="nav"

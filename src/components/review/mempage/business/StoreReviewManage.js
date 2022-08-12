@@ -7,10 +7,10 @@ export default function StoreReviewManage() {
 
   const { globalAxios } = useContext(GlobalContext);
   const [reviewShops, setReviewShops] = useState([]);
-  const [shopNum, setShopNum] = useState([4882]);
+  const [shopNum, setShopNum] = useState([]);
 
   const shopReviewList = () => {
-    globalAxios(`/review/reviewShopList/${shopNum}`, 'get', {}, res => {      
+    globalAxios('/review/reviewshoplistmem', 'get', {}, res => {      
       if (res) {     
         setReviewShops(res);        
       } else {
