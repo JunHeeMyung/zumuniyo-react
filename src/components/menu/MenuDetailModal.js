@@ -104,11 +104,12 @@ const MenuDetailModal = (props) => {
         
         <Modal open={props.detailModalOpen} >
           
-          <Box >
+          
             
             <div className="modal" id="detailModal">
             <Box>
             <Card sx={style} id="menuDetailCard">
+              <Box>
             <CardHeader
               avatar={ 
                 menuData.menuTop?  
@@ -208,24 +209,22 @@ const MenuDetailModal = (props) => {
             
 
             </div>
-            
-            
+            </Box>
+            <Box id="modalBottomWrapper">
+          
+              <Stack>
+              <Button variant="contained" onClick={props.handleModalClose}>닫기</Button>
+              </Stack>
+            </Box>
            
 
             </Card>
             
             <br></br>
             
-</Box>
-            </div>
-            <div id="modalBottomWrapper">
-          
-              <Stack>
-              <Button variant="contained" onClick={props.handleModalClose}>닫기</Button>
-              </Stack>
-            </div>
+            
           </Box> 
-          
+          </div>
         </Modal>
       </div>
 
